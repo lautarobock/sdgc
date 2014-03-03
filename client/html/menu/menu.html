@@ -1,0 +1,38 @@
+<header class="navbar navbar-default navbar-fixed-top">
+  <div class="navbar-inner">
+    <div class="container" style="width: 90%;">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-3" ng-click="toogleMenu()">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+      </div>
+      <nav class="hidden-xs">
+          <ul class="nav navbar-nav">
+              <a href="#" role="button" class="navbar-brand">
+                  {{ 'menu.title.desktop' | translate }}
+              </a>
+              <li secure>
+                  <a href="#/match/new" role="button" >
+                      {{'menu.match.new'|translate}} </b>
+                  </a>
+              </li>
+              <li>
+                  <a href="#/match" role="button" >
+                      {{'menu.matches'|translate}} </b>
+                  </a>
+              </li>
+              <li>
+                  <a href="#/player" role="button" >
+                      {{'menu.players'|translate}} </b>
+                  </a>
+              </li>
+              <li><sign-in></sign-in></li>
+              <li><log-in></log-in></li>
+          </ul>
+      </nav>
+    </div>
+  </div>
+</header>

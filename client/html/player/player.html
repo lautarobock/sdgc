@@ -1,0 +1,18 @@
+<div main-content>
+  <h1>{{'menu.players' | translate }}</h1>
+  <hr>
+  <!-- listview-sort="sort" 
+      listview-config="config" 
+      listview-filter="filterData" -->
+  <listview 
+      listview-data="players" 
+      listview-header="headers"></listview>
+  <hr/>
+  <a class="btn btn-success btn-sm" href="#/player/new" secure>
+    <span class="glyphicon glyphicon-plus"></span> Agregar Jugador
+  </a>
+</div>
+
+<div side-bar>
+  <div ng-include="'side/side.html'"></div>
+</div>

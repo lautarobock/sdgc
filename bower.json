@@ -1,0 +1,17 @@
+{
+  "name": "sdgc",
+  "version": "0.0.1",
+  "dependencies": {
+    "angular": "1.2.14",
+    "angular-resource": "1.2.14",
+    "angular-route": "1.2.14",
+    "angular-sanitize": "1.2.14",
+    "angular-mocks": "1.2.14",
+    "requirejs": "2.1.9",
+    "angular-bootstrap": "0.10.0",
+    "angular-translate": "1.1.0",
+    "highcharts.com": "v3.0.9",
+    "highcharts-ng": "0.0.4",
+    "lautarobock-ng-util": ">=0"
+  }
+}

@@ -1,0 +1,101 @@
+/* to add pointer to bootstrap components */
+.nav, .pagination, .carousel a { cursor: pointer; }
+
+.dl-hide {
+  display: none !important
+}
+
+.dl-show {
+  display: run-in
+}
+
+.dl-visible {
+	visibility: visible
+}
+
+.dl-hidden {
+	visibility: hidden; !important
+}
+
+.dl-color-yellow {
+	color: yellow;
+}
+
+.dl-color-blue {
+	color: blue;
+}
+
+.dl-score-detail {
+	font-size: 30px;
+	font-weight: bold;
+	font-family: Courier;
+	text-align: center;
+	border-radius: 10px;
+	width: 90px;
+	height: 90px;
+	padding-top: 23px;
+	margin-bottom: 5px !important;
+}
+
+.dl-score-overall {
+	background: #003366;
+	padding: 2px;
+	border-bottom-left-radius: 5px;
+	border-top-left-radius: 5px;
+	font-weight: bold;
+	color: white;
+	width: 2.5em;
+	display: inline-block;
+	text-align: right;
+}
+
+.dl-score-style {
+	background: #66A212;
+	padding: 2px;
+	text-align: center;
+	font-weight: bold;
+	color: white;
+	width: 2.5em;
+	display: inline-block;
+}
+
+.dl-score-category {
+	background: #CC3300;
+	padding: 2px;
+	border-bottom-right-radius: 5px;
+	border-top-right-radius: 5px;
+	font-weight: bold;
+	color: white;
+	width: 2.5em;
+	display: inline-block;
+}
+
+.dl-font-bold {
+	font-weight: bold;
+}
+
+.dl-loading {
+	background-color: #EE2200;
+	position: fixed;
+	margin-left: 40%;
+	margin-right: 40%;
+	top: 0;
+	width: 180px;
+	height: 20px;
+	z-index: 1050;
+	border-bottom-right-radius: 2px;
+	border-bottom-left-radius: 2px;
+	padding: 0 50px;
+}
+
+.dl-line-through {
+	text-decoration: line-through;
+}
+
+.dl-anchor {
+	cursor: pointer
+}
+
+#mapRating .angular-google-map-container { height: 140px; }
+#map400 .angular-google-map-container { height: 400px; }
+#map200 .angular-google-map-container { height: 200px; }

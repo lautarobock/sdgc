@@ -1,0 +1,26 @@
+{
+  "name": "ng-util",
+  "version": "0.0.6",
+  "homepage": "https://github.com/lautarobock/ng-util",
+  "authors": [
+    "Lautaro <lautaromail@gmail.com>"
+  ],
+  "description": "Angular Utilities",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "_release": "0.0.6",
+  "_resolution": {
+    "type": "version",
+    "tag": "0.0.6",
+    "commit": "ec7dbcb18b54f46ffbb1b619bbb1eba1577b0e95"
+  },
+  "_source": "git://github.com/lautarobock/ng-util.git",
+  "_target": ">=0",
+  "_originalSource": "lautarobock-ng-util"
+}
