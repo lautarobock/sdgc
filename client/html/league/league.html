@@ -14,7 +14,11 @@
       </ul>
     </div>
     <div class="col-lg-10">
-      <h4>{{league.name}}</h4>
+      <h4>{{league.name}}
+      <a href="#/league/edit/{{league._id}}" secure>
+        <span style="color: white;" class="glyphicon glyphicon-edit pull-right"></span>
+      </a>
+      </h4>
       <b>Desde: </b>{{league.startDate|date:'dd-MM-yyyy'}} 
       <span ng-hide="$last" class="glyphicon glyphicon-flash"></span>
       <b>Hasta: </b>{{league.finishDate|date:'dd-MM-yyyy'}}
@@ -22,7 +26,10 @@
       <b>Estado: </b>{{league.status|afdLeagueStatus}}
       <hr/>
       <!-- Match detail -->
-      <div match-detail="match"></div>
+      <div ng-if="match" match-detail="match"></div>
+      <div ng-if="!match" >
+        <alert type="'warning'">Esta liga no tiene ningun partido creado</alert>
+      </div>
       <hr/>
       <a class="btn btn-primary btn-sm" href="#/match/new?league_id={{league._id}}&nextRound={{nextRound}}" secure>
         <span class="glyphicon glyphicon-plus"></span> Programar un partido

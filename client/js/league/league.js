@@ -11,11 +11,22 @@ define(['../resources'], function() {
 		$scope.nextRound = 1;
 
 		function onLoad() {	
-			$scope.loadLeague($scope.leagues[$scope.leagues.length-1]);
+            if ( $scope.leagues.length != 0 ) {
+                $scope.loadLeague($scope.leagues[$scope.leagues.length-1]);    
+            } else {
+                $scope.clearLeague();
+            }
 		}
+
+        $scope.clearLeague = function() {
+            $scope.league = null;
+            $scope.clearMatch();
+            $scope.nextRound = 1;
+        };
 
 		$scope.loadLeague = function(league) {
 			$scope.league = league;
+            $scope.nextRound = 1;
 			$scope.matches = Match.query({
                     filter:{league: league._id},
                     sort: 'round'
@@ -23,10 +34,19 @@ define(['../resources'], function() {
 				angular.forEach($scope.matches, function(match) {
 					$scope.nextRound = match.round + 1;
 				})
-                $scope.loadMatch($scope.matches[$scope.matches.length-1]);
+                if ( $scope.matches.length != 0) {
+                    $scope.loadMatch($scope.matches[$scope.matches.length-1]);    
+                } else {
+                    $scope.clearMatch();
+                }
 			});
 
 		}
+
+        $scope.clearMatch = function() {
+            $scope.match = null;
+            $scope.nextRound = 1;
+        }
 
         $scope.loadMatch = function(match) {
             $scope.match = match;
