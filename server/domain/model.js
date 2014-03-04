@@ -15,7 +15,9 @@ exports.Player = mongoose.model("Player", new Schema({
     _id: String,
     name: String,
     lastName: String,
-    bornDate: Date
+    alias: String,
+    bornDate: Date,
+    starting: Boolean //si es titular o no
 },{ _id: false }));
 
 exports.League = mongoose.model("League", new Schema({
@@ -24,13 +26,27 @@ exports.League = mongoose.model("League", new Schema({
     status: {type: String, default: 'PLANNING'}, //PLANNING, RUNNING, FINISHED
     startDate: Date,
     finishDate: Date,
-    matches: [{type: String , ref: 'Match'}]
+    matches: [{type: String , ref: 'Match'}] //No lo estoy usando
 },{ _id: false }));
+
+var Team = {
+    members: [{
+        goals: Number,
+        beers: Number,
+        player: {type: String,  ref:'Player'}
+    }],
+    goals: Number,
+    avg: Number,
+    isWinner: Boolean
+};
 
 exports.Match = mongoose.model("Match", new Schema({
     _id: String,
     league: {type: String, ref: 'League'},
     round: Number,
     status: {type: String, default: 'PLANNING'}, //PLANNING, READY, FINISHED
-    date: Date
+    date: Date,
+    players: [{type: String, ref:'Player'}],
+    team1: Team,
+    teamB: Team
 },{ _id: false }));

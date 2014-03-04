@@ -9,7 +9,7 @@ function createRest(service, customId) {
             if ( req.query.filter ) {
                 filter = eval('('+req.query.filter+')');
             }
-            model[service].find(filter).exec(function(err,results) {
+            model[service].find(filter).sort(req.query.sort).exec(function(err,results) {
                 if ( err ) {
                     res.send(err);    
                 } else {
@@ -41,6 +41,19 @@ function createRest(service, customId) {
             model[service].findOne({_id:req.params.id},function(err,results) {
                 res.send(results);
             });  
+        }, 
+        count: function(req, res) {
+            var filter = {};
+            if ( req.query.filter ) {
+                filter = eval('('+req.query.filter+')');
+            }
+            model[service].count(filter).exec(function(err,results) {
+                if ( err ) {
+                    res.send(err);    
+                } else {
+                    res.send({count:results});
+                }
+            });    
         }
     };
 }
@@ -57,6 +70,7 @@ exports.create = function(name, customId) {
 exports.bind = function(name, rest, app, path, security) {
     security = security || {};
     path = path || '';
+    app.get('/' + path + name+'/count', rest.count);
     app.get('/' + path + name+ "/:id", rest.findById)
     app.get('/' + path + name, rest.findAll);
     app.post('/' + path + name + "/:id", security.save || [], rest.save);

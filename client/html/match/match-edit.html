@@ -1,10 +1,11 @@
 <div main-content>
-  <h2>Nuevo Partido</h2>
+  <h2 ng-hide="match._id">Nuevo Partido</h2>
+  <h2 ng-show="match._id">Fecha #{{match.round}} - {{match.league}}</h2>
   <form class="bs-example form-horizontal">
     <fieldset>
       <legend>Datos</legend>
       <div class="form-group" >
-        <div class="col-sm-2" style="font-weight:bold" ng-class="errorClass('name')" dl-input-number size="sm" id="round" value="match.round" caption="Fecha Nro"></div>
+        <div class="col-sm-2" style="font-weight:bold" ng-class="errorClass('round')" dl-input-number size="sm" id="round" value="match.round" caption="Fecha Nro"></div>
         <div class="col-sm-3" ng-class="errorClass('date')">
           <label for="date" class="control-label" tooltip-placement="right">Dia</label>
           <div class="input-group">
@@ -16,6 +17,84 @@
         </div>
       </div>
     </fieldset>    
+    <fieldset>
+      <legend>Jugadores</legend>
+      <div class="input-group">
+        <select class="form-control" ng-model="playerToAdd">
+          <option ng-repeat="player in players | notUsed:match.players | orderBy:'alias'" value="{{ player._id }}">
+            {{ player.alias }}
+          </option>
+        </select>
+        <span class="input-group-btn">
+            <button ng-disabled="match.players.length>=10" class="btn btn-default" type="button" ng-click="addPlayer(playerToAdd)">
+                <span class="glyphicon glyphicon-plus"></span>
+            </button>
+        </span>
+      </div>
+      <ul class="list-group">
+        <li class="list-group-item" ng-repeat="player in match.players | notUsedInTeam:match">
+          <span >
+            {{$index+1}} - {{playersMap[player].alias}}
+          </span>
+          <span class="pull-right">
+            <button ng-disabled="match.team1.members.length>=5" ng-click="addTeam1(player)"  type="button" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-backward"></button>
+            <button ng-disabled="match.teamB.members.length>=5" ng-click="addTeamB(player)"  type="button" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-forward"></button>
+            <button ng-click="remove(player,$index)" type="button" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-remove"></button>
+          </span>
+        </li>
+      </ul>
+    </fieldset>
+    <fieldset>
+      <legend>Equipos</legend>
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="panel panel-default">
+            <div class="panel-heading">Equipo 1</div>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Jugador</th>
+                  <th>Goles</th>
+                  <th>Cervezas</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="member in match.team1.members">
+                  <td>{{playersMap[member.player].alias}}</td>
+                  <td>{{member.goals}}</td>
+                  <td>{{member.beers}}</td>
+                  <td><button ng-click="removeTeam1(player,$index)" type="button" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-remove"></button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="panel panel-default">
+            <div class="panel-heading">Equipo B</div>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Jugador</th>
+                  <th>Goles</th>
+                  <th>Cervezas</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="member in match.teamB.members">
+                  <td>{{playersMap[member.player].alias}}</td>
+                  <td>{{member.goals}}</td>
+                  <td>{{member.beers}}</td>
+                  <td><button ng-click="removeTeamB(player,$index)" type="button" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-remove"></button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </fieldset>
     <div class="form-group">
       <div class="col-xs-12">
         <div class="pull-right">

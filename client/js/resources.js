@@ -14,7 +14,7 @@ define([],function() {
             var params = function() {
                 return $rootScope.user ? $rootScope.user.google_id : null;
             };
-            return $resource( "/" + path + s + '/:_id',{_id:"@_id",google_id:params}, {
+            return $resource( "/" + path + s + '/:operation:_id',{_id:"@_id",google_id:params}, {
                 count: {method:'GET', params: {operation:'count'}, isArray:false}
             });
         });
@@ -24,6 +24,16 @@ define([],function() {
         return function(status) {
             if ( consts.League.Status[status] ) {
                 return consts.League.Status[status].name;
+            } else {
+                return status;    
+            }
+        }
+    });
+
+    res.filter("afdMatchStatus", function() {
+        return function(status) {
+            if ( consts.Match.Status[status] ) {
+                return consts.Match.Status[status].name;
             } else {
                 return status;    
             }

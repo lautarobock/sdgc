@@ -8,12 +8,43 @@ define(['../resources'], function() {
 
         $scope.headers = [{
                 field: 'name',
-                caption: $translate('player.name'),
-                template:   '<a href="#/player/detail/{{$model._id}}">' +
-                                '<b>{{$model.lastName}}, {{$model.name}}</b>' +
+                caption: 'Nombre',
+                template:   '<a href="#/player/edit/{{$model._id}}">' +
+                                '<b>{{$model.name}}</b>' +
+                            '</a>'
+            },{
+                field: 'lastName',
+                caption: 'Apellido',
+                template:   '<a href="#/player/edit/{{$model._id}}">' +
+                                '<b>{{$model.lastName}}</b>' +
+                            '</a>'
+            },{
+                field: 'alias',
+                caption: 'Apodo',
+                template:   '<a href="#/player/edit/{{$model._id}}">' +
+                                '<b>{{$model.alias}}</b>' +
                             '</a>'
             }
         ];
+    });
+
+    player.controller('PlayerEditController', function($scope, $routeParams, Player){
+        
+        if ( $routeParams.player_id ) {
+            $scope.player = Player.get({_id: $routeParams.player_id});
+        } else {
+            $scope.player = new Player();
+        }
+
+        $scope.save = function() {
+            if ( !$scope.player._id ) {
+                $scope.player._id = $scope.player.alias.replace(/[^a-z0-9]/ig, '');
+            }
+            $scope.player.$save(function() {
+                window.history.back();
+            });
+        }
+
     });
 
 });

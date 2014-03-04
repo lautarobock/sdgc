@@ -21,6 +21,9 @@
       <span ng-hide="$last" class="glyphicon glyphicon-flash"></span>
       <b>Estado: </b>{{league.status|afdLeagueStatus}}
       <hr/>
+      <!-- Match detail -->
+      <div match-detail="match"></div>
+      <hr/>
       <a class="btn btn-primary btn-sm" href="#/match/new?league_id={{league._id}}&nextRound={{nextRound}}" secure>
         <span class="glyphicon glyphicon-plus"></span> Programar un partido
       </a>

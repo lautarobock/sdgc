@@ -16,12 +16,21 @@ define(['../resources'], function() {
 
 		$scope.loadLeague = function(league) {
 			$scope.league = league;
-			$scope.matches = Match.query({filter:{league: league._id}}, function() {
+			$scope.matches = Match.query({
+                    filter:{league: league._id},
+                    sort: 'round'
+                }, function() {
 				angular.forEach($scope.matches, function(match) {
 					$scope.nextRound = match.round + 1;
 				})
+                $scope.loadMatch($scope.matches[$scope.matches.length-1]);
 			});
+
 		}
+
+        $scope.loadMatch = function(match) {
+            $scope.match = match;
+        };
 
 	});
 

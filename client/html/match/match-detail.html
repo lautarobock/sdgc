@@ -1,0 +1,21 @@
+<div class="panel panel-default" > 
+  <div class="panel-heading">
+    Fecha #{{match.round}}
+    <span ng-hide="$last" class="glyphicon glyphicon-flash"></span>
+    {{match.date|date:'dd-MM-yyyy'}}
+    <span ng-hide="$last" class="glyphicon glyphicon-flash"></span>
+    {{match.status|afdMatchStatus}}
+    <a href="#/match/edit/{{match._id}}">
+      <span style="color: white;" class="glyphicon glyphicon-edit pull-right"></span>
+    </a>
+  </div>
+  <div class="panel-body">
+    <h5>Jugadores confirmados</h5>
+    {{playerMap}}
+    <ul class="list-group">
+      <li class="list-group-item" ng-repeat="player in match.players track by player" >
+        {{$index+1}} - {{playersMap[player].alias}}
+      </li>
+    </ul>
+  </div>
+</div>
