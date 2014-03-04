@@ -1,0 +1,18 @@
+<div main-content>
+  <h2>Nueva Liga</h2>
+  <form class="bs-example form-horizontal">
+    
+    <div class="form-group">
+      <div class="col-lg-12">
+        <div class="pull-right">
+          <a class="btn btn-default" href="javascript:window.history.back()" >Cancelar</a> 
+          <button type="submit" class="btn btn-primary" ng-click="save()">Guardar</button> 
+        </div>
+      </div>
+    </div>
+  </form>
+  <alert ng-repeat="(key,value) in error" type="'danger'">{{value}}</alert>
+</div>
+<div side-bar>
+  <div ng-include="'side/side.html'"></div>
+</div>

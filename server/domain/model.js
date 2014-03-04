@@ -17,3 +17,14 @@ exports.Player = mongoose.model("Player", new Schema({
     lastName: String,
     bornDate: Date
 },{ _id: false }));
+
+exports.League = mongoose.model("League", new Schema({
+    _id: String,
+    name: String,
+    status: String, //PLANNING, RUNNING, FINISHED
+    startDate: Date,
+    finishDate: Date
+    // ,
+    // matches: [{type: String , ref: 'Match'}]
+},{ _id: false }));
+

@@ -4,6 +4,7 @@ define("app", [
     "resources",
     "gplus",
     "player/player",
+    "league/league",
     "side/side",
     "main/main",
     "util/directives"
@@ -19,6 +20,7 @@ define("app", [
         'afd.resources',
         'dl.gplus',
         'afd.player',
+        'afd.league',
         'dl.side',
         'afd.main',
         'gt.listview',
@@ -107,7 +109,12 @@ define("app", [
                 when('/player/edit/:player_id', {templateUrl: 'player/player-edit.html',   controller: 'PlayerEditController'}).
                 when('/player', {templateUrl: 'player/player.html',   controller: 'PlayerController'}).
 
-                otherwise({redirectTo: '/main'});
+                when('/league/detail/:league_id', {templateUrl: 'league/league-detail.html',   controller: 'LeagueDetailController'}).
+                when('/league/edit/:league_id', {templateUrl: 'league/league-edit.html',   controller: 'LeagueEditController'}).
+                when('/league/new', {templateUrl: 'league/league-edit.html',   controller: 'LeagueEditController'}).
+                when('/league', {templateUrl: 'league/league.html',   controller: 'LeagueController'}).
+
+                otherwise({redirectTo: '/league'});
 
     }]);
 
