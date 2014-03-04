@@ -13,5 +13,8 @@
     "highcharts.com": "v3.0.9",
     "highcharts-ng": "0.0.4",
     "lautarobock-ng-util": ">=0"
+  },
+  "resolutions": {
+    "angular": "1.2.14"
   }
 }

@@ -1,0 +1,32 @@
+<div main-content>
+  <h2>Nuevo Partido</h2>
+  <form class="bs-example form-horizontal">
+    <fieldset>
+      <legend>Datos</legend>
+      <div class="form-group" >
+        <div class="col-sm-2" style="font-weight:bold" ng-class="errorClass('name')" dl-input-number size="sm" id="round" value="match.round" caption="Fecha Nro"></div>
+        <div class="col-sm-3" ng-class="errorClass('date')">
+          <label for="date" class="control-label" tooltip-placement="right">Dia</label>
+          <div class="input-group">
+            <input type="text" id="date" readonly="true" class="form-control input-sm" show-button-bar="false" show-weeks="false" datepicker-popup="dd/MM/yyyy" ng-model="match.date" is-open="opened.date" ng-required="true" close-text="Cerrar" />
+            <span class="input-group-btn">
+              <button class="btn btn-default btn-sm" ng-click="openDate($event,'date')"><i class="glyphicon glyphicon-calendar"></i></button>
+            </span>
+          </div>
+        </div>
+      </div>
+    </fieldset>    
+    <div class="form-group">
+      <div class="col-xs-12">
+        <div class="pull-right">
+          <a class="btn btn-default" href="javascript:window.history.back()" >Cancelar</a> 
+          <button type="submit" class="btn btn-primary" ng-click="save()">Guardar</button> 
+        </div>
+      </div>
+    </div>
+  </form>
+  <alert ng-repeat="(key,value) in error" type="'danger'">{{value}}</alert>
+</div>
+<div side-bar>
+  <div ng-include="'side/side.html'"></div>
+</div>

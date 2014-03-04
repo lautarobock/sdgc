@@ -21,10 +21,16 @@ exports.Player = mongoose.model("Player", new Schema({
 exports.League = mongoose.model("League", new Schema({
     _id: String,
     name: String,
-    status: String, //PLANNING, RUNNING, FINISHED
+    status: {type: String, default: 'PLANNING'}, //PLANNING, RUNNING, FINISHED
     startDate: Date,
-    finishDate: Date
-    // ,
-    // matches: [{type: String , ref: 'Match'}]
+    finishDate: Date,
+    matches: [{type: String , ref: 'Match'}]
 },{ _id: false }));
 
+exports.Match = mongoose.model("Match", new Schema({
+    _id: String,
+    league: {type: String, ref: 'League'},
+    round: Number,
+    status: {type: String, default: 'PLANNING'}, //PLANNING, READY, FINISHED
+    date: Date
+},{ _id: false }));

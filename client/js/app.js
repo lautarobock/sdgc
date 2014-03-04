@@ -5,6 +5,7 @@ define("app", [
     "gplus",
     "player/player",
     "league/league",
+    "match/match",
     "side/side",
     "main/main",
     "util/directives"
@@ -20,11 +21,13 @@ define("app", [
         'afd.resources',
         'dl.gplus',
         'afd.player',
+        'afd.match',
         'afd.league',
         'dl.side',
         'afd.main',
         'gt.listview',
         'gt.util',
+        'gt.form',
         'dl.directives']);
 
     //Esto esta aca porque este .js se carga en forma asincronica
@@ -101,20 +104,30 @@ define("app", [
         $translateProvider.translations('es', locale.es);
         $translateProvider.preferredLanguage('es');
 
+        var base = ['player','league','match'];
+
         //Configure Routes
         $routeProvider.            
                 when('/main', {templateUrl: 'main/main.html',   controller: 'MainController'}).
-
-                when('/player/detail/:player_id', {templateUrl: 'player/player-detail.html',   controller: 'PlayerDetailController'}).
-                when('/player/edit/:player_id', {templateUrl: 'player/player-edit.html',   controller: 'PlayerEditController'}).
-                when('/player', {templateUrl: 'player/player.html',   controller: 'PlayerController'}).
-
-                when('/league/detail/:league_id', {templateUrl: 'league/league-detail.html',   controller: 'LeagueDetailController'}).
-                when('/league/edit/:league_id', {templateUrl: 'league/league-edit.html',   controller: 'LeagueEditController'}).
-                when('/league/new', {templateUrl: 'league/league-edit.html',   controller: 'LeagueEditController'}).
-                when('/league', {templateUrl: 'league/league.html',   controller: 'LeagueController'}).
-
                 otherwise({redirectTo: '/league'});
+                // when('/player/detail/:player_id', {templateUrl: 'player/player-detail.html',   controller: 'PlayerDetailController'}).
+                // when('/player/edit/:player_id', {templateUrl: 'player/player-edit.html',   controller: 'PlayerEditController'}).
+                // when('/player', {templateUrl: 'player/player.html',   controller: 'PlayerController'}).
+
+                // when('/league/detail/:league_id', {templateUrl: 'league/league-detail.html',   controller: 'LeagueDetailController'}).
+                // when('/league/edit/:league_id', {templateUrl: 'league/league-edit.html',   controller: 'LeagueEditController'}).
+                // when('/league/new', {templateUrl: 'league/league-edit.html',   controller: 'LeagueEditController'}).
+                // when('/league', {templateUrl: 'league/league.html',   controller: 'LeagueController'}).
+        angular.forEach(base, function(route) {
+            var upperBase = route[0].toUpperCase() + route.substr(1);
+            $routeProvider.when('/'+route+'/detail/:'+route+'_id', {templateUrl: ''+route+'/'+route+'-detail.html',   controller: upperBase + 'DetailController'});
+            $routeProvider.when('/'+route+'/edit/:'+route+'_id', {templateUrl: ''+route+'/'+route+'-edit.html',   controller: upperBase + 'EditController'});
+            $routeProvider.when('/'+route+'/new', {templateUrl: ''+route+'/'+route+'-edit.html',   controller: upperBase + 'EditController'});
+            $routeProvider.when('/'+route+'', {templateUrl: ''+route+'/'+route+'.html',   controller: upperBase + 'Controller'});
+        });
+                
+
+                
 
     }]);
 

@@ -5,7 +5,11 @@ function createRest(service, customId) {
     return {
         findAll: function(req, res) {
             // console.log("INFO", "findAll");
-            model[service].find().exec(function(err,results) {
+            var filter = {};
+            if ( req.query.filter ) {
+                filter = eval('('+req.query.filter+')');
+            }
+            model[service].find(filter).exec(function(err,results) {
                 if ( err ) {
                     res.send(err);    
                 } else {

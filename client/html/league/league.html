@@ -1,12 +1,31 @@
 <div main-content>
-  <h1>La Liga</h1>
-  <hr>
-  <!-- listview-sort="sort" 
-      listview-config="config" 
-      listview-filter="filterData" -->
-  <!-- <listview 
-      listview-data="players" 
-      listview-header="headers"></listview> -->
+  <ul class="nav nav-pills">
+    <li ng-class="{active:it._id == league._id}" ng-repeat="it in leagues">
+      <a href="" ng-click="loadLeague(it)">{{it._id}}</a>
+    </li>
+  </ul>
+  <hr/> 
+  <div class="row"> 
+    <div class="col-lg-2">
+      <ul class="nav nav-pills nav-stacked">
+        <li ng-class="{active:it._id == match._id}" ng-repeat="it in matches | orderBy:'round'">
+          <a href="" ng-click="loadMatch(it)">Fecha #{{it.round}}</a>
+        </li>
+      </ul>
+    </div>
+    <div class="col-lg-10">
+      <h4>{{league.name}}</h4>
+      <b>Desde: </b>{{league.startDate|date:'dd-MM-yyyy'}} 
+      <span ng-hide="$last" class="glyphicon glyphicon-flash"></span>
+      <b>Hasta: </b>{{league.finishDate|date:'dd-MM-yyyy'}}
+      <span ng-hide="$last" class="glyphicon glyphicon-flash"></span>
+      <b>Estado: </b>{{league.status|afdLeagueStatus}}
+      <hr/>
+      <a class="btn btn-primary btn-sm" href="#/match/new?league_id={{league._id}}&nextRound={{nextRound}}" secure>
+        <span class="glyphicon glyphicon-plus"></span> Programar un partido
+      </a>
+    </div>    
+  </div>
   <hr/>
   <a class="btn btn-success btn-sm" href="#/league/new" secure>
     <span class="glyphicon glyphicon-plus"></span> Crear una Liga

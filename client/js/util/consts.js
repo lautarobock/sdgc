@@ -2,9 +2,12 @@
 
 	exports.League = {
 		Status: {
-			PLANNING: 'PLANNING',
-			RUNNING: 'RUNNING',
-			FINISHED: 'FINISHED'
+			PLANNING: {
+                id: 'PLANNING',
+                name: 'En Plan'
+            },
+			RUNNING: {id:'RUNNING',name:'En Curso'},
+			FINISHED: {id:'FINISHED', name: 'Finalizado'}
 		}
 	};
 

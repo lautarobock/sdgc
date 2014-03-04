@@ -35,6 +35,9 @@ var services = [{
 }, {
     name: "League",
     customId: true
+}, {
+    name: "Match",
+    customId: true
 }];
 
 exports.createRoutes = function(app) {

@@ -1,7 +1,33 @@
 <div main-content>
   <h2>Nueva Liga</h2>
   <form class="bs-example form-horizontal">
-    
+    <fieldset>
+      <legend>Datos</legend>
+      <div class="form-group" >
+        <div class="col-lg-6" ng-class="errorClass('_id')" dl-input-text id="_id" value="league._id" caption="ID"></div>
+        <div class="col-lg-6" ng-class="errorClass('name')" dl-input-text id="name" value="league.name" caption="Nombre"></div>
+      </div>
+      <div class="form-group">
+        <div class="col-lg-6" ng-class="errorClass('startDate')">
+          <label for="startDate" class="control-label" tooltip-placement="right">Fecha de comienzo</label>
+          <div class="input-group">
+            <input type="text" id="startDate" readonly="true" class="form-control input-sm" show-button-bar="false" show-weeks="false" datepicker-popup="dd/MM/yyyy" ng-model="league.startDate" is-open="opened.startDate" ng-required="true" close-text="Cerrar" />
+            <span class="input-group-btn">
+              <button class="btn btn-default btn-sm" ng-click="openDate($event,'startDate')"><i class="glyphicon glyphicon-calendar"></i></button>
+            </span>
+          </div>
+        </div>
+        <div class="col-lg-6" ng-class="errorClass('finishDate')">
+          <label for="finishDate" class="control-label" tooltip-placement="right">Fecha de finalizacion</label>
+          <div class="input-group">
+            <input type="text" id="finishDate" readonly="true" class="form-control input-sm" show-button-bar="false" show-weeks="false" datepicker-popup="dd/MM/yyyy" ng-model="league.finishDate" is-open="opened.finishDate" ng-required="true" close-text="Cerrar" />
+            <span class="input-group-btn">
+              <button class="btn btn-default btn-sm" ng-click="openDate($event,'finishDate')"><i class="glyphicon glyphicon-calendar"></i></button>
+            </span>
+          </div>
+        </div>
+      </div>
+    </fieldset>    
     <div class="form-group">
       <div class="col-lg-12">
         <div class="pull-right">
