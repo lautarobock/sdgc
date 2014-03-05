@@ -24,6 +24,13 @@ define(['../resources'], function() {
                 template:   '<a href="#/player/edit/{{$model._id}}">' +
                                 '<b>{{$model.alias}}</b>' +
                             '</a>'
+            },{
+                field: 'starting',
+                caption: 'Titular',
+                getValue: function(player) {
+                    return player.starting ? '<b>Titular</b>' : '';
+                },
+                template:   '{{header.getValue($model)}}'
             }
         ];
     });

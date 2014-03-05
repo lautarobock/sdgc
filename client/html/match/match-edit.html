@@ -29,6 +29,9 @@
             <button ng-disabled="match.players.length>=10" class="btn btn-default" type="button" ng-click="addPlayer(playerToAdd)">
                 <span class="glyphicon glyphicon-plus"></span>
             </button>
+            <button ng-disabled="match.players.length>=10" class="btn btn-default" type="button" ng-click="addStarting()">
+                <span class="glyphicon glyphicon-plus"></span> Titulares
+            </button>
         </span>
       </div>
       <ul class="list-group">
@@ -39,7 +42,7 @@
           <span class="pull-right">
             <button ng-disabled="match.team1.members.length>=5" ng-click="addTeam1(player)"  type="button" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-backward"></button>
             <button ng-disabled="match.teamB.members.length>=5" ng-click="addTeamB(player)"  type="button" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-forward"></button>
-            <button ng-click="remove(player,$index)" type="button" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-remove"></button>
+            <button ng-click="remove(player)" type="button" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-remove"></button>
           </span>
         </li>
       </ul>
@@ -54,19 +57,47 @@
               <thead>
                 <tr>
                   <th>Jugador</th>
-                  <th>Goles</th>
-                  <th>Cervezas</th>
+                  <th style="width:6em">Goles</th>
+                  <th style="width:7em">Birras</th>
+                  <th style="width:6em">Podio</th>
                   <th></th>
                 </tr>
               </thead>
               <tbody>
                 <tr ng-repeat="member in match.team1.members">
                   <td>{{playersMap[member.player].alias}}</td>
-                  <td>{{member.goals}}</td>
-                  <td>{{member.beers}}</td>
+                  <td>
+                    <input style="font-weight: bold;color: black;" ng-change="updateGoal1()" type="number" step="1" max="10" min="0" class="form-control input-sm" ng-model="member.goals"/>
+                  </td>
+                  <td>
+                    <input style="font-weight: bold;color: black;" ng-change="updateBeer1()" type="number" step="0.01" max="10" min="0" class="form-control input-sm" ng-model="member.beers"/>
+                  </td>
+                  <td>
+                    <select style="font-weight: bold;color: black;" class="form-control input-sm" ng-model="member.podium">
+                      <option></option>
+                      <option>1</option>
+                      <option>2</option>
+                      <option>3</option>
+                    </select>
+                  </td>
                   <td><button ng-click="removeTeam1(player,$index)" type="button" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-remove"></button></td>
                 </tr>
+                <tr>
+                  <td title="Para goles en contra y sin contar">Otros Goles</td>
+                  <td>
+                    <input style="font-weight: bold;color: black;" ng-change="updateGoal1()" type="number" step="1" max="10" min="0" class="form-control input-sm" ng-model="match.team1.otherGoals"/>
+                  </td>
+                  <td></td><td></td><td></td>
+                </tr>
               </tbody>
+              <tfoot>
+                <tr>
+                  <th>Totales</th>
+                  <th>{{match.team1.goals}}</th>
+                  <th>{{match.team1.avg}}</th>
+                  <th></th>
+                </tr>
+              </tfoot>
             </table>
           </div>
         </div>
@@ -77,19 +108,47 @@
               <thead>
                 <tr>
                   <th>Jugador</th>
-                  <th>Goles</th>
-                  <th>Cervezas</th>
+                  <th style="width:6em">Goles</th>
+                  <th style="width:7em">Birras</th>
+                  <th style="width:6em">Podio</th>
                   <th></th>
                 </tr>
               </thead>
               <tbody>
                 <tr ng-repeat="member in match.teamB.members">
                   <td>{{playersMap[member.player].alias}}</td>
-                  <td>{{member.goals}}</td>
-                  <td>{{member.beers}}</td>
+                  <td>
+                    <input style="font-weight: bold;color: black;" ng-change="updateGoalB()" type="number" step="1" max="10" min="0" class="form-control input-sm" ng-model="member.goals"/>
+                  </td>
+                  <td>
+                    <input style="font-weight: bold;color: black;" ng-change="updateBeerB()" type="number" step="0.01" max="10" min="0" class="form-control input-sm" ng-model="member.beers"/>
+                  </td>
+                  <td>
+                    <select style="font-weight: bold;color: black;" class="form-control input-sm" ng-model="member.podium">
+                      <option></option>
+                      <option>1</option>
+                      <option>2</option>
+                      <option>3</option>
+                    </select>
+                  </td>
                   <td><button ng-click="removeTeamB(player,$index)" type="button" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-remove"></button></td>
                 </tr>
+                <tr>
+                  <td title="Para goles en contra y sin contar">Otros Goles</td>
+                  <td>
+                    <input style="font-weight: bold;color: black;" ng-change="updateGoalB()" type="number" step="1" max="10" min="0" class="form-control input-sm" ng-model="match.teamB.otherGoals"/>
+                  </td>
+                  <td></td><td></td><td></td>
+                </tr>
               </tbody>
+              <tfoot>
+                <tr>
+                  <th>Totales</th>
+                  <th>{{match.teamB.goals}}</th>
+                  <th>{{match.teamB.avg}}</th>
+                  <th></th>
+                </tr>
+              </tfoot>
             </table>
           </div>
         </div>
@@ -98,6 +157,8 @@
     <div class="form-group">
       <div class="col-xs-12">
         <div class="pull-right">
+          <button type="button" class="btn btn-warning" ng-click="autoPodium()">Calcular Podios</button> 
+          <span ng-hide="$last" class="glyphicon glyphicon-flash"></span>
           <a class="btn btn-default" href="javascript:window.history.back()" >Cancelar</a> 
           <button type="submit" class="btn btn-primary" ng-click="save()">Guardar</button> 
         </div>

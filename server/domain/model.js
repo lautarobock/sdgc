@@ -31,10 +31,12 @@ exports.League = mongoose.model("League", new Schema({
 
 var Team = {
     members: [{
+        podium: Number,
         goals: Number,
         beers: Number,
         player: {type: String,  ref:'Player'}
     }],
+    otherGoals: Number, //En contra, no contados
     goals: Number,
     avg: Number,
     isWinner: Boolean

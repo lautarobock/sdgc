@@ -30,7 +30,7 @@ define(['../resources'], function() {
         }
     });
 
-    match.controller("MatchEditController", function($scope,$routeParams,Match,$location, Player) {
+    match.controller("MatchEditController", function($scope,$routeParams,Match,$location, Player, $filter) {
         
         $scope.playersMap = {};
         $scope.players = Player.query(function() {
@@ -63,6 +63,14 @@ define(['../resources'], function() {
             $scope.match.players.push(player);
         };
 
+        $scope.addStarting = function() {
+            angular.forEach($scope.players, function(player) {
+                if ( player.starting && $scope.match.players.length<10 ) {
+                    $scope.addPlayer(player._id);
+                }
+            });
+        };
+
         function addTeam (team, player) {
             team.members.push({
                 player: player
@@ -75,11 +83,11 @@ define(['../resources'], function() {
 
         $scope.addTeam1 = function(player) {
             addTeam($scope.match.team1, player);
-        }
+        };
 
-        $scope.remove = function(player, $index) {
-            $scope.match.players.splice($index,1);
-        }
+        $scope.remove = function(player) {
+            util.Arrays.remove($scope.match.players,player);
+        };
 
         function removeTeam(team, $index) {
             team.members.splice($index,1);
@@ -87,11 +95,61 @@ define(['../resources'], function() {
 
         $scope.removeTeamB = function(player, $index) {
             removeTeam($scope.match.teamB, $index);
-        }
+        };
 
         $scope.removeTeam1 = function(player,$index) {
             removeTeam($scope.match.team1, $index);
+        };
+
+        function updateGoal(team) {
+            team.goals = team.otherGoals||0;
+            angular.forEach(team.members, function(member) {
+                team.goals+=member.goals||0;
+            });
         }
+
+        $scope.updateGoalB = function() {
+            updateGoal($scope.match.teamB);
+        };
+
+        $scope.updateGoal1 = function() {
+            updateGoal($scope.match.team1);
+        };
+
+        function updateBeer(team) {
+            var sum = 0;
+            angular.forEach(team.members, function(member) {
+                sum += member.beers||0;
+            });
+            team.avg = sum/5;
+        }
+
+        $scope.updateBeer1 = function() {
+            updateBeer($scope.match.team1);
+        };
+
+        $scope.updateBeerB = function() {
+            updateBeer($scope.match.teamB);
+        };
+
+        $scope.autoPodium = function() {
+            var members = [];
+
+            var add = function(m) {
+                members.push(m);
+                m.podium = null;
+            };
+
+            angular.forEach($scope.match.team1.members, add);
+            angular.forEach($scope.match.teamB.members, add);
+
+            var sorted = $filter('orderBy')(members,'beers',true);
+
+            sorted[0].podium = 1;
+            sorted[1].podium = 2;
+            sorted[2].podium = 3;
+
+        };
 
         //Aux for dates
         $scope.opened = {
