@@ -104,20 +104,22 @@ define("app", [
         $translateProvider.translations('es', locale.es);
         $translateProvider.preferredLanguage('es');
 
-        var base = ['player','league','match'];
+        var base = ['player','match'];
 
         //Configure Routes
         $routeProvider.            
                 when('/main', {templateUrl: 'main/main.html',   controller: 'MainController'}).
-                otherwise({redirectTo: '/league'});
+                
                 // when('/player/detail/:player_id', {templateUrl: 'player/player-detail.html',   controller: 'PlayerDetailController'}).
                 // when('/player/edit/:player_id', {templateUrl: 'player/player-edit.html',   controller: 'PlayerEditController'}).
                 // when('/player', {templateUrl: 'player/player.html',   controller: 'PlayerController'}).
 
-                // when('/league/detail/:league_id', {templateUrl: 'league/league-detail.html',   controller: 'LeagueDetailController'}).
-                // when('/league/edit/:league_id', {templateUrl: 'league/league-edit.html',   controller: 'LeagueEditController'}).
-                // when('/league/new', {templateUrl: 'league/league-edit.html',   controller: 'LeagueEditController'}).
-                // when('/league', {templateUrl: 'league/league.html',   controller: 'LeagueController'}).
+                when('/league/detail/:league_id', {templateUrl: 'league/league.html',   controller: 'LeagueController'}).
+                when('/league/detail/:league_id/:match_round', {templateUrl: 'league/league.html',   controller: 'LeagueController'}).
+                when('/league/edit/:league_id', {templateUrl: 'league/league-edit.html',   controller: 'LeagueEditController'}).
+                when('/league/new', {templateUrl: 'league/league-edit.html',   controller: 'LeagueEditController'}).
+                when('/league', {templateUrl: 'league/league.html',   controller: 'LeagueController'}).
+                otherwise({redirectTo: '/league'});
         angular.forEach(base, function(route) {
             var upperBase = route[0].toUpperCase() + route.substr(1);
             $routeProvider.when('/'+route+'/detail/:'+route+'_id', {templateUrl: ''+route+'/'+route+'-detail.html',   controller: upperBase + 'DetailController'});

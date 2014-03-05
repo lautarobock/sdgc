@@ -2,7 +2,7 @@ define(['../resources'], function() {
 
 	var league = angular.module("afd.league", ["afd.resources"]);
 
-	league.controller("LeagueController", function($scope, League, Match) {
+	league.controller("LeagueController", function($scope, League, Match, $location,$routeParams) {
 
 		$scope.leagues = League.query(onLoad);
 		$scope.league = null;
@@ -10,9 +10,17 @@ define(['../resources'], function() {
 		$scope.match = null;
 		$scope.nextRound = 1;
 
-		function onLoad() {	
+		function onLoad() {
             if ( $scope.leagues.length != 0 ) {
-                $scope.loadLeague($scope.leagues[$scope.leagues.length-1]);    
+                if ( $routeParams.league_id ) {
+                    angular.forEach($scope.leagues, function(league) {
+                        if ( league._id == $routeParams.league_id ) {
+                            $scope.loadLeague(league,true);
+                        }
+                    });
+                } else {
+                    $scope.loadLeague($scope.leagues[$scope.leagues.length-1]);    
+                }
             } else {
                 $scope.clearLeague();
             }
@@ -24,7 +32,7 @@ define(['../resources'], function() {
             $scope.nextRound = 1;
         };
 
-		$scope.loadLeague = function(league) {
+		$scope.loadLeague = function(league, auto) {
 			$scope.league = league;
             $scope.nextRound = 1;
 			$scope.matches = Match.query({
@@ -35,7 +43,15 @@ define(['../resources'], function() {
 					$scope.nextRound = match.round + 1;
 				})
                 if ( $scope.matches.length != 0) {
-                    $scope.loadMatch($scope.matches[$scope.matches.length-1]);    
+                    if ( auto && $routeParams.league_id == $scope.league._id && $routeParams.match_round ) {
+                        angular.forEach($scope.matches, function(match) {
+                            if ( match.round == $routeParams.match_round ) {
+                                $scope.loadMatch(match);
+                            }
+                        }); 
+                    } else {
+                        $scope.loadMatch($scope.matches[$scope.matches.length-1]);        
+                    }
                 } else {
                     $scope.clearMatch();
                 }

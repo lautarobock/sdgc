@@ -10,6 +10,18 @@
     </a>
   </div>
   <div class="panel-body">
+    <div ng-show="match.winner">
+      <h5>Resultado</h5>
+      <ul class="list-group">
+        <li class="list-group-item">Ganador: <b>Equipo {{match.winner}}</b></li>
+        <li class="list-group-item">Diferencia de gol: <b>{{match.team1.goals-match.teamB.goals|Math:'abs'}}</b></li>
+        <li class="list-group-item">Diferencia de birras (abs): <b>{{match.team1.beers-match.teamB.beers|Math:'abs'|number:2}}</b></li>
+        <li class="list-group-item">Diferencia de birras (avg): <b>{{match.team1.avg-match.teamB.avg|Math:'abs'|number:2}}</b></li>
+        <li class="list-group-item" ng-repeat="pod in match.podium track by $index">
+          {{$index+1}} - {{playersMap[pod].alias}}
+        </li>
+      </ul>
+    </div>
     <div ng-show="(match.players | notUsedInTeam:match).length != 0">
       <h5>Jugadores confirmados</h5>
       {{playerMap}}
@@ -109,10 +121,6 @@
           </table>
         </div>
       </div>
-    </div>
-    <h5>Resultado</h5>
-    <div class="well">
-      aca
     </div>
   </div>
 

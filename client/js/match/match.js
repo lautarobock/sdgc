@@ -62,8 +62,12 @@ define(['../resources'], function() {
             }
 
             $scope.match.$save(function() {
-                window.history.back();
+                $location.path("/league/detail/"+ $scope.match.league + '/' + $scope.match.round);
             });
+        };
+
+        $scope.back = function() {
+            $location.path("/league/detail/"+ $scope.match.league + '/' + $scope.match.round);
         };
 
         $scope.addPlayer = function(player) {
@@ -115,7 +119,7 @@ define(['../resources'], function() {
             angular.forEach(team.members, function(member) {
                 team.goals+=member.goals||0;
             });
-            if ( $scope.match.team1.goals && $scope.match.teamB.goals ) {
+            if ( $scope.match.team1.goals != null && $scope.match.teamB.goals != null  ) {
                 if ( $scope.match.team1.goals > $scope.match.teamB.goals ) {
                     $scope.match.winner = '1';
                 } else if ( $scope.match.team1.goals < $scope.match.teamB.goals ) {
