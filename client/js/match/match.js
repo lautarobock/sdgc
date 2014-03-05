@@ -154,19 +154,16 @@ define(['../resources'], function() {
             updateBeer($scope.match.teamB);
         };
 
-        $scope.getPodium = function() {
-            if ( !$scope.match || !$scope.match.team1 || !$scope.match.teamB ) return [];
-            var pod = [null,null,null];
-
+        $scope.updatePodium = function() {
+            $scope.match.podium = [null,null,null];
             var ev = function(member) {
                 if ( member.podium ) {
-                    pod[member.podium-1] = $scope.playersMap[member.player];
+                    $scope.match.podium[member.podium-1] = member.player;
                 }
             };
 
             angular.forEach($scope.match.team1.members, ev);
             angular.forEach($scope.match.teamB.members, ev);
-            return pod;
         };
 
         $scope.autoPodium = function() {
@@ -185,6 +182,7 @@ define(['../resources'], function() {
             sorted[0].podium = 1;
             sorted[1].podium = 2;
             sorted[2].podium = 3;
+            $scope.match.podium = [sorted[0].player,sorted[1].player,sorted[2].player];
 
         };
 

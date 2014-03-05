@@ -51,5 +51,9 @@ exports.Match = mongoose.model("Match", new Schema({
     players: [{type: String, ref:'Player'}],
     team1: Team,
     teamB: Team,
-    winner: String // 1,B,E,null (E para empate, null para no definido aun)
+    winner: String, // 1,B,E,null (E para empate, null para no definido aun)
+    podium: [{type: String, ref:'Player'}],
+    diffGoals: Number,
+    diffBeers: Number,
+    diffAvg: Number
 },{ _id: false }));
