@@ -46,7 +46,14 @@ define(['../resources'], function() {
             $scope.match = new Match();
             $scope.match.round = parseInt($location.search().nextRound);
             $scope.match.date = new Date();
+            $scope.match.players = [];
             $scope.match.league = $location.search().league_id;
+            $scope.match.team1={
+                members: []
+            };
+            $scope.match.teamB={
+                members: []
+            };
         }
 
         $scope.save = function() {

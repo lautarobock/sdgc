@@ -10,12 +10,110 @@
     </a>
   </div>
   <div class="panel-body">
-    <h5>Jugadores confirmados</h5>
-    {{playerMap}}
-    <ul class="list-group">
-      <li class="list-group-item" ng-repeat="player in match.players track by player" >
-        {{$index+1}} - {{playersMap[player].alias}}
-      </li>
-    </ul>
+    <div ng-show="(match.players | notUsedInTeam:match).length != 0">
+      <h5>Jugadores confirmados</h5>
+      {{playerMap}}
+      <ul class="list-group">
+        <li class="list-group-item" ng-repeat="player in match.players | notUsedInTeam:match" >
+          {{$index+1}} - {{playersMap[player].alias}}
+        </li>
+      </ul>
+    </div>
+    <h5>Equipos</h5>
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="panel panel-default">
+          <div class="panel-heading">Equipo 1</div>
+          <table class="table table-condensed">
+            <thead>
+              <tr>
+                <th>Jugador</th>
+                <th style="width:6em">Goles</th>
+                <th style="width:7em">Birras</th>
+                <th style="width:6em">Podio</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="member in match.team1.members">
+                <td>{{playersMap[member.player].alias}}</td>
+                <td>
+                  {{member.goals}}
+                </td>
+                <td>
+                  {{member.beers}}
+                </td>
+                <td>
+                  {{member.podium}}<span ng-show="member.podium">º</span>
+                </td>
+              </tr>
+              <tr>
+                <td title="Para goles en contra y sin contar">Otros Goles</td>
+                <td>
+                  {{match.team1.otherGoals}}
+                </td>
+                <td></td><td></td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <th>Totales</th>
+                <th>{{match.team1.goals}}</th>
+                <th>{{match.team1.avg|number:2}}</th>
+                <td></td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="panel panel-default">
+          <div class="panel-heading">Equipo B</div>
+          <table class="table table-condensed">
+            <thead>
+              <tr>
+                <th>Jugador</th>
+                <th style="width:6em">Goles</th>
+                <th style="width:7em">Birras</th>
+                <th style="width:6em">Podio</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="member in match.teamB.members">
+                <td>{{playersMap[member.player].alias}}</td>
+                <td>
+                  {{member.goals}}
+                </td>
+                <td>
+                  {{member.beers}}
+                </td>
+                <td>
+                  {{member.podium}}<span ng-show="member.podium">º</span>
+                </td>
+              </tr>
+              <tr>
+                <td title="Para goles en contra y sin contar">Otros Goles</td>
+                <td>
+                  {{match.teamB.otherGoals}}
+                </td>
+                <td></td><td></td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <th>Totales</th>
+                <th>{{match.teamB.goals}}</th>
+                <th>{{match.teamB.avg|number:2}}</th>
+                <td></td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+    </div>
+    <h5>Resultado</h5>
+    <div class="well">
+      aca
+    </div>
   </div>
+
 </div>
