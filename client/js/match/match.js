@@ -72,7 +72,9 @@ define(['../resources'], function() {
 
         $scope.addStarting = function() {
             angular.forEach($scope.players, function(player) {
-                if ( player.starting && $scope.match.players.length<10 ) {
+                if ( player.starting 
+                        && $scope.match.players.length<10 
+                        && $scope.match.players.indexOf(player._id) == -1 ) {
                     $scope.addPlayer(player._id);
                 }
             });
@@ -113,6 +115,18 @@ define(['../resources'], function() {
             angular.forEach(team.members, function(member) {
                 team.goals+=member.goals||0;
             });
+            if ( $scope.match.team1.goals && $scope.match.teamB.goals ) {
+                if ( $scope.match.team1.goals > $scope.match.teamB.goals ) {
+                    $scope.match.winner = '1';
+                } else if ( $scope.match.team1.goals < $scope.match.teamB.goals ) {
+                    $scope.match.winner = 'B';
+                } else {
+                    $scope.match.winner = 'E';
+                }
+            } else {
+                $scope.match.winner = null;
+            }
+            
         }
 
         $scope.updateGoalB = function() {
@@ -129,6 +143,7 @@ define(['../resources'], function() {
                 sum += member.beers||0;
             });
             team.avg = sum/5;
+            team.beers = sum;
         }
 
         $scope.updateBeer1 = function() {
@@ -137,6 +152,21 @@ define(['../resources'], function() {
 
         $scope.updateBeerB = function() {
             updateBeer($scope.match.teamB);
+        };
+
+        $scope.getPodium = function() {
+            if ( !$scope.match || !$scope.match.team1 || !$scope.match.teamB ) return [];
+            var pod = [null,null,null];
+
+            var ev = function(member) {
+                if ( member.podium ) {
+                    pod[member.podium-1] = $scope.playersMap[member.player];
+                }
+            };
+
+            angular.forEach($scope.match.team1.members, ev);
+            angular.forEach($scope.match.teamB.members, ev);
+            return pod;
         };
 
         $scope.autoPodium = function() {

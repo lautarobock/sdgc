@@ -94,8 +94,8 @@
                 <tr>
                   <th>Totales</th>
                   <th>{{match.team1.goals}}</th>
+                  <th>{{match.team1.beers|number:2}}</th>
                   <th>{{match.team1.avg|number:2}}</th>
-                  <th></th>
                 </tr>
               </tfoot>
             </table>
@@ -145,13 +145,27 @@
                 <tr>
                   <th>Totales</th>
                   <th>{{match.teamB.goals}}</th>
+                  <th>{{match.teamB.beers|number:2}}</th>
                   <th>{{match.teamB.avg|number:2}}</th>
-                  <th></th>
                 </tr>
               </tfoot>
             </table>
           </div>
         </div>
+      </div>
+    </fieldset>
+    <fieldset>
+      <legend>Resultados</legend>
+      <div >
+        <ul class="list-group">
+          <li class="list-group-item">Ganador: <b>Equipo {{match.winner}}</b></li>
+          <li class="list-group-item">Diferencia de gol: <b>{{match.team1.goals-match.teamB.goals|Math:'abs'}}</b></li>
+          <li class="list-group-item">Diferencia de birras (abs): <b>{{match.team1.beers-match.teamB.beers|Math:'abs'|number:2}}</b></li>
+          <li class="list-group-item">Diferencia de birras (avg): <b>{{match.team1.avg-match.teamB.avg|Math:'abs'|number:2}}</b></li>
+          <li class="list-group-item" ng-repeat="pod in getPodium()">
+            {{$index+1}} - {{pod.alias}}
+          <li>
+        </ul>
       </div>
     </fieldset>
     <div class="form-group">

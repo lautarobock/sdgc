@@ -2,6 +2,11 @@ define([], function() {
 
 	var directives = angular.module("dl.directives", []);
 
+    directives.filter("Math", function() {
+        return function(value, operation, value1, value2, value3) {
+            return Math[operation](value, value1, value2, value3);
+        };
+    });
 
     directives.directive('secure', function() {
         return function(scope,element) {

@@ -39,7 +39,7 @@ var Team = {
     otherGoals: Number, //En contra, no contados
     goals: Number,
     avg: Number,
-    isWinner: Boolean
+    beers: Number
 };
 
 exports.Match = mongoose.model("Match", new Schema({
@@ -50,5 +50,6 @@ exports.Match = mongoose.model("Match", new Schema({
     date: Date,
     players: [{type: String, ref:'Player'}],
     team1: Team,
-    teamB: Team
+    teamB: Team,
+    winner: String // 1,B,E,null (E para empate, null para no definido aun)
 },{ _id: false }));
