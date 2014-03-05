@@ -73,7 +73,7 @@
                     <input style="font-weight: bold;color: black;" ng-change="updateBeer1()" type="number" step="0.01" max="10" min="0" class="form-control input-sm" ng-model="member.beers"/>
                   </td>
                   <td>
-                    <select style="font-weight: bold;color: black;" class="form-control input-sm" ng-model="member.podium">
+                    <select style="font-weight: bold;color: black;" ng-change="updatePodium()" class="form-control input-sm" ng-model="member.podium">
                       <option></option>
                       <option>1</option>
                       <option>2</option>
