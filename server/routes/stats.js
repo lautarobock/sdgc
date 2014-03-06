@@ -17,11 +17,11 @@ function calculateTeam(team, result, playersMap) {
         if ( result == 1 ) data.even++;
         if ( result == 0 ) data.lost++;
         data.points += result;
-        if ( member.goals ) {
+        if ( member.goals != null ) {
             data.goals+=member.goals;
             data.goalsCount++;
         }
-        if ( member.beers ) {
+        if ( member.beers != null ) {
             data.beers+=member.beers;
             data.beersCount++;
         }
