@@ -20,6 +20,15 @@ define([],function() {
         });
     });
 
+    res.factory('Stats',function($resource, $rootScope) {
+        var params = function() {
+            return $rootScope.user ? $rootScope.user.google_id : null;
+        };
+        return $resource( "/" + path + 'stats/:operation',{google_id:params}, {
+            leagueToRound: {method:'GET', params: {operation:'player'}, isArray:false}
+        });
+    });
+
     res.filter("afdLeagueStatus", function() {
         return function(status) {
             if ( consts.League.Status[status] ) {

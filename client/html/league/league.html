@@ -30,9 +30,51 @@
       <hr/>
       <!-- Match detail -->
       <div ng-if="match" match-detail="match"></div>
+      <div ng-if="match">
+        <div class="panel panel-default" > 
+          <div class="panel-heading">Tablas a la fecha #{{match.round}}</div>
+          <div class="panel-body">
+            <div class="col-md-6">
+              <table class="table table-condensed table-bordered">
+                <thead>
+                  <tr>
+                    <th>Jugador</th>
+                    <th>Pts</th>
+                    <th>J</th>
+                    <th>G</th>
+                    <th>E</th>
+                    <th>P</th>
+                    <th>G.F</th>
+                    <th>B</th>
+                    <th>P1</th>
+                    <th>P2</th>
+                    <th>P3</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr ng-repeat="player in stats.byPlayer | orderBy:'-points'">
+                    <td>{{playersMap[player.player].alias}}</td>
+                    <td>{{player.points}}</td>
+                    <td>{{player.count}}</td>
+                    <td>{{player.win}}</td>
+                    <td>{{player.even}}</td>
+                    <td>{{player.lost}}</td>
+                    <td>{{player.goals}}</td>
+                    <td>{{player.beers}}</td>
+                    <td>{{player.podium1}}</td>
+                    <td>{{player.podium2}}</td>
+                    <td>{{player.podium3}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
       <div ng-if="!match" >
         <alert type="'warning'">Esta liga no tiene ningun partido creado</alert>
       </div>
+
       <hr/>
       <a class="btn btn-primary btn-sm" href="#/match/new?league_id={{league._id}}&nextRound={{nextRound}}&nextDate={{nextDate}}" secure>
         <span class="glyphicon glyphicon-plus"></span> Programar un partido
