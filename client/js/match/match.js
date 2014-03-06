@@ -30,7 +30,7 @@ define(['../resources'], function() {
         }
     });
 
-    match.controller("MatchEditController", function($scope,$routeParams,Match,$location, Player, $filter) {
+    match.controller("MatchEditController", function($scope,$routeParams,Match,$location, Player, $filter, PlayerPopup) {
         
         $scope.playersMap = {};
         $scope.players = Player.query(function() {
@@ -189,6 +189,17 @@ define(['../resources'], function() {
             $scope.match.podium = [sorted[0].player,sorted[1].player,sorted[2].player];
 
         };
+
+        $scope.createNewPlayer = function() {
+            PlayerPopup.open().then(function() {
+                $scope.playersMap = {};
+                $scope.players = Player.query(function() {
+                    angular.forEach($scope.players, function(player) {
+                        $scope.playersMap[player._id] = player;
+                    });
+                });
+            });
+        }
 
         //Aux for dates
         $scope.opened = {

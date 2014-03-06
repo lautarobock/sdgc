@@ -3,17 +3,7 @@
   <form class="bs-example form-horizontal">
     <fieldset>
       <legend>Datos</legend>
-      <div class="form-group" >
-        <div class="col-sm-3" ng-class="errorClass('name')" dl-input-text size="sm" id="name" value="player.name" caption="Nombre"></div>
-        <div class="col-sm-3" ng-class="errorClass('lastName')" dl-input-text size="sm" id="lastName" value="player.lastName" caption="Apellido"></div>
-        <div class="col-sm-3" ng-class="errorClass('alias')" dl-input-text size="sm" id="alias" value="player.alias" caption="Apodo"></div>
-        <div class="col-sm-3">
-          <label class="checkbox">
-            Titular
-          </label>
-          <input type="checkbox" ng-model="player.starting">
-        </div>
-      </div>
+      <ng-include src="'player/player-form.html'"></ng-include>
     </fieldset>    
     <div class="form-group">
       <div class="col-xs-12">

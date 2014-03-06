@@ -1,7 +1,7 @@
 /* to add pointer to bootstrap components */
 .nav, .pagination, .carousel a { cursor: pointer; }
 
-.dl-hide {
+/*.dl-hide {
   display: none !important
 }
 
@@ -72,7 +72,7 @@
 
 .dl-font-bold {
 	font-weight: bold;
-}
+}*/
 
 .dl-loading {
 	background-color: #EE2200;
@@ -88,14 +88,14 @@
 	padding: 0 50px;
 }
 
-.dl-line-through {
+/*.dl-line-through {
 	text-decoration: line-through;
 }
 
 .dl-anchor {
 	cursor: pointer
-}
+}*/
 
-#mapRating .angular-google-map-container { height: 140px; }
-#map400 .angular-google-map-container { height: 400px; }
-#map200 .angular-google-map-container { height: 200px; }
+.player-popup {
+	width: 300px;
+}

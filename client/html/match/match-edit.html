@@ -27,10 +27,13 @@
         </select>
         <span class="input-group-btn">
             <button ng-disabled="match.players.length>=10" class="btn btn-default" type="button" ng-click="addPlayer(playerToAdd)">
-                <span class="glyphicon glyphicon-plus"></span>
+                <span class="glyphicon glyphicon-arrow-down"></span> Agregar
             </button>
             <button ng-disabled="match.players.length>=10" class="btn btn-default" type="button" ng-click="addStarting()">
-                <span class="glyphicon glyphicon-plus"></span> Titulares
+                <span class="glyphicon glyphicon-arrow-down"></span> Titulares
+            </button>
+            <button class="btn btn-default" type="button" ng-click="createNewPlayer()">
+                <span class="glyphicon glyphicon-plus"></span> Crear
             </button>
         </span>
       </div>

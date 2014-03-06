@@ -1,0 +1,14 @@
+<div class="modal-header">
+    <h3>Nuevo Jugador</h3>
+</div>
+<div class="modal-body">
+  <div class="row" ng-include="'player/player-form.html'"></div>
+</div>
+<div class="modal-footer">
+  <div class="form-group">
+    <div class="col-lg-10 col-lg-offset-2">
+      <a class="btn btn-default" ng-click="cancel()" >Cancelar</a>
+      <button type="button" ng-click="ok()" class="btn btn-primary" >Guardar</button> 
+    </div>
+  </div>
+</div>
