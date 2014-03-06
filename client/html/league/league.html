@@ -32,23 +32,24 @@
       <div ng-if="match" match-detail="match"></div>
       <div ng-if="match">
         <div class="panel panel-default" > 
-          <div class="panel-heading">Tablas a la fecha #{{match.round}}</div>
+          <div class="panel-heading">Posiciones a la fecha #{{match.round}}</div>
           <div class="panel-body">
-            <div class="col-md-6">
+            <div >
               <table class="table table-condensed table-bordered">
                 <thead>
                   <tr>
                     <th>Jugador</th>
-                    <th>Pts</th>
-                    <th>J</th>
-                    <th>G</th>
-                    <th>E</th>
-                    <th>P</th>
-                    <th>G.F</th>
-                    <th>B</th>
-                    <th>P1</th>
-                    <th>P2</th>
-                    <th>P3</th>
+                    <th title="Puntos">Pts</th>
+                    <th title="Partidos jugados">J</th>
+                    <th title="Ganads">G</th>
+                    <th title="Empatados">E</th>
+                    <th title="Perdidos">P</th>
+                    <th title="Goles convertidos">G.F</th>
+                    <th title="Promedio de gol, sobre los partidos que se contaron goles">P.G</th>
+                    <th title="Promedio de birras sobre los partidos en los cuales fue puntuado">B</th>
+                    <th title="Cantidad de figuras">P1</th>
+                    <th title="Cantidad de cebollitas en podio">P2</th>
+                    <th title="Cantidad de 3ra figura">P3</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -60,7 +61,11 @@
                     <td>{{player.even}}</td>
                     <td>{{player.lost}}</td>
                     <td>{{player.goals}}</td>
-                    <td>{{player.beers}}</td>
+                    <td>
+                      <span ng-if="player.goalsCount>0">{{player.goals/player.goalsCount|number:2}}</span>
+                      <span ng-if="player.goalsCount==0">0</span>
+                    </td>
+                    <td>{{player.beerAvg|number:2}}</td>
                     <td>{{player.podium1}}</td>
                     <td>{{player.podium2}}</td>
                     <td>{{player.podium3}}</td>
