@@ -45,7 +45,11 @@ define(['../resources'], function() {
         } else {
             $scope.match = new Match();
             $scope.match.round = parseInt($location.search().nextRound);
-            $scope.match.date = new Date();
+            if ( $location.search().nextDate ) {
+                $scope.match.date = new Date(parseInt($location.search().nextDate));
+            } else {
+                $scope.match.date = new Date();
+            }
             $scope.match.players = [];
             $scope.match.league = $location.search().league_id;
             $scope.match.team1={
@@ -67,7 +71,12 @@ define(['../resources'], function() {
         };
 
         $scope.back = function() {
-            $location.path("/league/detail/"+ $scope.match.league + '/' + $scope.match.round);
+            if ( $scope.match.match_id ) {
+                $location.path("/league/detail/"+ $scope.match.league + '/' + $scope.match.round);    
+            } else {
+                $location.path("/league/detail/"+ $scope.match.league);    
+            }
+            
         };
 
         $scope.addPlayer = function(player) {

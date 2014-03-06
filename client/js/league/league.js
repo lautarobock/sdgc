@@ -9,6 +9,7 @@ define(['../resources'], function() {
 		$scope.matches = [];
 		$scope.match = null;
 		$scope.nextRound = 1;
+        $scope.nextDate = new Date().getTime();
 
 		function onLoad() {
             if ( $scope.leagues.length != 0 ) {
@@ -30,17 +31,20 @@ define(['../resources'], function() {
             $scope.league = null;
             $scope.clearMatch();
             $scope.nextRound = 1;
+            $scope.nextDate = new Date().getTime();
         };
 
 		$scope.loadLeague = function(league, auto) {
 			$scope.league = league;
             $scope.nextRound = 1;
+            $scope.nextDate = new Date().getTime();
 			$scope.matches = Match.query({
                     filter:{league: league._id},
                     sort: 'round'
                 }, function() {
 				angular.forEach($scope.matches, function(match) {
 					$scope.nextRound = match.round + 1;
+                    $scope.nextDate = new Date(match.date).getTime();
 				})
                 if ( $scope.matches.length != 0) {
                     if ( auto && $routeParams.league_id == $scope.league._id && $routeParams.match_round ) {
@@ -55,13 +59,13 @@ define(['../resources'], function() {
                 } else {
                     $scope.clearMatch();
                 }
+                $scope.nextDate+=1000*60*60*24*7;
 			});
-
+            
 		}
 
         $scope.clearMatch = function() {
             $scope.match = null;
-            $scope.nextRound = 1;
         }
 
         $scope.loadMatch = function(match) {
