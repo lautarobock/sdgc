@@ -34,9 +34,27 @@
         <div class="panel panel-default" > 
           <div class="panel-heading">Posiciones a la fecha #{{match.round}}</div>
           <div class="panel-body">
-            <div >
+            <div>
+              <select style="margin-bottom: 1em;width:20em;float:right" ng-init="tableSort='-points'" class="form-control input-sm" ng-model="tableSort">
+                <option value="-points">Puntos</option>
+                <option value="-goals">Goles</option>
+                <option value="-goalAvg">Promedio gol</option>
+                <option value="-beerAvg">Birras</option>
+                <option value="-podium1">Figuras</option>
+                <option value="-podium2">Cebollitas</option>
+                <option value="-podium3">3ª Figura</option>
+                <option value="-(podium1+podium2+podium3)">Total de podios</option>
+              </select>
+            </div>
+            <div>
               <table class="table table-condensed table-bordered">
                 <thead>
+                  <tr>
+                    <th></th>
+                    <th colspan="5">Partidos</th>
+                    <th colspan="2">Goles</th>
+                    <th colspan="5">Birras</th>
+                  </tr>
                   <tr>
                     <th>Jugador</th>
                     <th title="Puntos">Pts</th>
@@ -50,10 +68,11 @@
                     <th title="Cantidad de figuras">P1</th>
                     <th title="Cantidad de cebollitas en podio">P2</th>
                     <th title="Cantidad de 3ra figura">P3</th>
+                    <th title="Total de podios">P.T</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr ng-repeat="player in stats.byPlayer | orderBy:'-points'">
+                  <tr ng-repeat="player in stats.byPlayer | orderBy:tableSort">
                     <td>{{playersMap[player.player].alias}}</td>
                     <td>{{player.points}}</td>
                     <td>{{player.count}}</td>
@@ -61,14 +80,12 @@
                     <td>{{player.even}}</td>
                     <td>{{player.lost}}</td>
                     <td>{{player.goals}}</td>
-                    <td>
-                      <span ng-if="player.goalsCount>0">{{player.goals/player.goalsCount|number:2}}</span>
-                      <span ng-if="player.goalsCount==0">0</span>
-                    </td>
+                    <td>{{player.goalAvg|number:2}}</td>
                     <td>{{player.beerAvg|number:2}}</td>
                     <td>{{player.podium1}}</td>
                     <td>{{player.podium2}}</td>
                     <td>{{player.podium3}}</td>
+                    <td>{{player.podium1+player.podium2+player.podium3}}</td>
                   </tr>
                 </tbody>
               </table>

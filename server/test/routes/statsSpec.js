@@ -18,6 +18,7 @@ describe("stats.js", function() {
         expect(result.playersMap.Lauta.beersCount).toBe(5);
         expect(result.playersMap.Lauta.goals).toBe(5);
         expect(result.playersMap.Lauta.goalsCount).toBe(1);
+        expect(result.playersMap.Lauta.goalAvg).toBe(5);
         expect(result.playersMap.Lauta.podium1).toBe(2);
         expect(result.playersMap.Lauta.podium2).toBe(0);
         expect(result.playersMap.Lauta.podium3).toBe(0);
@@ -52,6 +53,7 @@ describe("stats.js", function() {
             points: 3,
             goalsCount: 1,
             goals: 5,
+            goalAvg: 0,
             beersCount: 1,
             beers: 8.22,
             beerAvg: 0,

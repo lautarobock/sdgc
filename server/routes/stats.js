@@ -7,7 +7,7 @@ function calculateTeam(team, result, playersMap) {
         if ( !playersMap[member.player] ) {
             playersMap[member.player] = {
                 player: member.player,
-                count: 0,win: 0,lost: 0,even: 0,points: 0,goalsCount: 0, goals: 0,
+                count: 0,win: 0,lost: 0,even: 0,points: 0,goalsCount: 0, goals: 0, goalAvg: 0,
                 beersCount: 0, beers: 0,beerAvg: 0,podium1: 0,podium2: 0,podium3: 0
             }
         }
@@ -82,7 +82,8 @@ function calculate(matches) {
     stats.byPlayer = [];
     for ( var k in stats.playersMap ) {
         var player = stats.playersMap[k];
-        player.beerAvg = player.beers / player.beersCount;
+        player.beerAvg = (player.beers / player.beersCount) || 0;
+        player.goalAvg = (player.goals / player.goalsCount) || 0;
         stats.byPlayer.push(player);
     }
 
