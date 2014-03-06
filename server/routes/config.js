@@ -44,6 +44,8 @@ exports.createRoutes = function(app) {
     //Special for login
     app.get('/api/login/by_google/:google_id', require("./user").getForLogin);
 
+    app.get('/api/stats/player', require('./stats').calculateFor);
+
     for( var i=0; i<services.length; i++ ) {
         if ( services[i].process ) {
             var s = rest.create(services[i].name, true);
