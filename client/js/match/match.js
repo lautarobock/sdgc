@@ -71,7 +71,7 @@ define(['../resources'], function() {
         };
 
         $scope.back = function() {
-            if ( $scope.match.match_id ) {
+            if ( $scope.match._id ) {
                 $location.path("/league/detail/"+ $scope.match.league + '/' + $scope.match.round);    
             } else {
                 $location.path("/league/detail/"+ $scope.match.league);    

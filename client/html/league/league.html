@@ -9,14 +9,14 @@
     <alert type="'danger'">Aun no ha creado ninguna liga</alert>
   </div>
   <div class="row" ng-if="league"> 
-    <div class="col-lg-2">
+    <div class="col-xs-2">
       <ul class="nav nav-pills nav-stacked">
         <li ng-class="{active:it._id == match._id}" ng-repeat="it in matches | orderBy:'round'">
           <a href="" ng-click="loadMatch(it)">Fecha #{{it.round}}</a>
         </li>
       </ul>
     </div>
-    <div class="col-lg-10" >
+    <div class="col-xs-10" >
       <h4>{{league.name}}
       <a href="#/league/edit/{{league._id}}" secure>
         <span style="color: white;" class="glyphicon glyphicon-edit pull-right"></span>
@@ -30,69 +30,7 @@
       <hr/>
       <!-- Match detail -->
       <div ng-if="match" match-detail="match"></div>
-      <div ng-if="match">
-        <div class="panel panel-default" > 
-          <div class="panel-heading">Posiciones a la fecha #{{match.round}}</div>
-          <div class="panel-body">
-            <div>
-              <select style="margin-bottom: 1em;width:20em;float:right" ng-init="tableSort='-points'" class="form-control input-sm" ng-model="tableSort">
-                <option value="-points">Puntos</option>
-                <option value="-goals">Goles</option>
-                <option value="-goalAvg">Promedio gol</option>
-                <option value="-beerAvg">Birras</option>
-                <option value="-podium1">Figuras</option>
-                <option value="-podium2">Cebollitas</option>
-                <option value="-podium3">3ª Figura</option>
-                <option value="-(podium1+podium2+podium3)">Total de podios</option>
-              </select>
-            </div>
-            <div>
-              <table class="table table-condensed table-bordered">
-                <thead>
-                  <tr>
-                    <th></th>
-                    <th colspan="5">Partidos</th>
-                    <th colspan="2">Goles</th>
-                    <th colspan="5">Birras</th>
-                  </tr>
-                  <tr>
-                    <th>Jugador</th>
-                    <th title="Puntos">Pts</th>
-                    <th title="Partidos jugados">J</th>
-                    <th title="Ganads">G</th>
-                    <th title="Empatados">E</th>
-                    <th title="Perdidos">P</th>
-                    <th title="Goles convertidos">G.F</th>
-                    <th title="Promedio de gol, sobre los partidos que se contaron goles">P.G</th>
-                    <th title="Promedio de birras sobre los partidos en los cuales fue puntuado">B</th>
-                    <th title="Cantidad de figuras">P1</th>
-                    <th title="Cantidad de cebollitas en podio">P2</th>
-                    <th title="Cantidad de 3ra figura">P3</th>
-                    <th title="Total de podios">P.T</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr ng-repeat="player in stats.byPlayer | orderBy:tableSort">
-                    <td>{{playersMap[player.player].alias}}</td>
-                    <td>{{player.points}}</td>
-                    <td>{{player.count}}</td>
-                    <td>{{player.win}}</td>
-                    <td>{{player.even}}</td>
-                    <td>{{player.lost}}</td>
-                    <td>{{player.goals}}</td>
-                    <td>{{player.goalAvg|number:2}}</td>
-                    <td>{{player.beerAvg|number:2}}</td>
-                    <td>{{player.podium1}}</td>
-                    <td>{{player.podium2}}</td>
-                    <td>{{player.podium3}}</td>
-                    <td>{{player.podium1+player.podium2+player.podium3}}</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>
+      <div ng-if="match" stats-player league="league._id" round="match.round"></div>
       <div ng-if="!match" >
         <alert type="'warning'">Esta liga no tiene ningun partido creado</alert>
       </div>

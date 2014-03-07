@@ -1,6 +1,6 @@
-define(['../resources'], function() {
+define(['../stats/stats','../resources'], function() {
 
-	var league = angular.module("afd.league", ["afd.resources"]);
+	var league = angular.module("afd.league", ["afd.resources","afd.stats"]);
 
 	league.controller("LeagueController", function($scope, League, Match, $location,$routeParams,Stats,Player) {
 
@@ -17,7 +17,7 @@ define(['../resources'], function() {
 		$scope.match = null;
 		$scope.nextRound = 1;
         $scope.nextDate = new Date().getTime();
-        $scope.stats = {};
+        // $scope.stats = {};
 
 		function onLoad() {
             if ( $scope.leagues.length != 0 ) {
@@ -74,15 +74,15 @@ define(['../resources'], function() {
 
         $scope.clearMatch = function() {
             $scope.match = null;
-            $scope.stats = {};
+            // $scope.stats = {};
         }
 
         $scope.loadMatch = function(match) {
             $scope.match = match;
-            $scope.stats = Stats.leagueToRound({
-                league: $scope.league._id,
-                upToRound: match.round
-            });
+            // $scope.stats = Stats.leagueToRound({
+            //     league: $scope.league._id,
+            //     upToRound: match.round
+            // });
         };
 
 	});
