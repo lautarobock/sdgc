@@ -103,3 +103,17 @@
 .fwbold {
 	font-weight: bold;
 }
+
+.golden-medal {
+	background: gold !important;
+	color: black !important;
+}
+
+.silver-medal {
+	background: silver;
+	color: black !important;
+}
+
+.bronze-medal {
+	background: #A67D3D;
+}

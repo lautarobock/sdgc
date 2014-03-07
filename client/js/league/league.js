@@ -117,4 +117,36 @@ define(['../stats/stats','../resources'], function() {
         };
 	});
 
+    league.directive("leagueResume", function() {
+        return {
+            restrict: 'AE',
+            scope: {
+                league: '=',
+                matches: '='
+            },
+            templateUrl: 'league/league-resume.html',
+            controller: function($scope,Stats,Player) {
+                if ( $scope.matches.length != 0 ) {
+                    $scope.stats = Stats.leagueToRound({
+                        league: $scope.league._id,
+                        upToRound: $scope.matches[$scope.matches.length-1].round
+                    });     
+                }
+
+                //Load players
+                var playersMap = {};
+                $scope.players = Player.query(function() {
+                    angular.forEach($scope.players, function(player) {
+                        playersMap[player._id] = player;
+                    });
+                });
+
+                $scope.getPlayer = function(player_id) {
+                    return playersMap[player_id];
+                }
+                
+            }
+        };
+    });
+
 });

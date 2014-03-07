@@ -11,6 +11,9 @@
   <div class="row" ng-if="league"> 
     <div class="col-xs-2">
       <ul class="nav nav-pills nav-stacked">
+        <li ng-class="{active:!match}">
+          <a href="" ng-click="loadMatch(null)">Resumen</a>
+        </li>
         <li ng-class="{active:it._id == match._id}" ng-repeat="it in matches | orderBy:'-round'">
           <a href="" ng-click="loadMatch(it)">Fecha #{{it.round}}</a>
         </li>
@@ -33,12 +36,13 @@
         </a>
       </div>
       <hr/>
+      <div ng-if="!match" league-resume league="league" matches="matches"></div>
       <!-- Match detail -->
       <div ng-if="match" match-detail="match"></div>
       <div ng-if="match" stats-player league="league._id" round="match.round"></div>
-      <div ng-if="!match" >
+      <!-- <div ng-if="matches.length==0" >
         <alert type="'warning'">Esta liga no tiene ningun partido creado</alert>
-      </div>
+      </div> -->
 
       <hr/>
       <a class="btn btn-primary btn-sm" href="#/match/new?league_id={{league._id}}&nextRound={{nextRound}}&nextDate={{nextDate}}" secure>
