@@ -27,6 +27,11 @@
       <b>Hasta: </b>{{league.finishDate|date:'dd-MM-yyyy'}}
       <span ng-hide="$last" class="glyphicon glyphicon-flash"></span>
       <b>Estado: </b>{{league.status|afdLeagueStatus}}
+      <div style="margin-top:1em">
+        <a class="btn btn-primary btn-sm" href="#/match/new?league_id={{league._id}}&nextRound={{nextRound}}&nextDate={{nextDate}}" secure>
+          <span class="glyphicon glyphicon-plus"></span> Programar un partido
+        </a>
+      </div>
       <hr/>
       <!-- Match detail -->
       <div ng-if="match" match-detail="match"></div>
