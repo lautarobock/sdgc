@@ -15,7 +15,7 @@ define(['../resources'], function() {
 				$scope.sorts = [{
 					name: 'Puntos',
 					key: '-points',
-					sortBy: ['-points', '-win', '+lost', '-even', '-podium1', '-podium2']
+					sortBy: ['-points', '-win', '-count', '+lost', '-even', '-podium1', '-podium2']
 				}, {
 					name: 'Goles',
 					key: '-goals'
