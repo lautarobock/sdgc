@@ -11,7 +11,7 @@
   <div class="row" ng-if="league"> 
     <div class="col-xs-2">
       <ul class="nav nav-pills nav-stacked">
-        <li ng-class="{active:it._id == match._id}" ng-repeat="it in matches | orderBy:'round'">
+        <li ng-class="{active:it._id == match._id}" ng-repeat="it in matches | orderBy:'-round'">
           <a href="" ng-click="loadMatch(it)">Fecha #{{it.round}}</a>
         </li>
       </ul>
