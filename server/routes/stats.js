@@ -96,6 +96,13 @@ function calculateFor(req, res) {
         model.Match.find({league: req.query.league, round: {$lte:req.query.upToRound}}, function(err, matches) {
             res.send(calculate(matches));
         });
+    } else if ( req.query.leagues ) {
+        if ( !(req.query.leagues instanceof Array) ) {
+            req.query.leagues = [req.query.leagues];
+        }
+        model.Match.find({league:{$in: req.query.leagues}}, function(err, matches) {
+            res.send(calculate(matches));
+        });
     } else {
         res.send({});
     }

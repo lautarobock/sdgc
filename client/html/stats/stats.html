@@ -1,0 +1,11 @@
+<div main-content>
+  <div class="btn-group">
+      <button ng-repeat="it in leagues | orderBy:'_id'" type="button" class="btn btn-primary" ng-model="filter.league[it._id]" btn-checkbox>{{it.name}}</button>
+  </div>
+
+  <div style="margin-top: 1em;" stats-player leagues="selectedLeagues" config="config"></div>
+</div>
+
+<div side-bar>
+  <div ng-include="'side/side.html'"></div>
+</div>

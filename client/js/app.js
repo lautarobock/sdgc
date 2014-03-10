@@ -108,11 +108,9 @@ define("app", [
 
         //Configure Routes
         $routeProvider.            
-                when('/main', {templateUrl: 'main/main.html',   controller: 'MainController'}).
+                // when('/main', {templateUrl: 'main/main.html',   controller: 'MainController'}).
                 
-                // when('/player/detail/:player_id', {templateUrl: 'player/player-detail.html',   controller: 'PlayerDetailController'}).
-                // when('/player/edit/:player_id', {templateUrl: 'player/player-edit.html',   controller: 'PlayerEditController'}).
-                // when('/player', {templateUrl: 'player/player.html',   controller: 'PlayerController'}).
+                when('/stats', {templateUrl: 'stats/stats.html',   controller: 'StatsController'}).
 
                 when('/league/detail/:league_id', {templateUrl: 'league/league.html',   controller: 'LeagueController'}).
                 when('/league/detail/:league_id/:match_round', {templateUrl: 'league/league.html',   controller: 'LeagueController'}).
