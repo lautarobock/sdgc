@@ -1,6 +1,6 @@
 <div main-content>
   <ul class="nav nav-pills">
-    <li ng-class="{active:it._id == league._id}" ng-repeat="it in leagues">
+    <li ng-class="{active:it._id == league._id}" ng-repeat="it in leagues | orderBy:'_id'">
       <a href="" ng-click="loadLeague(it)">{{it._id}}</a>
     </li>
   </ul>
