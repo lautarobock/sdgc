@@ -2,7 +2,7 @@ define(['../resources'], function() {
 
 	var stats = angular.module("afd.stats", ['afd.resources']);
 
-	stats.controller('StatsPairController', function($scope, Stats){
+	stats.controller('StatsPairController', function($scope, Stats, Player){
 
 		$scope.$watchCollection("selectedLeagues", function() {
 			if ( $scope.selectedLeagues ) {
@@ -15,10 +15,25 @@ define(['../resources'], function() {
 		});
 
 		$scope.countMin = 10;
+		$scope.filterPlayer = "_";
 
-		$scope.minMatches = function(a) {
-			return a.count > $scope.countMin;
-		}
+		$scope.globalFilter = function(a) {
+			return a.count >= $scope.countMin 
+				&& ($scope.filterPlayer == "_" || $scope.filterPlayer == a.players[0] || $scope.filterPlayer == a.players[1]);
+		};
+
+
+		//Load players
+		var playersMap = {};
+        $scope.players = Player.query(function() {
+            angular.forEach($scope.players, function(player) {
+                playersMap[player._id] = player;
+            });
+        });
+
+        $scope.getPlayer = function(player_id) {
+        	return playersMap[player_id];
+        }
 
 
 		$scope.sorts = [{

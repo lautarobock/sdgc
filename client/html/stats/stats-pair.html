@@ -4,13 +4,27 @@
   </div>
 
   <div ng-controller="StatsPairController" style="margin-top:1em">
-    <div>
-        <input style="width:10em" type="text" class="pull-left form-control input-sm" ng-model="countMin"></input>
-        <select style="margin-bottom: 1em;width:20em;float:right" ng-init="tableSort=sorts[0]" class="form-control input-sm" ng-model="tableSort" ng-options="sort.name for sort in sorts">
+    <div class="row" style="margin-bottom:1em">
+      <div class="col-md-4">
+        <label class="col-md-6">Min. partidos</label>
+        <input style="width:10em" type="number" class="col-md-6 form-control input-sm" ng-model="countMin"></input>
+      </div>
+      <div class="col-md-4">
+        <select class="form-control input-sm" ng-model="filterPlayer">
+          <option value="_">(Todos los jugadores)</option>
+          <option ng-repeat="player in players | orderBy:'alias'" value="{{ player._id }}">
+            {{ player.alias }}
+          </option>
+        </select>
+      </div>
+      <div class="col-md-4">
+        <select ng-init="tableSort=sorts[0]" class="form-control input-sm" ng-model="tableSort" ng-options="sort.name for sort in sorts">
         <!-- <option ng-repeat="sort in sorts" value="{{sort.key}}">{{sort.name}}</option> -->
         </select>
+      </div>
     </div>
-        <table class="table table-condensed table-bordered">
+    <div class="row">
+        <table class="col-md-12 table table-condensed table-bordered">
             <thead>
               <tr>
                 <th>#</th>
@@ -25,10 +39,10 @@
               </tr>
             </thead>
             <tbody>
-              <tr ng-repeat="player in stats.byPair | filter:minMatches | orderBy:(tableSort.sortBy||tableSort.key)">
+              <tr ng-repeat="player in stats.byPair | filter:globalFilter | orderBy:(tableSort.sortBy||tableSort.key)">
                 <td>{{$index+1}}</td>
-                <td>{{player.players[0]}}</td>
-                <td>{{player.players[1]}}</td>
+                <td>{{getPlayer(player.players[0]).alias}}</td>
+                <td>{{getPlayer(player.players[1]).alias}}</td>
                 <td>{{player.count}}</td>
                 <td>{{player.win}}</td>
                 <td>{{player.even}}</td>
@@ -37,6 +51,7 @@
               </tr>
             </tbody>
         </table>
+      </div>
     </div>
 </div>
 
