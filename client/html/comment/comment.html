@@ -1,0 +1,20 @@
+<div>
+    <h4>Comentarios</h4>
+    <ul class="list-group">
+        <li ng-repeat="comment in owner.comments | orderBy:'date'" class="list-group-item">
+            <label for="text_{{comment._id}}">{{comment.name}}</label> -
+            <span title="{{comment.date|date:'dd/MM/yyyy HH:mm'}}">{{comment.date|date:'dd/MM/yyyy HH:mm'}}</span>
+            <pre id="text_{{comment._id}}" ng-bind="comment.text"/>
+        </li>
+    </ul>
+    <div style="float:none" ng-init="newComment=false" ng-show="newComment">
+        <label for="name">Nombre</label>
+        <input type="text" class="form-control" ng-model="name" placeholder="Escriba su nombre"></input>
+        <label for="text">Nuevo comentario</label>
+        <textarea style="margin-bottom:1em" rows="4" class="form-control" id="text" placeholder="Escriba su comentario" ng-model="commentText">
+        </textarea>
+        <button ng-click="addComment(commentText);newComment=false;" type="button" class="btn btn-primary">Aceptar</button>
+        <button ng-click="newComment=false; commentText=''" type="button" class="btn btn-default">Cancelar</button>
+    </div>
+    <a href="" ng-click="newComment=true" ng-hide="newComment">Agregar comentario</a>
+</div>

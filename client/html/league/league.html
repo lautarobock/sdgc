@@ -53,8 +53,9 @@
       <!-- <div ng-if="matches.length==0" >
         <alert type="'warning'">Esta liga no tiene ningun partido creado</alert>
       </div> -->
-
       <hr/>
+      <comment owner="league"></comment>
+      <br/>
       <a ng-if="league.status == 'RUNNING'" class="btn btn-primary btn-sm" href="#/match/new?league_id={{league._id}}&nextRound={{nextRound}}&nextDate={{nextDate}}" secure>
         <span class="glyphicon glyphicon-plus"></span> Programar un partido
       </a>

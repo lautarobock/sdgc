@@ -1,40 +1,43 @@
 <div>
-    <div class="col-md-12">
-        <h3>Resumen</h3>
-    </div>
-    <div class="col-md-6">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                Podio de los Championes
+    <div class="row">
+        <div class="col-md-12">
+            <h3>Resumen</h3>
+        </div>
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Podio de los Championes
+                </div>
+                <div class="panel-body">
+                    <ul class="list-group">
+                        <li ng-repeat="player in stats.byPlayer | orderBy:['-points', '-win', '-count', '+lost', '-even', '-podium1', '-podium2'] | limitTo:3" class="list-group-item">
+                            <span ng-class="{fwbold:$index==0}">
+                                {{$index+1}}) {{getPlayer(player.player).alias}} 
+                            </span>
+                            <span ng-class="{'golden-medal':$index==0, 'silver-medal':$index==1, 'bronze-medal':$index==2}" class="badge">{{player.points}}</span>
+                        </li>
+                    </ul>
+                </div>
             </div>
-            <div class="panel-body">
-                <ul class="list-group">
-                    <li ng-repeat="player in stats.byPlayer | orderBy:['-points', '-win', '-count', '+lost', '-even', '-podium1', '-podium2'] | limitTo:3" class="list-group-item">
-                        <span ng-class="{fwbold:$index==0}">
-                            {{$index+1}}) {{getPlayer(player.player).alias}} 
-                        </span>
-                        <span ng-class="{'golden-medal':$index==0, 'silver-medal':$index==1, 'bronze-medal':$index==2}" class="badge">{{player.points}}</span>
-                    </li>
-                </ul>
+        </div>
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Podio de los Goleadores
+                </div>
+                <div class="panel-body">
+                    <ul class="list-group">
+                        <li ng-repeat="player in stats.byPlayer | orderBy:['-goals', '-count'] | limitTo:3" class="list-group-item">
+                            <span ng-class="{fwbold:$index==0}">
+                                {{$index+1}}) {{getPlayer(player.player).alias}} 
+                            </span>
+                            <span ng-class="{'golden-medal':$index==0, 'silver-medal':$index==1, 'bronze-medal':$index==2}" class="badge">{{player.goals}}</span>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
-    <div class="col-md-6">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                Podio de los Goleadores
-            </div>
-            <div class="panel-body">
-                <ul class="list-group">
-                    <li ng-repeat="player in stats.byPlayer | orderBy:['-goals', '-count'] | limitTo:3" class="list-group-item">
-                        <span ng-class="{fwbold:$index==0}">
-                            {{$index+1}}) {{getPlayer(player.player).alias}} 
-                        </span>
-                        <span ng-class="{'golden-medal':$index==0, 'silver-medal':$index==1, 'bronze-medal':$index==2}" class="badge">{{player.goals}}</span>
-                    </li>
-                </ul>
-            </div>
-        </div>
+    <div ng-if="matches.length!=0" stats-player league="league._id" round="matches[matches.length-1].round">
     </div>
-    <!-- <div ng-if="matches.length!=0" stats-player league="league._id" round="matches[matches.length-1].round"></div> -->
 </div>

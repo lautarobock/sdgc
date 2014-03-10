@@ -1,6 +1,6 @@
-define(['../stats/stats','../resources'], function() {
+define(['../stats/stats','../resources','../comment/comment'], function() {
 
-	var league = angular.module("afd.league", ["afd.resources","afd.stats"]);
+	var league = angular.module("afd.league", ["afd.resources","afd.stats",'afd.comment']);
 
 	league.controller("LeagueController", function($scope, League, Match, $location,$routeParams,Stats,Player) {
 

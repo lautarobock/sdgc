@@ -20,13 +20,21 @@ exports.Player = mongoose.model("Player", new Schema({
     starting: Boolean //si es titular o no
 },{ _id: false }));
 
+var Comment = {
+    date: Date,
+    user: {type: String, ref: 'User'},
+    name: String,
+    text: String
+};
+
 exports.League = mongoose.model("League", new Schema({
     _id: String,
     name: String,
     status: {type: String, default: 'PLANNING'}, //PLANNING, RUNNING, FINISHED
     startDate: Date,
     finishDate: Date,
-    matches: [{type: String , ref: 'Match'}] //No lo estoy usando
+    matches: [{type: String , ref: 'Match'}], //No lo estoy usando,
+    comments: [Comment]
 },{ _id: false }));
 
 var Team = {
@@ -55,5 +63,6 @@ exports.Match = mongoose.model("Match", new Schema({
     podium: [{type: String, ref:'Player'}],
     diffGoals: Number,
     diffBeers: Number,
-    diffAvg: Number
+    diffAvg: Number,
+    comments: [Comment]
 },{ _id: false }));
