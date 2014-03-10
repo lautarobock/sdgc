@@ -2,6 +2,55 @@ define(['../resources'], function() {
 
 	var stats = angular.module("afd.stats", ['afd.resources']);
 
+	stats.controller('StatsPairController', function($scope, Stats){
+
+		$scope.$watchCollection("selectedLeagues", function() {
+			if ( $scope.selectedLeagues ) {
+				$scope.stats = Stats.leagueToRoundForPair({
+	                leagues: $scope.selectedLeagues
+	            });	
+			} else {
+				$scope.stats = {};
+			}
+		});
+
+		$scope.countMin = 10;
+
+		$scope.minMatches = function(a) {
+			return a.count > $scope.countMin;
+		}
+
+
+		$scope.sorts = [{
+				name: '+Partidos ganados',
+				key: ['-win','count']
+			}, {
+				name: '-Partidos ganados',
+				key: ['win','-count']
+			}, {
+				name: '+Partidos jugados',
+				key: ['-count','-(win/count)', '-win']
+			}, {
+				name: '-Partidos jugados',
+				key: ['count','(win/count)', 'win']
+			}, {
+				name: '+Promedio ganados',
+				key: ['-(win/count)','-count']
+			}, {
+				name: '-Promedio ganados',
+				key: ['(win/count)','count']
+			// }, {
+			// 	name: '+Partidos perdidos',
+			// 	key: ['-lost','count']
+			// }, {
+			// 	name: '-Partidos perdidos',
+			// 	key: ['lost','-count']
+			}
+		];
+		
+
+	});
+
 	stats.controller('StatsController',function($scope, League) {
 
 		$scope.filter = {

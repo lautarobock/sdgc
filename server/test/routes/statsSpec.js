@@ -65,6 +65,53 @@ describe("stats.js", function() {
         done();
     });
 
+    it("Should retrive stats for pairs of player over given matches", function(done) {
+        
+        var result = stats.calculateForPairs(MATCHES);
+        // console.log(result);
+        expect(result).toBeDefined();
+        expect(result.byPair.length).toBe(65);
+        expect(result.pairsMap.LautaRAta.win).toBe(2);
+        expect(result.pairsMap.LautaRAta.lost).toBe(1);
+        expect(result.pairsMap.LautaRAta.even).toBe(0);
+        expect(result.pairsMap.LautaRAta.count).toBe(3);
+
+
+        
+        
+        done();
+    });
+
+    it("Should retrive stats for pair of player over one match", function(done) {
+
+        var map = stats.calculateMatchForPairs(MATCHES[1]);
+        
+        expect(map).toBeDefined();
+        // expect(result.byPlayer.length).toBe(10);
+        expect(map.pairsMap.LautaRAta).toEqual({ 
+            key: 'LautaRAta',
+            players: ['RAta','Lauta'],
+            count: 1,
+            win: 0,
+            lost: 1,
+            even: 0
+            // ,
+            // points: 3,
+            // goalsCount: 1,
+            // goals: 5,
+            // goalAvg: 0,
+            // beersCount: 1,
+            // beers: 8.22,
+            // beerAvg: 0,
+            // podium1: 1,
+            // podium2: 0,
+            // podium3: 0 
+        });
+
+        done();
+    });
+
+
 
     var MATCHES = [{
         "_id": "2009_1",

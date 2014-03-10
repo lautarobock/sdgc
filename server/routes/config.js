@@ -45,6 +45,7 @@ exports.createRoutes = function(app) {
     app.get('/api/login/by_google/:google_id', require("./user").getForLogin);
 
     app.get('/api/stats/player', require('./stats').calculateFor);
+    app.get('/api/stats/pair', require('./stats').calculateForPairsFor);
 
     for( var i=0; i<services.length; i++ ) {
         if ( services[i].process ) {

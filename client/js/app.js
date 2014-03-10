@@ -110,7 +110,8 @@ define("app", [
         $routeProvider.            
                 // when('/main', {templateUrl: 'main/main.html',   controller: 'MainController'}).
                 
-                when('/stats', {templateUrl: 'stats/stats.html',   controller: 'StatsController'}).
+                when('/stats/player', {templateUrl: 'stats/stats.html',   controller: 'StatsController'}).
+                when('/stats/pair', {templateUrl: 'stats/stats-pair.html',   controller: 'StatsController'}).
 
                 when('/league/detail/:league_id', {templateUrl: 'league/league.html',   controller: 'LeagueController'}).
                 when('/league/detail/:league_id/:match_round', {templateUrl: 'league/league.html',   controller: 'LeagueController'}).

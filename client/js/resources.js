@@ -25,7 +25,8 @@ define([],function() {
             return $rootScope.user ? $rootScope.user.google_id : null;
         };
         return $resource( "/" + path + 'stats/:operation',{google_id:params}, {
-            leagueToRound: {method:'GET', params: {operation:'player'}, isArray:false}
+            leagueToRound: {method:'GET', params: {operation:'player'}, isArray:false},
+            leagueToRoundForPair: {method:'GET', params: {operation:'pair'}, isArray:false}
         });
     });
 
