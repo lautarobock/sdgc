@@ -62,7 +62,8 @@ define(['../stats/stats','../resources'], function() {
                             }
                         }); 
                     } else {
-                        $scope.loadMatch($scope.matches[$scope.matches.length-1]);        
+                        // $scope.loadMatch($scope.matches[$scope.matches.length-1]);        
+                        $scope.clearMatch();
                     }
                 } else {
                     $scope.clearMatch();
@@ -83,6 +84,15 @@ define(['../stats/stats','../resources'], function() {
             //     league: $scope.league._id,
             //     upToRound: match.round
             // });
+        };
+
+        $scope.getStatus = function() {
+            return consts.League.Status.asList();
+        };
+
+        $scope.changeStatus = function(league, status) {
+            league.status = status.id;
+            league.$save();
         };
 
 	});
@@ -126,12 +136,14 @@ define(['../stats/stats','../resources'], function() {
             },
             templateUrl: 'league/league-resume.html',
             controller: function($scope,Stats,Player) {
-                if ( $scope.matches.length != 0 ) {
-                    $scope.stats = Stats.leagueToRound({
-                        league: $scope.league._id,
-                        upToRound: $scope.matches[$scope.matches.length-1].round
-                    });     
-                }
+                $scope.$watchCollection("matches", function() {
+                    if ( $scope.matches.length != 0 ) {
+                        $scope.stats = Stats.leagueToRound({
+                            league: $scope.league._id,
+                            upToRound: $scope.matches[$scope.matches.length-1].round
+                        });     
+                    }
+                });
 
                 //Load players
                 var playersMap = {};

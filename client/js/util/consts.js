@@ -4,7 +4,10 @@
 		Status: {
 			PLANNING: {id: 'PLANNING',name: 'En Plan'},
 			RUNNING: {id:'RUNNING',name:'En Curso'},
-			FINISHED: {id:'FINISHED', name: 'Finalizado'}
+			FINISHED: {id:'FINISHED', name: 'Finalizado'},
+			asList: function() {
+				return [exports.League.Status.PLANNING,exports.League.Status.RUNNING, exports.League.Status.FINISHED];
+			}
 		}
 	};
 

@@ -30,7 +30,17 @@
       <b>Hasta: </b>{{league.finishDate|date:'dd-MM-yyyy'}}
       <span ng-hide="$last" class="glyphicon glyphicon-flash"></span>
       <b>Estado: </b>{{league.status|afdLeagueStatus}}
-      <div style="margin-top:1em">
+      <span class="dropdown">
+        <a class="dropdown-toggle"><span class="glyphicon glyphicon-edit"></span></a>
+        <ul class="dropdown-menu">
+          <li>
+            <a ng-if="status.id != league.status" href="" ng-click="changeStatus(league,status)" ng-repeat="status in getStatus()">
+              {{status.name}}
+            </a>
+          </li>
+        </ul>
+      </span>
+      <div ng-if="league.status == 'RUNNING'" style="margin-top:1em">
         <a class="btn btn-primary btn-sm" href="#/match/new?league_id={{league._id}}&nextRound={{nextRound}}&nextDate={{nextDate}}" secure>
           <span class="glyphicon glyphicon-plus"></span> Programar un partido
         </a>
@@ -38,14 +48,14 @@
       <hr/>
       <div ng-if="!match" league-resume league="league" matches="matches"></div>
       <!-- Match detail -->
-      <div ng-if="match" match-detail="match"></div>
+      <div ng-if="match" match-detail="match" league="league"></div>
       <div ng-if="match" stats-player league="league._id" round="match.round"></div>
       <!-- <div ng-if="matches.length==0" >
         <alert type="'warning'">Esta liga no tiene ningun partido creado</alert>
       </div> -->
 
       <hr/>
-      <a class="btn btn-primary btn-sm" href="#/match/new?league_id={{league._id}}&nextRound={{nextRound}}&nextDate={{nextDate}}" secure>
+      <a ng-if="league.status == 'RUNNING'" class="btn btn-primary btn-sm" href="#/match/new?league_id={{league._id}}&nextRound={{nextRound}}&nextDate={{nextDate}}" secure>
         <span class="glyphicon glyphicon-plus"></span> Programar un partido
       </a>
     </div>    

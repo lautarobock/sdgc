@@ -229,7 +229,8 @@ define(['../resources'], function() {
             replace : false,
             templateUrl: 'match/match-detail.html',
             scope : {
-                match: '=matchDetail'
+                match: '=matchDetail',
+                league: '='
             },
             controller: function($scope, Player) {
                 $scope.playersMap = {};
