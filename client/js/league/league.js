@@ -6,12 +6,12 @@ define(['../stats/stats','../resources','../comment/comment'], function() {
 
         $scope.playersMap = {};
         $scope.players = Player.query(function() {
-            angular.forEach($scope.players, function(player) {
-                $scope.playersMap[player._id] = player;
-            });
+                angular.forEach($scope.players, function(player) {
+                    $scope.playersMap[player._id] = player;
+                });
         });
 
-		$scope.leagues = League.query(onLoad);
+		$scope.leagues = League.query({sort: '_id'},onLoad);
 		$scope.league = null;
 		$scope.matches = [];
 		$scope.match = null;
@@ -136,12 +136,30 @@ define(['../stats/stats','../resources','../comment/comment'], function() {
             },
             templateUrl: 'league/league-resume.html',
             controller: function($scope,Stats,Player) {
+                
+                $scope.show = {
+                    points: true,
+                    goals: true,
+                    beers: true,
+                    count: true
+                };
+
+                $scope.filterMinCount = function(player) {
+                    if ( $scope.matches ) {
+                        return player.count >= ($scope.matches.length/2);
+                    } else {
+                        return true;
+                    }
+                };
+
                 $scope.$watchCollection("matches", function() {
                     if ( $scope.matches.length != 0 ) {
                         $scope.stats = Stats.leagueToRound({
                             league: $scope.league._id,
                             upToRound: $scope.matches[$scope.matches.length-1].round
-                        });     
+                        });
+                    } else {
+                        $scope.stats = {};
                     }
                 });
 

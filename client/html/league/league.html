@@ -1,6 +1,6 @@
 <div main-content>
   <ul class="nav nav-pills">
-    <li ng-class="{active:it._id == league._id}" ng-repeat="it in leagues | orderBy:'_id'">
+    <li ng-class="{active:it._id == league._id}" ng-repeat="it in leagues">
       <a href="" ng-click="loadLeague(it)">{{it._id}}</a>
     </li>
   </ul>
@@ -26,9 +26,11 @@
       </a>
       </h4>
       <b>Desde: </b>{{league.startDate|date:'dd-MM-yyyy'}} 
-      <span ng-hide="$last" class="glyphicon glyphicon-flash"></span>
+      <span class="glyphicon glyphicon-flash"></span>
       <b>Hasta: </b>{{league.finishDate|date:'dd-MM-yyyy'}}
-      <span ng-hide="$last" class="glyphicon glyphicon-flash"></span>
+      <span class="glyphicon glyphicon-flash"></span>
+      <b>Fechas: </b>{{matches.length}}
+      <span class="glyphicon glyphicon-flash"></span>
       <b>Estado: </b>{{league.status|afdLeagueStatus}}
       <span class="dropdown">
         <a class="dropdown-toggle"><span class="glyphicon glyphicon-edit"></span></a>
