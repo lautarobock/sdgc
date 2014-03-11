@@ -11,12 +11,6 @@ function calculateTeamsForDuels(team1,teamB, result1,resultB, duelsMap) {
             var result = result1;
             var players = [memberI.player,memberJ.player];
             var key = memberI.player+memberJ.player;
-
-            // if ( memberI.player > memberJ.player ) {
-            //     key = memberJ.player+memberI.player;
-            //     players = [memberJ.player,memberI.player];
-            //     result = resultB;
-            // }
             
             if ( !duelsMap[key] ) {
                 duelsMap[key] = {
@@ -122,6 +116,10 @@ function calculateMatchForDuels(match, stats) {
     calculateTeamsForDuels(match.teamB,match.team1,resultB,result1,stats.duelsMap);
 
     return stats;
+}
+
+function calculateMatchForN(match, stats, n) {
+
 }
 
 function calculateMatchForPairs(match, stats) {
@@ -313,3 +311,6 @@ exports.calculateForPairsFor = calculateForPairsFor;
 exports.calculateMatchForDuels = calculateMatchForDuels;
 exports.calculateForDuels = calculateForDuels;
 exports.calculateForDuelsFor = calculateForDuelsFor;
+
+//n
+exports.calculateMatchForN = calculateMatchForN;
