@@ -59,7 +59,7 @@
             <td ng-if="_config.show.beers"ng-class="{fwbold:tableSort.key=='-podium3'}">{{player.podium3}}</td>
             <td ng-if="_config.show.beers"ng-class="{fwbold:tableSort.key=='-(podium1+podium2+podium3)'}">{{player.podium1+player.podium2+player.podium3}}</td>
 
-            <td ng-if="_config.show.extra">{{player.win/player.count|number:2}}</td>
+            <td ng-if="_config.show.extra">{{player.win/player.count*100|number:0}}%</td>
           </tr>
         </tbody>
       </table>
