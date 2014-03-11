@@ -19,15 +19,15 @@
                       {{'menu.players'|translate}}
                   </a>
               </li>
-              <li>
-                  <a href="#/stats/player" role="button">
-                      Estadisticas
-                  </a>
-              </li>
-              <li>
-                  <a href="#/stats/pair" role="button">
-                      Estadisticas por duplas
-                  </a>
+              <li class="dropdown">
+                <a href="" role="button" class="dropdown-toggle">
+                    Estadisticas <b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a href="#/stats/player" role="button">Jugadores</a></li>                  
+                    <li><a href="#/stats/pair" role="button">Duplas</a></li>
+                    <li><a href="#/stats/duel" role="button">Duelos</a></li>
+                </ul>
               </li>
               <li><sign-in></sign-in></li>
               <li><log-in></log-in></li>

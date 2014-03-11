@@ -1,5 +1,41 @@
 var model = require('../domain/model.js');
 
+
+function calculateTeamsForDuels(team1,teamB, result1,resultB, duelsMap) {
+
+    for ( var i=0; i<team1.members.length; i++ ) {
+        var memberI = team1.members[i];
+        for ( var j=0; j<teamB.members.length; j++ ) {
+            var memberJ = teamB.members[j];
+
+            var result = result1;
+            var players = [memberI.player,memberJ.player];
+            var key = memberI.player+memberJ.player;
+
+            // if ( memberI.player > memberJ.player ) {
+            //     key = memberJ.player+memberI.player;
+            //     players = [memberJ.player,memberI.player];
+            //     result = resultB;
+            // }
+            
+            if ( !duelsMap[key] ) {
+                duelsMap[key] = {
+                    key: key,
+                    players: players,
+                    count: 0,win: 0,lost: 0,even: 0
+                }
+            }
+            var data = duelsMap[key];
+            data.count++;
+            if ( result == 3 ) data.win++;
+            if ( result == 1 ) data.even++;
+            if ( result == 0 ) data.lost++;
+        }
+       
+    }
+
+}
+
 function calculateTeamForPairs(team, result, pairsMap) {
 
     for ( var i=0; i<team.members.length; i++ ) {
@@ -61,6 +97,31 @@ function calculateTeam(team, result, playersMap) {
         if ( member.podium == 2 ) data.podium2++;
         if ( member.podium == 3 ) data.podium3++;
     }
+}
+
+function calculateMatchForDuels(match, stats) {
+    if ( !stats ) {
+        stats = {duelsMap: {}};
+    }
+    
+    var result1;
+    var resultB;
+    if ( match.winner=='1' )  {
+        result1 = 3;
+        resultB = 0;
+    } else if ( match.winner=='B' )  {
+        result1 = 0;
+        resultB = 3;
+    } else {
+        result1 = 1;
+        resultB = 1;
+    }
+
+    // calculateTeamsForDuels(match,result1,resultB,stats.duelsMap);
+    calculateTeamsForDuels(match.team1,match.teamB,result1,resultB,stats.duelsMap);
+    calculateTeamsForDuels(match.teamB,match.team1,resultB,result1,stats.duelsMap);
+
+    return stats;
 }
 
 function calculateMatchForPairs(match, stats) {
@@ -164,6 +225,23 @@ function calculateForPairs(matches) {
     return stats;
 };
 
+function calculateForDuels(matches) {
+    var stats = {
+        duelsMap: {}
+    }
+
+    for ( var i=0; i<matches.length; i++ ) {
+        calculateMatchForDuels(matches[i],stats);
+    }
+
+    stats.byDuel = [];
+    for ( var k in stats.duelsMap ) {
+        var duel = stats.duelsMap[k];
+        stats.byDuel.push(duel);
+    }
+
+    return stats;
+};
 
 function calculateForPairsFor(req, res) {
     //Caso para calcular una liga hasta determinada ronda
@@ -177,6 +255,24 @@ function calculateForPairsFor(req, res) {
         }
         model.Match.find({league:{$in: req.query.leagues}}, function(err, matches) {
             res.send(calculateForPairs(matches));
+        });
+    } else {
+        res.send({});
+    }
+};
+
+function calculateForDuelsFor(req, res) {
+    //Caso para calcular una liga hasta determinada ronda
+    if ( req.query.league && req.query.upToRound ) {
+        model.Match.find({league: req.query.league, round: {$lte:req.query.upToRound}}, function(err, matches) {
+            res.send(calculateForDuels(matches));
+        });
+    } else if ( req.query.leagues ) {
+        if ( !(req.query.leagues instanceof Array) ) {
+            req.query.leagues = [req.query.leagues];
+        }
+        model.Match.find({league:{$in: req.query.leagues}}, function(err, matches) {
+            res.send(calculateForDuels(matches));
         });
     } else {
         res.send({});
@@ -203,9 +299,17 @@ function calculateFor(req, res) {
 
 
 //public API
+//Players
 exports.calculate = calculate;
 exports.calculateFor = calculateFor;
 exports.calculateMatch = calculateMatch;
+
+//Pairs
 exports.calculateMatchForPairs = calculateMatchForPairs;
 exports.calculateForPairs = calculateForPairs;
 exports.calculateForPairsFor = calculateForPairsFor;
+
+//Duels
+exports.calculateMatchForDuels = calculateMatchForDuels;
+exports.calculateForDuels = calculateForDuels;
+exports.calculateForDuelsFor = calculateForDuelsFor;

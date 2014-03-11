@@ -112,6 +112,7 @@ define("app", [
                 
                 when('/stats/player', {templateUrl: 'stats/stats.html',   controller: 'StatsController'}).
                 when('/stats/pair', {templateUrl: 'stats/stats-pair.html',   controller: 'StatsController'}).
+                when('/stats/duel', {templateUrl: 'stats/stats-duel.html',   controller: 'StatsController'}).
 
                 when('/league/detail/:league_id', {templateUrl: 'league/league.html',   controller: 'LeagueController'}).
                 when('/league/detail/:league_id/:match_round', {templateUrl: 'league/league.html',   controller: 'LeagueController'}).

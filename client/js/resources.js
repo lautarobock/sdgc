@@ -26,7 +26,8 @@ define([],function() {
         };
         return $resource( "/" + path + 'stats/:operation',{google_id:params}, {
             leagueToRound: {method:'GET', params: {operation:'player'}, isArray:false},
-            leagueToRoundForPair: {method:'GET', params: {operation:'pair'}, isArray:false}
+            leagueToRoundForPair: {method:'GET', params: {operation:'pair'}, isArray:false},
+            leagueToRoundForDuel: {method:'GET', params: {operation:'duel'}, isArray:false}
         });
     });
 

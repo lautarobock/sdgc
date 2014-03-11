@@ -1,0 +1,60 @@
+<div main-content>
+  <div class="btn-group">
+      <button ng-repeat="it in leagues | orderBy:'_id'" type="button" class="btn btn-primary" ng-model="filter.league[it._id]" btn-checkbox>{{it.name}}</button>
+  </div>
+
+  <div ng-controller="StatsDuelController" style="margin-top:1em">
+    <div class="row" style="margin-bottom:1em">
+      <div class="col-md-4">
+        <label class="col-md-6">Min. partidos</label>
+        <input style="width:10em" type="number" class="col-md-6 form-control input-sm" ng-model="countMin"></input>
+      </div>
+      <div class="col-md-4">
+        <select class="form-control input-sm" ng-model="filterPlayer">
+          <option value="_">(Todos los jugadores)</option>
+          <option ng-repeat="player in players | orderBy:'alias'" value="{{ player._id }}">
+            {{ player.alias }}
+          </option>
+        </select>
+      </div>
+      <div class="col-md-4">
+        <select ng-init="tableSort=sorts[0]" class="form-control input-sm" ng-model="tableSort" ng-options="sort.name for sort in sorts"></select>
+      </div>
+    </div>
+    <div class="row">
+        <table class="col-md-12 table table-condensed table-bordered">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Jugador 1</th>
+                <th>Jugador 2</th>
+                <th title="Partidos jugados">J</th>
+                <th title="Ganados">G1</th>
+                <th title="Empatados">E</th>
+                <th title="Perdidos">G2</th>
+                
+                <th title="Promedio de partidos ganados">P.P.G.1</th>
+                <th title="Promedio de partidos ganados">P.P.G.2</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="player in stats.byDuel | filter:globalFilter | orderBy:(tableSort.sortBy||tableSort.key)">
+                <td>{{$index+1}}</td>
+                <td>{{getPlayer(player.players[0]).alias}}</td>
+                <td>{{getPlayer(player.players[1]).alias}}</td>
+                <td>{{player.count}}</td>
+                <td>{{player.win}}</td>
+                <td>{{player.even}}</td>
+                <td>{{player.lost}}</td>
+                <td>{{player.win/player.count*100|number:0}}%</td>
+                <td>{{player.lost/player.count*100|number:0}}%</td>
+              </tr>
+            </tbody>
+        </table>
+      </div>
+    </div>
+</div>
+
+<div side-bar>
+  <div ng-include="'side/side.html'"></div>
+</div>

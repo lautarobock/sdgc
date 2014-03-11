@@ -46,6 +46,7 @@ exports.createRoutes = function(app) {
 
     app.get('/api/stats/player', require('./stats').calculateFor);
     app.get('/api/stats/pair', require('./stats').calculateForPairsFor);
+    app.get('/api/stats/duel', require('./stats').calculateForDuelsFor);
 
     for( var i=0; i<services.length; i++ ) {
         if ( services[i].process ) {

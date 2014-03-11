@@ -2,6 +2,64 @@ define(['../resources'], function() {
 
 	var stats = angular.module("afd.stats", ['afd.resources']);
 
+	stats.controller('StatsDuelController', function($scope, Stats, Player){
+
+		$scope.$watchCollection("selectedLeagues", function() {
+			if ( $scope.selectedLeagues ) {
+				$scope.stats = Stats.leagueToRoundForDuel({
+	                leagues: $scope.selectedLeagues
+	            });	
+			} else {
+				$scope.stats = {};
+			}
+		});
+
+		$scope.countMin = 10;
+		$scope.filterPlayer = "_";
+
+		$scope.globalFilter = function(a) {
+			return a.count >= $scope.countMin 
+				&& ($scope.filterPlayer == "_" || $scope.filterPlayer == a.players[0]);
+		};
+
+
+		//Load players
+		var playersMap = {};
+        $scope.players = Player.query(function() {
+            angular.forEach($scope.players, function(player) {
+                playersMap[player._id] = player;
+            });
+        });
+
+        $scope.getPlayer = function(player_id) {
+        	return playersMap[player_id];
+        }
+
+
+		$scope.sorts = [{
+				name: '+Promedio ganados por 1',
+				key: ['-(win/count)','-count']
+			}, {
+				name: '+Promedio ganados por 2',
+				key: ['-(lost/count)','-count']
+			}, {
+				name: '+Partidos jugados',
+				key: ['-count','-(win/count)', '-win']
+			}, {
+				name: '-Partidos jugados',
+				key: ['count','(win/count)', 'win']
+			}, {	
+				name: '+Partidos ganados por 1',
+				key: ['-win','count']
+			}, {
+				name: '+Partidos ganados por 2',
+				key: ['-lost','count']
+			}
+		];
+		
+
+	});
+
 	stats.controller('StatsPairController', function($scope, Stats, Player){
 
 		$scope.$watchCollection("selectedLeagues", function() {

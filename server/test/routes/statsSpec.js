@@ -75,9 +75,6 @@ describe("stats.js", function() {
         expect(result.pairsMap.LautaRAta.lost).toBe(1);
         expect(result.pairsMap.LautaRAta.even).toBe(0);
         expect(result.pairsMap.LautaRAta.count).toBe(3);
-
-
-        
         
         done();
     });
@@ -95,17 +92,51 @@ describe("stats.js", function() {
             win: 0,
             lost: 1,
             even: 0
-            // ,
-            // points: 3,
-            // goalsCount: 1,
-            // goals: 5,
-            // goalAvg: 0,
-            // beersCount: 1,
-            // beers: 8.22,
-            // beerAvg: 0,
-            // podium1: 1,
-            // podium2: 0,
-            // podium3: 0 
+        });
+
+        done();
+    });
+
+    it("Should retrive stats for duel of player over given matches", function(done) {
+        
+        var result = stats.calculateForDuels(MATCHES);
+        // console.log(result);
+        expect(result).toBeDefined();
+        expect(result.byDuel.length).toBe(132);
+        expect(result.duelsMap.LautaRAta.win).toBe(0);
+        expect(result.duelsMap.LautaRAta.lost).toBe(3);
+        expect(result.duelsMap.LautaRAta.even).toBe(1);
+        expect(result.duelsMap.LautaRAta.count).toBe(4);
+        
+        done();
+    });
+
+
+    /**
+      DUELOS
+    */
+    it("Should retrive stats for duel of player over one match", function(done) {
+
+        var map = stats.calculateMatchForDuels(MATCHES[1]);
+        
+        expect(map).toBeDefined();
+        // expect(result.byPlayer.length).toBe(10);
+        expect(map.duelsMap.HangaRAta).toEqual({ 
+            key: 'HangaRAta',
+            players: ['Hanga', 'RAta'],
+            count: 1,
+            win: 1,
+            lost: 0,
+            even: 0
+        });
+
+        expect(map.duelsMap.RAtaHanga).toEqual({ 
+            key: 'RAtaHanga',
+            players: ['RAta','Hanga'],
+            count: 1,
+            win: 0,
+            lost: 1,
+            even: 0
         });
 
         done();
