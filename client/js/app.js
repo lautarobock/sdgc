@@ -23,7 +23,7 @@ define("app", [
         'afd.player',
         'afd.match',
         'afd.league',
-        'dl.side',
+        'afd.side',
         'afd.main',
         'gt.listview',
         'gt.util',
@@ -51,6 +51,12 @@ define("app", [
 
         $rootScope.mainTitle = function() {
             return MainTitle.get();
+        };
+
+        $rootScope.sideBar = true;
+
+        $rootScope.toggleSideBar = function() {
+            $rootScope.sideBar = !$rootScope.sideBar;
         };
 
     }]);

@@ -1,18 +1,5 @@
-<div class="well" ng-controller="SideSearchController">
-  <h4>{{'side.search'|translate}}</h4>
-  <!-- <form ng-submit="search(searchText)">
-    <div class="input-group">
-      <input type="text" class="form-control" ng-model="searchText" focus-on="focusSearch" placeholder="{{'side.search.placeholder'|translate}}"/>
-      <span class="input-group-btn">
-        <button type="submit" class="btn btn-default" >
-          <span class="glyphicon glyphicon-search"></span>
-        </button>
-      </span>
-    </div>
-  </form>
-  <div class="input-group" style="margin-top: 1em;">
-    <a class="btn btn-success btn-sm" href="#/beer/new" secure>
-      <span class="glyphicon glyphicon-plus"></span> Agregar Cerveza
-    </a>
-  </div> -->
+<div ng-controller="SideController">
+  <div stats-player leagues="leagues" config="config"></div>
+  <div stats-player leagues="leagues" config="configGoals"></div>
+  
 </div>

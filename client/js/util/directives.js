@@ -64,16 +64,34 @@ define([], function() {
                 scope.caption = element.attr("caption") || "Registrarse";   
             }
         };
-    });    
+    });
+
+
 
     directives.directive('mainContent', function() {
         return function(scope, element) {
-            element.addClass("col-md-9");
+            scope.$watch("sideBar", function(value) {
+                if ( value ) {
+                    element.addClass("col-md-9");
+                    element.removeClass("col-md-12");
+                } else {
+                    element.removeClass("col-md-9");
+                    element.addClass("col-md-12");
+                }
+            });
+            
         };
     });
 
     directives.directive('sideBar', function() {
         return function(scope, element) {
+            scope.$watch("sideBar", function(value) {
+                if ( value ) {
+                    element.removeClass("hidden");
+                } else {
+                    element.addClass("hidden");
+                }
+            });
             element.addClass("col-md-3");
         };
     });

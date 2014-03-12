@@ -3,7 +3,7 @@
     <span>{{getTitle()}}</span>
   </div>
   <div class="panel-body">
-    <div class="row">
+    <div class="row" ng-show="_config.show.header">
       <div class="col-md-4">
         <label class="col-md-6">Min. partidos</label>
         <input style="width:7em" type="number" class="col-md-6 form-control input-sm" ng-model="_config.filter.minMatches"></input>
@@ -11,13 +11,13 @@
       <div class="col-md-4">
       </div>
       <div class="col-md-4">
-        <select style="margin-bottom: 1em;width:20em;float:right" ng-init="tableSort=sorts[0]" class="form-control input-sm" ng-model="tableSort" ng-options="sort.name for sort in sorts"></select>
+        <select style="margin-bottom: 1em;width:20em;float:right" class="form-control input-sm" ng-model="tableSort" ng-options="sort.name for sort in sorts"></select>
       </div>
     </div>
     <div class="row">
       <table class="table table-condensed table-bordered">
         <thead>
-          <tr>
+          <tr ng-show="_config.show.rowGroup">
             <th colspan="2"></th>
             <th ng-if="_config.show.match" colspan="5">Partidos</th>
             <th ng-if="_config.show.goals" colspan="2">Goles</th>

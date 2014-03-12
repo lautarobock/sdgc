@@ -180,26 +180,39 @@ define(['../resources'], function() {
 						goals: true,
 						beers: true,
 						title: true,
-						extra: false
+						extra: false,
+						header: true,
+						rowGroup: true
 					},
 					text: {
 
 					},
 					filter: {
 						minMatches: 0
+					},
+					sort: {
+						init: null
 					}
 				};
 				angular.extend($scope._config.show, $scope.config.show);
 				angular.extend($scope._config.text, $scope.config.text);
 				angular.extend($scope._config.filter, $scope.config.filter);
+				angular.extend($scope._config.sort, $scope.config.sort);
 				
+				var title = "";
 				$scope.getTitle = function() {
-					if ( $scope._config.text.title ) {
-						return $scope._config.text.title;
-					} else {
-						return $interpolate("Liga {{league}} - Posiciones a la fecha #{{round}}")($scope);	
-					}
+					return title;
 				};
+
+				$scope.$watch("config.text.title", function(v) {
+					if ( !v ) return;
+					$scope._config.text.title = $scope.config.text.title;
+					if ( $scope._config.text.title ) {
+						title = $scope._config.text.title;
+					} else {
+						title = $interpolate("Liga {{league}} - Posiciones a la fecha #{{round}}")($scope);	
+					}
+				});
 
 				$scope.rowFilter = function(player) {
 					return player.count >= $scope._config.filter.minMatches;
@@ -240,6 +253,8 @@ define(['../resources'], function() {
 					name: 'Partidos perdidos',
 					key: '-lost'
 				}];
+
+				$scope.tableSort = $scope._config.sort.init || $scope.sorts[0];
 
 				if ( $scope._config.show.extra ) {
 					$scope.sorts.push({
