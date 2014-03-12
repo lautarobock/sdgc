@@ -23,6 +23,7 @@ describe("stats.js", function() {
         expect(result.playersMap.Lauta.podium2).toBe(0);
         expect(result.playersMap.Lauta.podium3).toBe(0);
         expect(result.playersMap.Lauta.beerAvg).toBe(7.153999999999999);
+        expect(result.general.count).toBe(9);
         
         
         expect(result.playersMap.RAta.points).toBe(19);
@@ -75,6 +76,7 @@ describe("stats.js", function() {
         expect(result.pairsMap.LautaRAta.lost).toBe(1);
         expect(result.pairsMap.LautaRAta.even).toBe(0);
         expect(result.pairsMap.LautaRAta.count).toBe(3);
+        expect(result.general.count).toBe(9);
         
         done();
     });
@@ -107,6 +109,7 @@ describe("stats.js", function() {
         expect(result.duelsMap.LautaRAta.lost).toBe(3);
         expect(result.duelsMap.LautaRAta.even).toBe(1);
         expect(result.duelsMap.LautaRAta.count).toBe(4);
+        expect(result.general.count).toBe(9);
         
         done();
     });

@@ -156,6 +156,7 @@ define(['../resources'], function() {
 				extra: true
 			}
 		};
+
 	});
 
 	stats.directive("statsPlayer", function() {
@@ -165,7 +166,8 @@ define(['../resources'], function() {
 				league: '=?',
 				round: '=?',
 				leagues: '=?',
-				config: '=?'
+				config: '=?',
+				stats: '=?'
 			},
 			templateUrl: 'stats/stats-player.html',
 			controller: function($scope, Stats, Player, $interpolate) {
@@ -182,10 +184,14 @@ define(['../resources'], function() {
 					},
 					text: {
 
+					},
+					filter: {
+						minMatches: 0
 					}
 				};
 				angular.extend($scope._config.show, $scope.config.show);
 				angular.extend($scope._config.text, $scope.config.text);
+				angular.extend($scope._config.filter, $scope.config.filter);
 				
 				$scope.getTitle = function() {
 					if ( $scope._config.text.title ) {
@@ -193,6 +199,10 @@ define(['../resources'], function() {
 					} else {
 						return $interpolate("Liga {{league}} - Posiciones a la fecha #{{round}}")($scope);	
 					}
+				};
+
+				$scope.rowFilter = function(player) {
+					return player.count >= $scope._config.filter.minMatches;
 				};
 
 				$scope.sorts = [{

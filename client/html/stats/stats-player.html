@@ -3,12 +3,18 @@
     <span>{{getTitle()}}</span>
   </div>
   <div class="panel-body">
-    <div>
-      <select style="margin-bottom: 1em;width:20em;float:right" ng-init="tableSort=sorts[0]" class="form-control input-sm" ng-model="tableSort" ng-options="sort.name for sort in sorts">
-        <!-- <option ng-repeat="sort in sorts" value="{{sort.key}}">{{sort.name}}</option> -->
-      </select>
+    <div class="row">
+      <div class="col-md-4">
+        <label class="col-md-6">Min. partidos</label>
+        <input style="width:7em" type="number" class="col-md-6 form-control input-sm" ng-model="_config.filter.minMatches"></input>
+      </div>
+      <div class="col-md-4">
+      </div>
+      <div class="col-md-4">
+        <select style="margin-bottom: 1em;width:20em;float:right" ng-init="tableSort=sorts[0]" class="form-control input-sm" ng-model="tableSort" ng-options="sort.name for sort in sorts"></select>
+      </div>
     </div>
-    <div>
+    <div class="row">
       <table class="table table-condensed table-bordered">
         <thead>
           <tr>
@@ -23,10 +29,10 @@
             <th>Jugador</th>
             
             <th ng-if="_config.show.match" title="Puntos">Pts<span ng-class="{'glyphicon glyphicon-asterisk':tableSort.key=='-points'}"></span></th>
-            <th ng-if="_config.show.match" title="Partidos jugados">J</th>
-            <th ng-if="_config.show.match" title="Ganads">G</th>
+            <th ng-if="_config.show.match" title="Partidos jugados">J<span ng-class="{'glyphicon glyphicon-asterisk':tableSort.key=='-count'}"></span></th>
+            <th ng-if="_config.show.match" title="Ganads">G<span ng-class="{'glyphicon glyphicon-asterisk':tableSort.key=='-win'}"></span></th>
             <th ng-if="_config.show.match" title="Empatados">E</th>
-            <th ng-if="_config.show.match"title="Perdidos">P</th>
+            <th ng-if="_config.show.match"title="Perdidos">P<span ng-class="{'glyphicon glyphicon-asterisk':tableSort.key=='-lost'}"></span></th>
             
             <th ng-if="_config.show.goals" title="Goles convertidos">G.F<span ng-class="{'glyphicon glyphicon-asterisk':tableSort.key=='-goals'}"></span></th>
             <th ng-if="_config.show.goals" title="Promedio de gol, sobre los partidos que se contaron goles">P.G<span ng-class="{'glyphicon glyphicon-asterisk':tableSort.key=='-goalAvg'}"></span></th>
@@ -37,18 +43,18 @@
             <th ng-if="_config.show.beers" title="Cantidad de 3ra figura">P3<span ng-class="{'glyphicon glyphicon-asterisk':tableSort.key=='-podium3'}"></span></th>
             <th ng-if="_config.show.beers" title="Total de podios">P.T<span ng-class="{'glyphicon glyphicon-asterisk':tableSort.key=='-(podium1+podium2+podium3)'}"></span></th>
 
-            <th ng-if="_config.show.extra" title="Promedio de partidos ganados">P.P.G</th>
+            <th ng-if="_config.show.extra" title="Promedio de partidos ganados">P.P.G<span ng-class="{'glyphicon glyphicon-asterisk':tableSort.key=='-(win/count)'}"></span></th>
           </tr>
         </thead>
         <tbody>
-          <tr ng-repeat="player in stats.byPlayer | orderBy:(tableSort.sortBy||tableSort.key)">
+          <tr ng-repeat="player in stats.byPlayer | filter:rowFilter | orderBy:(tableSort.sortBy||tableSort.key)">
             <td>{{$index+1}}</td>
             <td>{{getPlayer(player.player).alias}}</td>
             <td ng-if="_config.show.match" ng-class="{fwbold:tableSort.key=='-points'}">{{player.points}}</td>
-            <td ng-if="_config.show.match">{{player.count}}</td>
-            <td ng-if="_config.show.match">{{player.win}}</td>
-            <td ng-if="_config.show.match">{{player.even}}</td>
-            <td ng-if="_config.show.match">{{player.lost}}</td>
+            <td ng-if="_config.show.match" ng-class="{fwbold:tableSort.key=='-count'}" title="{{player.count/stats.general.count*100|number:0}}%">{{player.count}}</td>
+            <td ng-if="_config.show.match" ng-class="{fwbold:tableSort.key=='-win'}">{{player.win}}</td>
+            <td ng-if="_config.show.match" ng-class="{fwbold:tableSort.key=='-even'}">{{player.even}}</td>
+            <td ng-if="_config.show.match" ng-class="{fwbold:tableSort.key=='-lost'}">{{player.lost}}</td>
             
             <td ng-if="_config.show.goals" ng-class="{fwbold:tableSort.key=='-goals'}">{{player.goals}}</td>
             <td ng-if="_config.show.goals" ng-class="{fwbold:tableSort.key=='-goalAvg'}">{{player.goalAvg|number:2}}</td>
@@ -56,10 +62,10 @@
             <td ng-if="_config.show.beers" ng-class="{fwbold:tableSort.key=='-beerAvg'}">{{player.beerAvg|number:2}}</td>
             <td ng-if="_config.show.beers" ng-class="{fwbold:tableSort.key=='-podium1'}">{{player.podium1}}</td>
             <td ng-if="_config.show.beers" ng-class="{fwbold:tableSort.key=='-podium2'}">{{player.podium2}}</td>
-            <td ng-if="_config.show.beers"ng-class="{fwbold:tableSort.key=='-podium3'}">{{player.podium3}}</td>
-            <td ng-if="_config.show.beers"ng-class="{fwbold:tableSort.key=='-(podium1+podium2+podium3)'}">{{player.podium1+player.podium2+player.podium3}}</td>
+            <td ng-if="_config.show.beers" ng-class="{fwbold:tableSort.key=='-podium3'}">{{player.podium3}}</td>
+            <td ng-if="_config.show.beers" ng-class="{fwbold:tableSort.key=='-(podium1+podium2+podium3)'}">{{player.podium1+player.podium2+player.podium3}}</td>
 
-            <td ng-if="_config.show.extra">{{player.win/player.count*100|number:0}}%</td>
+            <td ng-if="_config.show.extra" ng-class="{fwbold:tableSort.key=='-(win/count)'}">{{player.win/player.count*100|number:0}}%</td>
           </tr>
         </tbody>
       </table>

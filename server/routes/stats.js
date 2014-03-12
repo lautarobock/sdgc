@@ -185,7 +185,10 @@ Dada una lista de partidos calcula estadisticas por jugador.
 */
 function calculate(matches) {
     var stats = {
-        playersMap: {}
+        playersMap: {},
+        general: {
+            count: matches.length
+        }
     }
     
 
@@ -206,7 +209,10 @@ function calculate(matches) {
 
 function calculateForPairs(matches) {
     var stats = {
-        pairsMap: {}
+        pairsMap: {},
+        general: {
+            count: matches.length
+        }
     }
     
 
@@ -225,7 +231,10 @@ function calculateForPairs(matches) {
 
 function calculateForDuels(matches) {
     var stats = {
-        duelsMap: {}
+        duelsMap: {},
+        general: {
+            count: matches.length
+        }
     }
 
     for ( var i=0; i<matches.length; i++ ) {

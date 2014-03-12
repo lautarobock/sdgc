@@ -1,9 +1,13 @@
-<div main-content>
+<div main-content ng-controller="StatsDuelController" >
+  <h2>Estadisticas por duelos</h2>
   <div class="btn-group">
       <button ng-repeat="it in leagues | orderBy:'_id'" type="button" class="btn btn-primary" ng-model="filter.league[it._id]" btn-checkbox>{{it.name}}</button>
   </div>
+  <div class="well well-sm top1">
+    Sobre un total de {{stats.general.count}} partidos
+  </div>
 
-  <div ng-controller="StatsDuelController" style="margin-top:1em">
+  <div class="top1">
     <div class="row" style="margin-bottom:1em">
       <div class="col-md-4">
         <label class="col-md-6">Min. partidos</label>
@@ -22,7 +26,8 @@
       </div>
     </div>
     <div class="row">
-        <table class="col-md-12 table table-condensed table-bordered">
+      <div class="col-md-12">
+        <table class="table table-condensed table-bordered">
             <thead>
               <tr>
                 <th>#</th>
@@ -42,7 +47,7 @@
                 <td>{{$index+1}}</td>
                 <td>{{getPlayer(player.players[0]).alias}}</td>
                 <td>{{getPlayer(player.players[1]).alias}}</td>
-                <td>{{player.count}}</td>
+                <td title="{{player.count/stats.general.count*100|number:0}}% de los partidos">{{player.count}}</td>
                 <td>{{player.win}}</td>
                 <td>{{player.even}}</td>
                 <td>{{player.lost}}</td>
@@ -53,6 +58,7 @@
         </table>
       </div>
     </div>
+  </div>
 </div>
 
 <div side-bar>
