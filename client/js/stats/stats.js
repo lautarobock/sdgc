@@ -22,7 +22,7 @@ define(['../resources'], function() {
                 title:'Posiciones'
             },
             show: {
-                title: true,
+                title: $location.search().showTitle,
                 goals: $location.search().goals,
                 beers: $location.search().beers,
                 extra: $location.search().extra,
