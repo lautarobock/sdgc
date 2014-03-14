@@ -116,6 +116,7 @@ define("app", [
         $routeProvider.            
                 // when('/main', {templateUrl: 'main/main.html',   controller: 'MainController'}).
                 
+                when('/stats/insert', {templateUrl: 'stats/stats-insert.html',   controller: 'StatsInsertController'}).
                 when('/stats/player', {templateUrl: 'stats/stats.html',   controller: 'StatsController'}).
                 when('/stats/pair', {templateUrl: 'stats/stats-pair.html',   controller: 'StatsController'}).
                 when('/stats/duel', {templateUrl: 'stats/stats-duel.html',   controller: 'StatsController'}).

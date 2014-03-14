@@ -2,6 +2,70 @@ define(['../resources'], function() {
 
 	var stats = angular.module("afd.stats", ['afd.resources']);
 
+	stats.controller("StatsInsertController", function($scope, League, $location) {
+
+        $scope.leagues = [];
+
+        League.query({sort: '_id'}, function(leagues) {
+            // angular.forEach(leagues, function(league) {
+
+            //     $scope.filter.league[league._id] = true;
+            // });
+            $scope.leagues = [leagues[leagues.length-1]._id];
+            $scope.config.text.title = "Posiciones " + leagues[leagues.length-1].name;
+            // $scope.configGoals.text.title = "Goleadores " + leagues[leagues.length-1].name;
+        });
+
+        
+        $scope.config= {
+            text: {
+                title:'Posiciones'
+            },
+            show: {
+                title: true,
+                goals: $location.search().goals,
+                beers: $location.search().beers,
+                extra: $location.search().extra,
+                header: $location.search().header,
+                rowGroup: $location.search().rowGroup
+            }
+        };
+
+        if ( $location.search().sort == 'goals' ) {
+        	$scope.config.sort = {
+        		init: {
+	                name: 'Goles',
+	                key: '-goals'
+	            }
+        	}
+        }
+
+
+
+
+        // $scope.configGoals= {
+        //     text: {
+        //         title:'Goleadores'
+        //     },
+        //     show: {
+        //         title: true,
+        //         match: false,
+        //         goals: true,
+        //         beers: false,
+        //         extra: false,
+        //         header: false,
+        //         rowGroup: false
+        //     },
+        //     sort: {
+        //         init: {
+        //             name: 'Goles',
+        //             key: '-goals'
+        //         }
+        //     }
+        // };		
+
+	});
+
 	stats.controller('StatsDuelController', function($scope, Stats, Player){
 
 		$scope.$watchCollection("selectedLeagues", function() {
