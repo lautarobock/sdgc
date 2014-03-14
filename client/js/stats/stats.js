@@ -23,6 +23,7 @@ define(['../resources'], function() {
             },
             show: {
                 title: $location.search().showTitle,
+                match: $location.search().match,
                 goals: $location.search().goals,
                 beers: $location.search().beers,
                 extra: $location.search().extra,
