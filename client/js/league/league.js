@@ -11,7 +11,7 @@ define(['../stats/stats','../resources','../comment/comment'], function() {
                 });
         });
 
-		$scope.leagues = League.query({sort: '_id'},onLoad);
+		$scope.leagues = League.query({sort: 'startDate'},onLoad);
 		$scope.league = null;
 		$scope.matches = [];
 		$scope.match = null;
@@ -28,7 +28,7 @@ define(['../stats/stats','../resources','../comment/comment'], function() {
                         }
                     });
                 } else {
-                    $scope.loadLeague($scope.leagues[$scope.leagues.length-1]);    
+                    $scope.loadLeague($scope.leagues[$scope.leagues.length-1]);
                 }
             } else {
                 $scope.clearLeague();
@@ -60,9 +60,9 @@ define(['../stats/stats','../resources','../comment/comment'], function() {
                             if ( match.round == $routeParams.match_round ) {
                                 $scope.loadMatch(match);
                             }
-                        }); 
+                        });
                     } else {
-                        // $scope.loadMatch($scope.matches[$scope.matches.length-1]);        
+                        // $scope.loadMatch($scope.matches[$scope.matches.length-1]);
                         $scope.clearMatch();
                     }
                 } else {
@@ -70,7 +70,7 @@ define(['../stats/stats','../resources','../comment/comment'], function() {
                 }
                 $scope.nextDate+=1000*60*60*24*7;
 			});
-            
+
 		}
 
         $scope.clearMatch = function() {
@@ -110,7 +110,7 @@ define(['../stats/stats','../resources','../comment/comment'], function() {
             startDate: false,
             finishDate: false
         };
-        
+
         $scope.openDate = function($event, type) {
             $event.preventDefault();
             $event.stopPropagation();
@@ -136,7 +136,7 @@ define(['../stats/stats','../resources','../comment/comment'], function() {
             },
             templateUrl: 'league/league-resume.html',
             controller: function($scope,Stats,Player) {
-                
+
                 $scope.show = {
                     points: true,
                     goals: true,
@@ -174,7 +174,7 @@ define(['../stats/stats','../resources','../comment/comment'], function() {
                 $scope.getPlayer = function(player_id) {
                     return playersMap[player_id];
                 }
-                
+
             }
         };
     });
