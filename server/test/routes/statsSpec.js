@@ -8,8 +8,6 @@ describe("stats.js", function() {
 
         var result = stats.calculate(MATCHES);
 
-        console.log(JSON.stringify(result,0,4));
-
         done();
     });
 
