@@ -16,7 +16,7 @@ define(['../resources'], function() {
             // $scope.configGoals.text.title = "Goleadores " + leagues[leagues.length-1].name;
         });
 
-        
+
         $scope.config= {
             text: {
                 title:'Posiciones'
@@ -63,7 +63,7 @@ define(['../resources'], function() {
         //             key: '-goals'
         //         }
         //     }
-        // };		
+        // };
 
 	});
 
@@ -73,7 +73,7 @@ define(['../resources'], function() {
 			if ( $scope.selectedLeagues ) {
 				$scope.stats = Stats.leagueToRoundForDuel({
 	                leagues: $scope.selectedLeagues
-	            });	
+	            });
 			} else {
 				$scope.stats = {};
 			}
@@ -83,7 +83,7 @@ define(['../resources'], function() {
 		$scope.filterPlayer = "_";
 
 		$scope.globalFilter = function(a) {
-			return a.count >= $scope.countMin 
+			return a.count >= $scope.countMin
 				&& ($scope.filterPlayer == "_" || $scope.filterPlayer == a.players[0]);
 		};
 
@@ -113,7 +113,7 @@ define(['../resources'], function() {
 			}, {
 				name: '-Partidos jugados',
 				key: ['count','(win/count)', 'win']
-			}, {	
+			}, {
 				name: '+Partidos ganados por 1',
 				key: ['-win','count']
 			}, {
@@ -121,7 +121,7 @@ define(['../resources'], function() {
 				key: ['-lost','count']
 			}
 		];
-		
+
 
 	});
 
@@ -131,7 +131,7 @@ define(['../resources'], function() {
 			if ( $scope.selectedLeagues ) {
 				$scope.stats = Stats.leagueToRoundForPair({
 	                leagues: $scope.selectedLeagues
-	            });	
+	            });
 			} else {
 				$scope.stats = {};
 			}
@@ -141,7 +141,7 @@ define(['../resources'], function() {
 		$scope.filterPlayer = "_";
 
 		$scope.globalFilter = function(a) {
-			return a.count >= $scope.countMin 
+			return a.count >= $scope.countMin
 				&& ($scope.filterPlayer == "_" || $scope.filterPlayer == a.players[0] || $scope.filterPlayer == a.players[1]);
 		};
 
@@ -185,7 +185,7 @@ define(['../resources'], function() {
 			// 	key: ['lost','-count']
 			}
 		];
-		
+
 
 	});
 
@@ -218,7 +218,8 @@ define(['../resources'], function() {
 			},
 			show: {
 				title: false,
-				extra: true
+				extra: true,
+				historic: true
 			}
 		};
 
@@ -263,7 +264,7 @@ define(['../resources'], function() {
 				angular.extend($scope._config.text, $scope.config.text);
 				angular.extend($scope._config.filter, $scope.config.filter);
 				angular.extend($scope._config.sort, $scope.config.sort);
-				
+
 				var title = "";
 				$scope.getTitle = function() {
 					return title;
@@ -275,7 +276,7 @@ define(['../resources'], function() {
 					if ( $scope._config.text.title ) {
 						title = $scope._config.text.title;
 					} else {
-						title = $interpolate("Liga {{league}} - Posiciones a la fecha #{{round}}")($scope);	
+						title = $interpolate("Liga {{league}} - Posiciones a la fecha #{{round}}")($scope);
 					}
 				});
 
@@ -328,17 +329,24 @@ define(['../resources'], function() {
 					});
 				}
 
+				if ( $scope._config.show.historic ) {
+					$scope.sorts.push({
+						name: 'Historico',
+						key: '-historic'
+					});
+				}
+
 				if ( $scope.league && $scope.round ) {
 					$scope.$watch('league+round', function() {
 						if ( $scope.league && $scope.round ) {
 							$scope.stats = Stats.leagueToRound({
 				                league: $scope.league,
 				                upToRound: $scope.round
-				            });	
+				            });
 						} else {
 							$scope.stats = {};
 						}
-					});	
+					});
 				}
 
 				if ( $scope.leagues ) {
@@ -346,14 +354,14 @@ define(['../resources'], function() {
 						if ( $scope.leagues ) {
 							$scope.stats = Stats.leagueToRound({
 				                leagues: $scope.leagues
-				            });	
+				            });
 						} else {
 							$scope.stats = {};
 						}
-					});	
+					});
 				}
-				
-				
+
+
 				//Load players
 				var playersMap = {};
 		        $scope.players = Player.query(function() {

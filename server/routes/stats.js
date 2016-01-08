@@ -11,7 +11,7 @@ function calculateTeamsForDuels(team1,teamB, result1,resultB, duelsMap) {
             var result = result1;
             var players = [memberI.player,memberJ.player];
             var key = memberI.player+memberJ.player;
-            
+
             if ( !duelsMap[key] ) {
                 duelsMap[key] = {
                     key: key,
@@ -25,7 +25,7 @@ function calculateTeamsForDuels(team1,teamB, result1,resultB, duelsMap) {
             if ( result == 1 ) data.even++;
             if ( result == 0 ) data.lost++;
         }
-       
+
     }
 
 }
@@ -42,7 +42,7 @@ function calculateTeamForPairs(team, result, pairsMap) {
             if ( memberI.player > memberJ.player ) {
                 key = memberJ.player+memberI.player;
             }
-            
+
             if ( !pairsMap[key] ) {
                 pairsMap[key] = {
                     key: key,
@@ -56,20 +56,21 @@ function calculateTeamForPairs(team, result, pairsMap) {
             if ( result == 1 ) data.even++;
             if ( result == 0 ) data.lost++;
         }
-       
+
     }
 
 }
 
 //result: 0,1,3 (for lost, even or win)
-function calculateTeam(team, result, playersMap) {
+//and *cohef is using for players
+function calculateTeam(team, result, playersMap, cohef) {
     for ( var i=0; i<team.members.length; i++ ) {
         var member = team.members[i];
         if ( !playersMap[member.player] ) {
             playersMap[member.player] = {
                 player: member.player,
                 count: 0,win: 0,lost: 0,even: 0,points: 0,goalsCount: 0, goals: 0, goalAvg: 0,
-                beersCount: 0, beers: 0,beerAvg: 0,podium1: 0,podium2: 0,podium3: 0
+                beersCount: 0, beers: 0,beerAvg: 0,podium1: 0,podium2: 0,podium3: 0, historic: 0
             }
         }
         var data = playersMap[member.player];
@@ -78,6 +79,7 @@ function calculateTeam(team, result, playersMap) {
         if ( result == 1 ) data.even++;
         if ( result == 0 ) data.lost++;
         data.points += result;
+        data.historic += result*(cohef||1);
         if ( member.goals != null ) {
             data.goals+=member.goals;
             data.goalsCount++;
@@ -86,7 +88,7 @@ function calculateTeam(team, result, playersMap) {
             data.beers+=member.beers;
             data.beersCount++;
         }
-        
+
         if ( member.podium == 1 ) data.podium1++;
         if ( member.podium == 2 ) data.podium2++;
         if ( member.podium == 3 ) data.podium3++;
@@ -97,7 +99,7 @@ function calculateMatchForDuels(match, stats) {
     if ( !stats ) {
         stats = {duelsMap: {}};
     }
-    
+
     var result1;
     var resultB;
     if ( match.winner=='1' )  {
@@ -126,7 +128,7 @@ function calculateMatchForPairs(match, stats) {
     if ( !stats ) {
         stats = {pairsMap: {}};
     }
-    
+
     var result1;
     var resultB;
     if ( match.winner=='1' )  {
@@ -146,11 +148,14 @@ function calculateMatchForPairs(match, stats) {
     return stats;
 }
 
-function calculateMatch(match, stats) {
+/**
+* @params cohef valor para hacer ranking historico segun los ulitmos partidos
+*/
+function calculateMatch(match, stats, cohef) {
     if ( !stats ) {
         stats = {playersMap: {}};
     }
-    
+
     var result1;
     var resultB;
     if ( match.winner=='1' )  {
@@ -163,9 +168,9 @@ function calculateMatch(match, stats) {
         result1 = 1;
         resultB = 1;
     }
-
-    calculateTeam(match.team1,result1,stats.playersMap);
-    calculateTeam(match.teamB,resultB,stats.playersMap);
+    console.log('date',match.date,'cohef',cohef);
+    calculateTeam(match.team1,result1,stats.playersMap, cohef);
+    calculateTeam(match.teamB,resultB,stats.playersMap, cohef);
 
     return stats;
 }
@@ -190,10 +195,10 @@ function calculate(matches) {
             count: matches.length
         }
     }
-    
+
 
     for ( var i=0; i<matches.length; i++ ) {
-        calculateMatch(matches[i],stats);
+        calculateMatch(matches[i],stats, 1-i/matches.length);
     }
 
     stats.byPlayer = [];
@@ -214,7 +219,7 @@ function calculateForPairs(matches) {
             count: matches.length
         }
     }
-    
+
 
     for ( var i=0; i<matches.length; i++ ) {
         calculateMatchForPairs(matches[i],stats);
@@ -296,9 +301,13 @@ function calculateFor(req, res) {
         if ( !(req.query.leagues instanceof Array) ) {
             req.query.leagues = [req.query.leagues];
         }
-        model.Match.find({league:{$in: req.query.leagues}}, function(err, matches) {
-            res.send(calculate(matches));
-        });
+
+        model.Match
+            .find({league:{$in: req.query.leagues}})
+            .sort('-date')    
+            .exec(function(err, matches) {
+                res.send(calculate(matches));
+            });
     } else {
         res.send({});
     }

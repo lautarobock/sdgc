@@ -2,8 +2,19 @@ var model = require("../../domain/model");
 var stats = require("../../routes/stats");
 
 describe("stats.js", function() {
+
+    it('Should calculate coheficiente por los ultimos X partidos', function(done) {
+        expect(MATCHES.length).toBe(9);
+
+        var result = stats.calculate(MATCHES);
+
+        console.log(JSON.stringify(result,0,4));
+
+        done();
+    });
+
     it("Should retrive stats for single player over given matches", function(done) {
-        
+
         var result = stats.calculate(MATCHES);
         // console.log(result);
         expect(result).toBeDefined();
@@ -24,10 +35,10 @@ describe("stats.js", function() {
         expect(result.playersMap.Lauta.podium3).toBe(0);
         expect(result.playersMap.Lauta.beerAvg).toBe(7.153999999999999);
         expect(result.general.count).toBe(9);
-        
-        
+
+
         expect(result.playersMap.RAta.points).toBe(19);
-        
+
 
         done();
     });
@@ -45,7 +56,7 @@ describe("stats.js", function() {
         expect(result).toBeDefined();
         expect(result.byPlayer).toBeDefined();
         expect(result.byPlayer.length).toBe(10);
-        expect(result.byPlayer[9]).toEqual({ 
+        expect(result.byPlayer[9]).toEqual({
             player: 'Lauta',
             count: 1,
             win: 1,
@@ -60,14 +71,15 @@ describe("stats.js", function() {
             beerAvg: 0,
             podium1: 1,
             podium2: 0,
-            podium3: 0 
+            podium3: 0,
+            historic: 3
         });
 
         done();
     });
 
     it("Should retrive stats for pairs of player over given matches", function(done) {
-        
+
         var result = stats.calculateForPairs(MATCHES);
         // console.log(result);
         expect(result).toBeDefined();
@@ -77,17 +89,17 @@ describe("stats.js", function() {
         expect(result.pairsMap.LautaRAta.even).toBe(0);
         expect(result.pairsMap.LautaRAta.count).toBe(3);
         expect(result.general.count).toBe(9);
-        
+
         done();
     });
 
     it("Should retrive stats for pair of player over one match", function(done) {
 
         var map = stats.calculateMatchForPairs(MATCHES[1]);
-        
+
         expect(map).toBeDefined();
         // expect(result.byPlayer.length).toBe(10);
-        expect(map.pairsMap.LautaRAta).toEqual({ 
+        expect(map.pairsMap.LautaRAta).toEqual({
             key: 'LautaRAta',
             players: ['RAta','Lauta'],
             count: 1,
@@ -100,7 +112,7 @@ describe("stats.js", function() {
     });
 
     it("Should retrive stats for duel of player over given matches", function(done) {
-        
+
         var result = stats.calculateForDuels(MATCHES);
         // console.log(result);
         expect(result).toBeDefined();
@@ -110,7 +122,7 @@ describe("stats.js", function() {
         expect(result.duelsMap.LautaRAta.even).toBe(1);
         expect(result.duelsMap.LautaRAta.count).toBe(4);
         expect(result.general.count).toBe(9);
-        
+
         done();
     });
 
@@ -121,10 +133,10 @@ describe("stats.js", function() {
     it("Should retrive stats for duel of player over one match", function(done) {
 
         var map = stats.calculateMatchForDuels(MATCHES[1]);
-        
+
         expect(map).toBeDefined();
         // expect(result.byPlayer.length).toBe(10);
-        expect(map.duelsMap.HangaRAta).toEqual({ 
+        expect(map.duelsMap.HangaRAta).toEqual({
             key: 'HangaRAta',
             players: ['Hanga', 'RAta'],
             count: 1,
@@ -133,7 +145,7 @@ describe("stats.js", function() {
             even: 0
         });
 
-        expect(map.duelsMap.RAtaHanga).toEqual({ 
+        expect(map.duelsMap.RAtaHanga).toEqual({
             key: 'RAtaHanga',
             players: ['RAta','Hanga'],
             count: 1,
