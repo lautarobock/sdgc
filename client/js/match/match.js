@@ -31,12 +31,13 @@ define(['../resources'], function() {
     });
 
     match.controller("MatchEditController", function($scope,$routeParams,Match,$location, Player, $filter, PlayerPopup) {
-        
+
         $scope.playersMap = {};
         $scope.players = Player.query(function() {
             angular.forEach($scope.players, function(player) {
                 $scope.playersMap[player._id] = player;
             });
+            $scope.addStarting();
         });
 
 
@@ -53,10 +54,12 @@ define(['../resources'], function() {
             $scope.match.players = [];
             $scope.match.league = $location.search().league_id;
             $scope.match.team1={
-                members: []
+                members: [],
+                otherGoals: 0
             };
             $scope.match.teamB={
-                members: []
+                members: [],
+                otherGoals: 0
             };
         }
 
@@ -72,11 +75,11 @@ define(['../resources'], function() {
 
         $scope.back = function() {
             if ( $scope.match._id ) {
-                $location.path("/league/detail/"+ $scope.match.league + '/' + $scope.match.round);    
+                $location.path("/league/detail/"+ $scope.match.league + '/' + $scope.match.round);
             } else {
-                $location.path("/league/detail/"+ $scope.match.league);    
+                $location.path("/league/detail/"+ $scope.match.league);
             }
-            
+
         };
 
         $scope.addPlayer = function(player) {
@@ -85,8 +88,8 @@ define(['../resources'], function() {
 
         $scope.addStarting = function() {
             angular.forEach($scope.players, function(player) {
-                if ( player.starting 
-                        && $scope.match.players.length<10 
+                if ( player.starting
+                        && $scope.match.players.length<10
                         && $scope.match.players.indexOf(player._id) == -1 ) {
                     $scope.addPlayer(player._id);
                 }
@@ -95,7 +98,8 @@ define(['../resources'], function() {
 
         function addTeam (team, player) {
             team.members.push({
-                player: player
+                player: player,
+                goals: 0
             });
         }
 
@@ -105,6 +109,14 @@ define(['../resources'], function() {
 
         $scope.addTeam1 = function(player) {
             addTeam($scope.match.team1, player);
+        };
+
+        $scope.addTeamMagic = function(player) {
+            if ( $scope.match.team1.members.length<5 ) {
+                $scope.addTeam1(player);
+            } else {
+                $scope.addTeamB(player);
+            }
         };
 
         $scope.remove = function(player) {
@@ -139,7 +151,7 @@ define(['../resources'], function() {
             } else {
                 $scope.match.winner = null;
             }
-            
+
         }
 
         $scope.updateGoalB = function() {
@@ -214,7 +226,7 @@ define(['../resources'], function() {
         $scope.opened = {
             date: false
         };
-        
+
         $scope.openDate = function($event, type) {
             $event.preventDefault();
             $event.stopPropagation();

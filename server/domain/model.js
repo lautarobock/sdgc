@@ -35,7 +35,7 @@ exports.League = mongoose.model("League", new Schema({
     finishDate: Date,
     matches: [{type: String , ref: 'Match'}], //No lo estoy usando,
     comments: [Comment]
-},{ _id: false }));
+},{ _id: false, versionKey: false }));
 
 var Team = {
     members: [{
