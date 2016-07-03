@@ -1,0 +1,85 @@
+<div>
+    <!--<h4>Fecha #{{match.round}} - {{match.league}}</h4>-->
+  <fieldset>
+      <div class="row">
+        <div class="col-xs-6">
+          <div class="panel panel-default">
+            <!--<div class="panel-heading">Equipo 1</div>-->
+            <table class="table table-condensed">
+              <tbody>   
+                <tr ng-repeat="member in match.team1.members">
+                  <td>{{playersMap[member.player].alias}}</td>
+                  <td style="width:45px">
+                      <button type="button" ng-click="member.goals=member.goals-1;updateGoal1()" class="btn btn-default btn-md">
+                          <span class="glyphicon glyphicon-chevron-left"></span>
+                      </button> 
+                  </td>
+                  <td style="width:60px">
+                      <span class="form-control input-md" style="text-align: right;font-weight: bolder;font-size: 28px;padding: 0px 11px;color: white;background: black;" ng-bind="member.goals"></span>
+                  </td>
+                  <td style="width:45px">
+                      <button type="button" ng-click="member.goals=member.goals+1;updateGoal1()" class="btn btn-default btn-md">
+                          <span class="glyphicon glyphicon-chevron-right"></span>
+                      </button> 
+                  </td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Totales</th>
+                  <th></th>
+                  <th>
+                      <span class="form-control input-md" 
+                            style="text-align: right;font-weight: bolder;font-size: 28px;padding: 0px 11px;color: greenyellow;background: black;" 
+                            ng-bind="match.team1.goals"></span>
+                  </th>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+        </div>
+        <div class="col-xs-6">
+          <div class="panel panel-default">
+            <!--<div class="panel-heading">Equipo B</div>-->
+            <table class="table table-condensed">
+              <tbody>
+                <tr ng-repeat="member in match.teamB.members">
+                    <td>{{playersMap[member.player].alias}}</td>
+                    <td style="width:45px">
+                        <button type="button" ng-click="member.goals=member.goals-1;updateGoalB()" class="btn btn-default btn-md">
+                            <span class="glyphicon glyphicon-chevron-left"></span>
+                        </button> 
+                    </td>
+                    <td style="width:60px">
+                        <span class="form-control input-md" style="text-align: right;font-weight: bolder;font-size: 28px;padding: 0px 11px;color: white;background: black;" ng-bind="member.goals"></span>
+                    </td>
+                    <td style="width:45px">
+                        <button type="button" ng-click="member.goals=member.goals+1;updateGoalB()" class="btn btn-default btn-md">
+                            <span class="glyphicon glyphicon-chevron-right"></span>
+                        </button> 
+                    </td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Totales</th>
+                  <th></th>
+                  <th>
+                      <span class="form-control input-md" 
+                            style="text-align: right;font-weight: bolder;font-size: 28px;padding: 0px 11px;color: greenyellow;background: black;" 
+                            ng-bind="match.teamB.goals"></span>
+                  </th>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+        </div>
+      </div>
+    </fieldset>
+    <button type="button" class="btn btn-primary pull-left btn-xs" ng-click="back()">
+        <span class="glyphicon glyphicon-arrow-left "></span> Volver
+    </button>
+    <button type="button" class="btn btn-default pull-right btn-md" ng-click="save()">
+        <span class="glyphicon glyphicon-ok"></span> Guardar
+    </button>
+</div>

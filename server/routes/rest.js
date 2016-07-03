@@ -26,7 +26,10 @@ function createRest(service, customId) {
             } else {
                 id = new mongoose.Types.ObjectId(req.params.id);
             }
-            model[service].findByIdAndUpdate(id,req.body,{upsert:true}).exec(function(err,results) {
+            model[service].findByIdAndUpdate(id,req.body,{upsert:true, new:true}).exec(function(err,results) {
+                if ( err ) {
+                    console.log('ERR', err);
+                }
                 res.send(results);
             });
         },

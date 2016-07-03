@@ -5,8 +5,14 @@
     {{match.date|date:'dd-MM-yyyy'}}
     <span ng-hide="$last" class="glyphicon glyphicon-flash"></span>
     {{match.status|afdMatchStatus}}
-    <a ng-if="league.status == 'RUNNING'" href="#/match/edit/{{match._id}}">
-      <span style="color: white;" class="glyphicon glyphicon-edit pull-right"></span>
+    <a ng-if="league.status == 'RUNNING'" href="#/match/edit/{{match._id}}" class="pull-right">
+      <span style="color: white;" class="glyphicon glyphicon-edit"></span>
+    </a>
+    <a ng-if="league.status == 'RUNNING'" href="match.html#/match-run/{{match._id}}" class="pull-right" style="margin-right:1em">
+      <span style="color: white;" class="glyphicon glyphicon-new-window "></span>
+    </a>
+    <a ng-if="match._id" ng-click="remove()" class="pull-right" href="" style="margin-right:1em">
+      <span style="color: white;" class="glyphicon glyphicon-remove"></span>
     </a>
   </div>
   <div class="panel-body">
