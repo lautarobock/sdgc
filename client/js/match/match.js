@@ -304,9 +304,6 @@ define(['../resources'], function() {
                     $scope.match.$delete(function() {
                         $location.path("/league/detail/"+ $scope.match.league);
                     });
-                    // $scope.match.$save(function() {
-                    //     $location.path("/league/detail/"+ $scope.match.league + '/' + $scope.match.round);
-                    // });
                 };
             }
         };
