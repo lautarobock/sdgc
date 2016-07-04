@@ -11,9 +11,6 @@
     <a ng-if="league.status == 'RUNNING'" href="match.html#/match-run/{{match._id}}" class="pull-right" style="margin-right:1em">
       <span style="color: white;" class="glyphicon glyphicon-new-window "></span>
     </a>
-    <a ng-if="match._id" ng-click="remove()" class="pull-right" href="" style="margin-right:1em">
-      <span style="color: white;" class="glyphicon glyphicon-remove"></span>
-    </a>
   </div>
   <div class="panel-body">
     <div ng-show="match.winner">

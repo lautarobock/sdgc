@@ -17,7 +17,8 @@ exports.Player = mongoose.model("Player", new Schema({
     lastName: String,
     alias: String,
     bornDate: Date,
-    starting: Boolean //si es titular o no
+    starting: Boolean, //si es titular o no
+    goalkeeper: {type:Boolean, default: false}
 },{ _id: false }));
 
 var Comment = {

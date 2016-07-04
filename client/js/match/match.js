@@ -122,6 +122,55 @@ define(['../resources'], function() {
             });
         };
 
+        $scope.random = function() {
+            var notUsedInTeam = $filter('notUsedInTeam');
+            var playersToUse = notUsedInTeam($scope.match.players,$scope.match);
+            if ( playersToUse.length === 0 ) {
+                for ( var i=0; i<5; i++ ) {
+                    $scope.removeTeam1($scope.match.team1.members[0],0);
+                }
+                for ( var i=0; i<5; i++ ) {
+                    $scope.removeTeamB($scope.match.teamB.members[0],0);
+                }
+            }
+            var playersToUse = notUsedInTeam($scope.match.players,$scope.match);
+            var length = playersToUse.length;
+            //Si estan todos pongo un arquero para cada lado.
+            if ( length === 10) {
+                var ar1 = util.Arrays.indexOf(playersToUse, function(it) {
+                    return $scope.playersMap[it].goalkeeper?0:-1;
+                });
+                if ( ar1 !== -1 ) {
+                    $scope.addTeam1(playersToUse[ar1]);
+                    playersToUse.splice(ar1,1);
+                }
+                ar1 = util.Arrays.indexOf(playersToUse, function(it) {
+                    return $scope.playersMap[it].goalkeeper?0:-1;
+                });
+                if ( ar1 !== -1 ) {
+                    $scope.addTeamB(playersToUse[ar1]);
+                    playersToUse.splice(ar1,1);
+                }
+            }
+            length = playersToUse.length;
+            for ( var i=0; i<length; i++ ) {
+                var idx = Math.floor(Math.random()*+playersToUse.length);
+                var p = playersToUse[idx];
+                playersToUse.splice(idx,1);
+                if ( $scope.match.team1.members.length<5 ) {
+                    $scope.addTeam1(p);
+                } else {
+                    $scope.addTeamB(p);
+                }
+            }
+        };
+        
+        $scope.removeMatch = function() {
+            $scope.match.$delete(function() {
+                $location.path("/league/detail/"+ $scope.match.league);
+            });
+        };
+
         $scope.back = function() {
             if ( $scope.match._id ) {
                 $location.path("/league/detail/"+ $scope.match.league + '/' + $scope.match.round);
@@ -300,11 +349,6 @@ define(['../resources'], function() {
                         $scope.playersMap[player._id] = player;
                     });
                 });
-                $scope.remove = function() {
-                    $scope.match.$delete(function() {
-                        $location.path("/league/detail/"+ $scope.match.league);
-                    });
-                };
             }
         };
     });

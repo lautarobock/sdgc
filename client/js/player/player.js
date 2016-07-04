@@ -31,6 +31,13 @@ define(['../resources'], function() {
                     return player.starting ? '<b>Titular</b>' : '';
                 },
                 template:   '{{header.getValue($model)}}'
+            },{
+                field: 'goalkeeper',
+                caption: 'Arquero',
+                getValue: function(player) {
+                    return player.goalkeeper ? 'Si' : 'No';
+                },
+                template:   '{{header.getValue($model)}}'
             }
         ];
     });

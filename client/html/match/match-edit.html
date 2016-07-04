@@ -176,11 +176,19 @@
     </fieldset>
     <div class="form-group">
       <div class="col-xs-12">
+        <div class="pull-left">
+          <button ng-if="match._id" type="button" class="btn btn-danger" ng-click="removeMatch()">
+            <span class="glyphicon glyphicon-remove"></span> Eliminar
+          </button>
+        </div>
         <div class="pull-right">
+          <button type="button" ng-hide="match.players.length!=10" class="btn btn-info" ng-click="random()">Equipo Random</button>
+          <span ng-hide="match.players.length!=10" class="glyphicon glyphicon-flash"></span>
           <button type="button" class="btn btn-warning" ng-click="autoPodium()">Calcular Podios</button>
           <span ng-hide="$last" class="glyphicon glyphicon-flash"></span>
           <a class="btn btn-default" href="" ng-click="back()" >Cancelar</a>
           <button type="submit" class="btn btn-primary" ng-click="save()">Guardar</button>
+          
         </div>
       </div>
     </div>
