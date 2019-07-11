@@ -20,6 +20,7 @@ function createRest(service, customId) {
         save: function(req, res) {
             // console.log("INFO", "save");
             delete req.body._id;
+            delete req.body.__v;
             var id;
             if ( customId ) {
                 id = req.params.id;
@@ -29,8 +30,10 @@ function createRest(service, customId) {
             model[service].findByIdAndUpdate(id,req.body,{upsert:true, new:true}).exec(function(err,results) {
                 if ( err ) {
                     console.log('ERR', err);
+                    res.status(500).send(err);
+                } else {
+                    res.send(results);
                 }
-                res.send(results);
             });
         },
         remove: function(req, res) {

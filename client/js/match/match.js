@@ -82,16 +82,19 @@ define(['../resources'], function() {
     match.controller("MatchEditController", function($scope,$routeParams,Match,$location, Player, $filter, PlayerPopup) {
 
         $scope.playersMap = {};
-        $scope.players = Player.query(function() {
-            angular.forEach($scope.players, function(player) {
-                $scope.playersMap[player._id] = player;
-            });
-            $scope.addStarting();
-        });
+        
 
 
         if ( $routeParams.match_id ) {
-            $scope.match = Match.get({_id: $routeParams.match_id});
+            Match.get({_id: $routeParams.match_id}).$promise.then(match => {
+                $scope.match = match;
+                $scope.players = Player.query(function() {
+                    angular.forEach($scope.players, function(player) {
+                        $scope.playersMap[player._id] = player;
+                    });
+                    $scope.addStarting();
+                });
+            });
         } else {
             $scope.match = new Match();
             $scope.match.round = parseInt($location.search().nextRound);
@@ -110,6 +113,12 @@ define(['../resources'], function() {
                 members: [],
                 otherGoals: 0
             };
+            $scope.players = Player.query(function() {
+                angular.forEach($scope.players, function(player) {
+                    $scope.playersMap[player._id] = player;
+                });
+                $scope.addStarting();
+            });
         }
 
         $scope.save = function() {
@@ -119,7 +128,7 @@ define(['../resources'], function() {
 
             $scope.match.$save(function() {
                 $location.path("/league/detail/"+ $scope.match.league + '/' + $scope.match.round);
-            });
+            }, err => alert(err.data.message));
         };
 
         $scope.random = function() {
