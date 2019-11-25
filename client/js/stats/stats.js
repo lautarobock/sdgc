@@ -295,6 +295,9 @@ define(['../resources'], function() {
 					name: 'Promedio gol',
 					key: '-goalAvg'
 				}, {
+					name: 'Max gol',
+					key: '-goalMax'
+				}, {
 					name: 'Birras',
 					key: '-beerAvg'
 				}, {

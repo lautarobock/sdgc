@@ -69,7 +69,7 @@ function calculateTeam(team, result, playersMap, cohef) {
         if ( !playersMap[member.player] ) {
             playersMap[member.player] = {
                 player: member.player,
-                count: 0,win: 0,lost: 0,even: 0,points: 0,goalsCount: 0, goals: 0, goalAvg: 0,
+                count: 0,win: 0,lost: 0,even: 0,points: 0,goalsCount: 0, goals: 0, goalAvg: 0, goalMax: 0,
                 beersCount: 0, beers: 0,beerAvg: 0,podium1: 0,podium2: 0,podium3: 0, historic: 0
             }
         }
@@ -83,6 +83,7 @@ function calculateTeam(team, result, playersMap, cohef) {
         if ( member.goals != null ) {
             data.goals+=member.goals;
             data.goalsCount++;
+            data.goalMax = Math.max(data.goalMax, member.goals);
         }
         if ( member.beers != null ) {
             data.beers+=member.beers;
