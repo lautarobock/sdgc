@@ -17,7 +17,7 @@
   "readmeFilename": "README.md",
   "dependencies": {
     "async": "~0.2.9",
-    "express": "3.4.7",
+    "express": "3.11.0",
     "mongoose": "^5.7.5"
   },
   "devDependencies": {
