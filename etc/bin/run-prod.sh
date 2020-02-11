@@ -1,2 +1,2 @@
-export MONGOLAB_URI=mongodb://elcomite:elcomite@ds031339.mongolab.com:31339/elcomite
+export MONGOLAB_URI=mongodb+srv://afd:j43Aa6UtnTVBVSU@elcomite-qvuoo.mongodb.net/elcomite?retryWrites=true&w=majority
 node server/server.js
