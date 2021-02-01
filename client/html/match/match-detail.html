@@ -62,7 +62,10 @@
             </thead>
             <tbody>
               <tr ng-repeat="member in match.team1.members">
-                <td>{{playersMap[member.player].alias}}</td>
+                <td>
+                    {{playersMap[member.player].alias}}
+                    <span ng-show="member.captain">(C)</span>
+                </td>
                 <td>
                   {{member.goals}}
                 </td>
@@ -109,7 +112,10 @@
             </thead>
             <tbody>
               <tr ng-repeat="member in match.teamB.members">
-                <td>{{playersMap[member.player].alias}}</td>
+                <td>
+                    {{playersMap[member.player].alias}}
+                    <span ng-show="member.captain">(C)</span>
+                </td>
                 <td>
                   {{member.goals}}
                 </td>
