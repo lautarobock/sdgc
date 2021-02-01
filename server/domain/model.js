@@ -43,7 +43,8 @@ var Team = {
         podium: Number,
         goals: Number,
         beers: Number,
-        player: {type: String,  ref:'Player'}
+        player: {type: String,  ref:'Player'},
+        captain: Boolean
     }],
     otherGoals: Number, //En contra, no contados
     goals: Number,

@@ -79,12 +79,12 @@ define(['../resources'], function() {
         };
     });
 
-    match.controller("MatchEditController", function($scope,$routeParams,Match,$location, Player, $filter, PlayerPopup) {
+    match.controller("MatchEditController", function($scope,$routeParams,Match,$location, Player, $filter, PlayerPopup, Stats) {
 
         $scope.playersMap = {};
         
 
-
+        $scope.stats = Stats.leagueToRound();
         if ( $routeParams.match_id ) {
             Match.get({_id: $routeParams.match_id}).$promise.then(match => {
                 $scope.match = match;
@@ -172,6 +172,9 @@ define(['../resources'], function() {
                     $scope.addTeamB(p);
                 }
             }
+
+            $scope.match.team1.members.slice().sort((p1, p2) => ($scope.stats.playersMap[p2.player].count || 0) - ($scope.stats.playersMap[p1.player].count || 0) )[0].captain = true;
+            $scope.match.teamB.members.slice().sort((p1, p2) => ($scope.stats.playersMap[p2.player].count || 0) - ($scope.stats.playersMap[p1.player].count || 0) )[0].captain = true;
         };
         
         $scope.removeMatch = function() {

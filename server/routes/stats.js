@@ -310,7 +310,12 @@ function calculateFor(req, res) {
                 res.send(calculate(matches));
             });
     } else {
-        res.send({});
+        model.Match
+            .find()
+            .exec(function(err, matches) {
+                res.send(calculate(matches));
+            });
+        // res.send({});
     }
 }
 

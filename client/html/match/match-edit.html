@@ -43,7 +43,7 @@
             <button ng-click="addTeamMagic(player)" type="button" class="btn btn-default btn-xs">
                 <span class="glyphicon glyphicon-arrow-down">
             </button>
-            {{$index+1}} - {{playersMap[player].alias}}
+            {{$index+1}} - {{playersMap[player].alias}}  [{{ stats.playersMap[playersMap[player]._id].count}}]
           </span>
           <span class="pull-right">
             <button ng-disabled="match.team1.members.length>=5" ng-click="addTeam1(player)"  type="button" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-backward"></button>
@@ -71,7 +71,10 @@
               </thead>
               <tbody>
                 <tr ng-repeat="member in match.team1.members">
-                  <td>{{playersMap[member.player].alias}}</td>
+                  <td>
+                      {{playersMap[member.player].alias}}
+                      <span ng-show="member.captain">(C)</span>
+                  </td>
                   <td>
                     <input style="font-weight: bold;color: black;" ng-change="updateGoal1()" type="number" step="1" min="0" class="form-control input-sm" ng-model="member.goals"/>
                   </td>
@@ -122,7 +125,10 @@
               </thead>
               <tbody>
                 <tr ng-repeat="member in match.teamB.members">
-                  <td>{{playersMap[member.player].alias}}</td>
+                  <td>
+                      {{playersMap[member.player].alias}}
+                      <span ng-show="member.captain">(C)</span>
+                  </td>
                   <td>
                     <input style="font-weight: bold;color: black;" ng-change="updateGoalB()" type="number" step="1" min="0" class="form-control input-sm" ng-model="member.goals"/>
                   </td>
