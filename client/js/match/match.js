@@ -173,8 +173,8 @@ define(['../resources'], function() {
                 }
             }
 
-            $scope.match.team1.members.slice().sort((p1, p2) => ($scope.stats.playersMap[p2.player].count || 0) - ($scope.stats.playersMap[p1.player].count || 0) )[0].captain = true;
-            $scope.match.teamB.members.slice().sort((p1, p2) => ($scope.stats.playersMap[p2.player].count || 0) - ($scope.stats.playersMap[p1.player].count || 0) )[0].captain = true;
+            $scope.match.team1.members.slice().sort((p1, p2) => ($scope.stats.playersMap[p2.player]?.count || 0) - ($scope.stats.playersMap[p1.player]?.count || 0) )[0].captain = true;
+            $scope.match.teamB.members.slice().sort((p1, p2) => ($scope.stats.playersMap[p2.player]?.count || 0) - ($scope.stats.playersMap[p1.player]?.count || 0) )[0].captain = true;
         };
         
         $scope.removeMatch = function() {
