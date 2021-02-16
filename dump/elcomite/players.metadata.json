@@ -1,1 +1,1 @@
-{"options":{},"indexes":[{"v":1,"key":{"_id":1},"ns":"elcomite.players","name":"_id_"}]}
+{"options":{},"indexes":[{"v":2,"key":{"_id":1},"name":"_id_","ns":"elcomite.players"}],"uuid":"8768838dd16f47019003b993a814dd20"}
