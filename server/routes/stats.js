@@ -63,14 +63,14 @@ function calculateTeamForPairs(team, result, pairsMap) {
 
 //result: 0,1,3 (for lost, even or win)
 //and *cohef is using for players
-function calculateTeam(team, result, playersMap, cohef) {
+function calculateTeam(team, result, playersMap, cohef, goalsReceived) {
     for ( var i=0; i<team.members.length; i++ ) {
         var member = team.members[i];
         if ( !playersMap[member.player] ) {
             playersMap[member.player] = {
                 player: member.player,
                 count: 0,win: 0,lost: 0,even: 0,points: 0,goalsCount: 0, goals: 0, goalAvg: 0, goalMax: 0,
-                beersCount: 0, beers: 0,beerAvg: 0,podium1: 0,podium2: 0,podium3: 0, historic: 0
+                beersCount: 0, beers: 0,beerAvg: 0,podium1: 0,podium2: 0,podium3: 0, historic: 0, goalsReceived: 0
             }
         }
         var data = playersMap[member.player];
@@ -93,6 +93,10 @@ function calculateTeam(team, result, playersMap, cohef) {
         if ( member.podium == 1 ) data.podium1++;
         if ( member.podium == 2 ) data.podium2++;
         if ( member.podium == 3 ) data.podium3++;
+        if ( member.goalkeeper ) {
+            data.goalsReceived += goalsReceived;
+            console.log(data.goalsReceived);
+        }
     }
 }
 
@@ -170,8 +174,8 @@ function calculateMatch(match, stats, cohef) {
         resultB = 1;
     }
     console.log('date',match.date,'cohef',cohef);
-    calculateTeam(match.team1,result1,stats.playersMap, cohef);
-    calculateTeam(match.teamB,resultB,stats.playersMap, cohef);
+    calculateTeam(match.team1,result1,stats.playersMap, cohef, match.teamB.goals);
+    calculateTeam(match.teamB,resultB,stats.playersMap, cohef, match.team1.goals);
 
     return stats;
 }
@@ -188,6 +192,7 @@ Dada una lista de partidos calcula estadisticas por jugador.
 - Cant Podios 1º
 - Cant Podios 2º
 - Cant Podios 3º
+- Goles recibidos
 */
 function calculate(matches) {
     var stats = {
@@ -207,6 +212,7 @@ function calculate(matches) {
         var player = stats.playersMap[k];
         player.beerAvg = (player.beers / player.beersCount) || 0;
         player.goalAvg = (player.goals / player.goalsCount) || 0;
+        player.goalsReceivedAvg = (player.goalsReceived / player.goalsCount) || 0;
         stats.byPlayer.push(player);
     }
 

@@ -298,6 +298,12 @@ define(['../resources'], function() {
 					name: 'Max gol',
 					key: '-goalMax'
 				}, {
+					name: 'Recibidos',
+					key: '-goalsReceived'
+				}, {
+					name: 'Promedio Recibidos',
+					key: '-goalsReceivedAvg'
+				}, {
 					name: 'Birras',
 					key: '-beerAvg'
 				}, {
@@ -328,7 +334,7 @@ define(['../resources'], function() {
 				if ( $scope._config.show.extra ) {
 					$scope.sorts.push({
 						name: '% Ganados',
-						key: '-(win/count)'
+						key: '-(win/(win+lost))'
 					});
 				}
 

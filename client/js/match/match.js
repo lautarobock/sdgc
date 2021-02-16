@@ -209,7 +209,8 @@ define(['../resources'], function() {
         function addTeam (team, player) {
             team.members.push({
                 player: player,
-                goals: 0
+                goals: 0,
+                goalkeeper: $scope.playersMap[player].goalkeeper
             });
         }
 
@@ -244,6 +245,18 @@ define(['../resources'], function() {
         $scope.removeTeam1 = function(player,$index) {
             removeTeam($scope.match.team1, $index);
         };
+
+        $scope.updateGoalKeeper1 = function(member) {
+            updateGoalKeeper($scope.match.team1, member);
+        }
+
+        $scope.updateGoalKeeperB = function(member) {
+            updateGoalKeeper($scope.match.teamB, member);
+        }
+
+        function updateGoalKeeper(team, member) {
+            team.members.filter(m => m.player !== member.player).map(m => m.goalkeeper = false);
+        }
 
         function updateGoal(team) {
             team.goals = team.otherGoals||0;

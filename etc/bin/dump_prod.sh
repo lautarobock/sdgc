@@ -1,1 +1,1 @@
-mongodump -h ds031339.mongolab.com:31339 -d elcomite -u elcomite -p elcomite -o dump/ --excludeCollection "system.users"
+/c/Program\ Files/MongoDB/Server/4.0/bin/mongodump.exe --uri="mongodb+srv://afd:j43Aa6UtnTVBVSU@elcomite-qvuoo.mongodb.net/elcomite?retryWrites=true&w=majority"

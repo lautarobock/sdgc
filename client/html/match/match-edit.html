@@ -39,11 +39,13 @@
       </div>
       <ul class="list-group">
         <li class="list-group-item" ng-repeat="player in match.players | notUsedInTeam:match">
-          <span>
+          <span ng-class="{ goalkeeper: playersMap[player].goalkeeper }">
             <button ng-click="addTeamMagic(player)" type="button" class="btn btn-default btn-xs">
                 <span class="glyphicon glyphicon-arrow-down">
             </button>
-            {{$index+1}} - {{playersMap[player].alias}}  [{{ stats.playersMap[playersMap[player]._id].count}}]
+            {{$index+1}} - {{playersMap[player].alias}}  
+            <span style="position: absolute; right: 110px;">Partidos: {{ stats.playersMap[playersMap[player]._id].count}}</span>
+            <span style="font-weight: bold;" ng-show="playersMap[player].goalkeeper">(A)</span>
           </span>
           <span class="pull-right">
             <button ng-disabled="match.team1.members.length>=5" ng-click="addTeam1(player)"  type="button" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-backward"></button>
@@ -67,11 +69,12 @@
                   <!-- <th style="width:7em">Birras</th>
                   <th style="width:6em">Podio</th> -->
                   <th></th>
+                  <th>Arquero</th>
                 </tr>
               </thead>
               <tbody>
                 <tr ng-repeat="member in match.team1.members">
-                  <td>
+                  <td ng-class="{ goalkeeper: member.goalkeeper }">
                       {{playersMap[member.player].alias}}
                       <span ng-show="member.captain">(C)</span>
                   </td>
@@ -90,6 +93,9 @@
                     </select>
                   </td> -->
                   <td><button ng-click="removeTeam1(player,$index)" type="button" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-remove"></button></td>
+                  <td>
+                    <input type="checkbox" ng-change="updateGoalKeeper1(member)" ng-model="member.goalkeeper">
+                  </td>
                 </tr>
                 <tr>
                   <td title="Para goles en contra y sin contar">Otros Goles</td>
@@ -121,11 +127,12 @@
                   <!-- <th style="width:7em">Birras</th>
                   <th style="width:6em">Podio</th> -->
                   <th></th>
+                  <th>Arquero</th>
                 </tr>
               </thead>
               <tbody>
                 <tr ng-repeat="member in match.teamB.members">
-                  <td>
+                  <td ng-class="{ goalkeeper: member.goalkeeper }">
                       {{playersMap[member.player].alias}}
                       <span ng-show="member.captain">(C)</span>
                   </td>
@@ -144,6 +151,9 @@
                     </select>
                   </td> -->
                   <td><button ng-click="removeTeamB(player,$index)" type="button" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-remove"></button></td>
+                  <td>
+                    <input type="checkbox" ng-change="updateGoalKeeperB(member)" ng-model="member.goalkeeper">
+                  </td>
                 </tr>
                 <tr>
                   <td title="Para goles en contra y sin contar">Otros Goles</td>

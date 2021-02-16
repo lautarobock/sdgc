@@ -12,6 +12,15 @@
             "env": {
                 "MONGOLAB_URI": "mongodb+srv://afd:j43Aa6UtnTVBVSU@elcomite-qvuoo.mongodb.net/elcomite?retryWrites=true&w=majority"
             }
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "TESDT",
+            "program": "${workspaceFolder}\\test.js",
+            "env": {
+                "MONGOLAB_URI": "mongodb+srv://afd:j43Aa6UtnTVBVSU@elcomite-qvuoo.mongodb.net/elcomite?retryWrites=true&w=majority"
+            }
         }
     ]
 }

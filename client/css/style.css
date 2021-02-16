@@ -118,6 +118,11 @@
 	background: #A67D3D;
 }
 
+.goalkeeper {
+    font-weight: bold;
+    color: darkorange;
+}
+
 .top1 {
 	margin-top: 1em
 }
