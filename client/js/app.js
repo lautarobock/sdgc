@@ -59,6 +59,10 @@ define("app", [
             $rootScope.sideBar = !$rootScope.sideBar;
         };
 
+        $rootScope.hideSideBar = function() {
+            $rootScope.sideBar = false;
+        };
+
     }]);
 
     app.run(

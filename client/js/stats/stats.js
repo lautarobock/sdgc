@@ -189,7 +189,7 @@ define(['../resources'], function() {
 
 	});
 
-	stats.controller('StatsController',function($scope, League) {
+	stats.controller('StatsController',function($scope, League, $rootScope) {
 
 		$scope.filter = {
 			league: {}
@@ -222,6 +222,8 @@ define(['../resources'], function() {
 				historic: true
 			}
 		};
+        
+        $rootScope.hideSideBar();
 
 	});
 
@@ -395,6 +397,7 @@ define(['../resources'], function() {
 		        $scope.getPlayer = function(player_id) {
 		        	return playersMap[player_id];
 		        }
+
 			}
 		};
 	});
