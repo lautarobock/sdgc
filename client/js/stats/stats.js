@@ -248,7 +248,8 @@ define(['../resources'], function() {
 						title: true,
 						extra: false,
 						header: true,
-						rowGroup: true
+						rowGroup: true,
+                        streak: true
 					},
 					text: {
 
@@ -327,6 +328,9 @@ define(['../resources'], function() {
 				}, {
 					name: 'Partidos perdidos',
 					key: '-lost'
+				}, {
+					name: 'Racha jugados',
+					key: '-streakMatches'
 				}];
 
 				$scope.tableSort = $scope._config.sort.init || $scope.sorts[0];

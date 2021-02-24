@@ -70,7 +70,11 @@ function calculateTeam(team, result, playersMap, cohef, goalsReceived) {
             playersMap[member.player] = {
                 player: member.player,
                 count: 0,win: 0,lost: 0,even: 0,points: 0,goalsCount: 0, goals: 0, goalAvg: 0, goalMax: 0,
-                beersCount: 0, beers: 0,beerAvg: 0,podium1: 0,podium2: 0,podium3: 0, historic: 0, goalsReceived: 0
+                beersCount: 0, beers: 0,beerAvg: 0,podium1: 0,podium2: 0,podium3: 0, historic: 0,
+                goalsReceived: 0, goalkeeperCount: 0,
+                streakMatches: 0,
+                lastMatch: false,
+                lastStreakMatches: 0
             }
         }
         var data = playersMap[member.player];
@@ -95,6 +99,7 @@ function calculateTeam(team, result, playersMap, cohef, goalsReceived) {
         if ( member.podium == 3 ) data.podium3++;
         if ( member.goalkeeper ) {
             data.goalsReceived += goalsReceived;
+            data.goalkeeperCount++;
             console.log(data.goalsReceived);
         }
     }
@@ -173,10 +178,24 @@ function calculateMatch(match, stats, cohef) {
         result1 = 1;
         resultB = 1;
     }
-    console.log('date',match.date,'cohef',cohef);
-    calculateTeam(match.team1,result1,stats.playersMap, cohef, match.teamB.goals);
-    calculateTeam(match.teamB,resultB,stats.playersMap, cohef, match.team1.goals);
-
+    
+    calculateTeam(match.team1, result1, stats.playersMap, cohef, match.teamB.goals);
+    calculateTeam(match.teamB, resultB, stats.playersMap, cohef, match.team1.goals);
+    Object.keys(stats.playersMap).forEach(p => {
+        if (match.team1.members.some(m => m.player === p) ||
+            match.teamB.members.some(m => m.player === p) ) {
+            if (stats.playersMap[p].lastMatch) {
+                stats.playersMap[p].lastStreakMatches++;
+            }
+            stats.playersMap[p].lastMatch = true;
+            if (stats.playersMap[p].lastStreakMatches > stats.playersMap[p].streakMatches) {
+                stats.playersMap[p].streakMatches = stats.playersMap[p].lastStreakMatches;
+            }
+        } else {
+            stats.playersMap[p].lastStreakMatches = 0;
+            stats.playersMap[p].lastMatch = false;
+        }
+    })
     return stats;
 }
 
@@ -203,8 +222,8 @@ function calculate(matches) {
     }
 
 
-    for ( var i=0; i<matches.length; i++ ) {
-        calculateMatch(matches[i],stats, 1-i/matches.length);
+    for (var i = 0; i < matches.length; i++) {
+        calculateMatch(matches[i], stats, 1 - i / matches.length);
     }
 
     stats.byPlayer = [];
@@ -212,7 +231,7 @@ function calculate(matches) {
         var player = stats.playersMap[k];
         player.beerAvg = (player.beers / player.beersCount) || 0;
         player.goalAvg = (player.goals / player.goalsCount) || 0;
-        player.goalsReceivedAvg = (player.goalsReceived / player.goalsCount) || 0;
+        player.goalsReceivedAvg = (player.goalsReceived / player.goalkeeperCount) || 0;
         stats.byPlayer.push(player);
     }
 
@@ -301,9 +320,9 @@ function calculateForDuelsFor(req, res) {
 function calculateFor(req, res) {
     //Caso para calcular una liga hasta determinada ronda
     if ( req.query.league && req.query.upToRound ) {
-        model.Match.find({league: req.query.league, round: {$lte:req.query.upToRound}}, function(err, matches) {
-            res.send(calculate(matches));
-        });
+        model.Match.find({league: req.query.league, round: {$lte:req.query.upToRound}})
+        .sort('-date')    
+        .then(matches => res.send(calculate(matches)));
     } else if ( req.query.leagues ) {
         if ( !(req.query.leagues instanceof Array) ) {
             req.query.leagues = [req.query.leagues];
@@ -311,10 +330,8 @@ function calculateFor(req, res) {
 
         model.Match
             .find({league:{$in: req.query.leagues}})
-            .sort('-date')    
-            .exec(function(err, matches) {
-                res.send(calculate(matches));
-            });
+            .sort('-date')
+            .then(matches => res.send(calculate(matches)));
     } else {
         model.Match
             .find()
