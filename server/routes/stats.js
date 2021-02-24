@@ -74,7 +74,13 @@ function calculateTeam(team, result, playersMap, cohef, goalsReceived) {
                 goalsReceived: 0, goalkeeperCount: 0,
                 streakMatches: 0,
                 lastMatch: false,
-                lastStreakMatches: 0
+                lastStreakMatches: 0,
+                streakWins: 0,
+                lastStreakWins: 0,
+                streakLosses: 0,
+                lastStreakLosses: 0,
+                streakNoLosses: 0,
+                lastStreakNoLosses: 0
             }
         }
         var data = playersMap[member.player];
@@ -101,6 +107,33 @@ function calculateTeam(team, result, playersMap, cohef, goalsReceived) {
             data.goalsReceived += goalsReceived;
             data.goalkeeperCount++;
             console.log(data.goalsReceived);
+        }
+
+        if (result === 3) {
+            data.lastStreakWins++;
+            if (data.lastStreakWins > data.streakWins) {
+                data.streakWins = data.lastStreakWins;
+            }
+        } else {
+            data.lastStreakWins = 0;
+        }
+
+        if (result === 0) {
+            data.lastStreakLosses++;
+            if (data.lastStreakLosses > data.streakLosses) {
+                data.streakLosses = data.lastStreakLosses;
+            }
+        } else {
+            data.lastStreakLosses = 0;
+        }
+
+        if (result !== 0) {
+            data.lastStreakNoLosses++;
+            if (data.lastStreakNoLosses > data.streakNoLosses) {
+                data.streakNoLosses = data.lastStreakNoLosses;
+            }
+        } else {
+            data.lastStreakNoLosses = 0;
         }
     }
 }

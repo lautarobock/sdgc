@@ -331,6 +331,15 @@ define(['../resources'], function() {
 				}, {
 					name: 'Racha jugados',
 					key: '-streakMatches'
+				}, {
+					name: 'Racha ganados',
+					key: '-streakWins'
+				}, {
+					name: 'Racha perdidos',
+					key: '-streakLosses'
+				}, {
+					name: 'Racha NO perdidos',
+					key: '-streakNoLosses'
 				}];
 
 				$scope.tableSort = $scope._config.sort.init || $scope.sorts[0];
