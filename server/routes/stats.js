@@ -71,16 +71,13 @@ function calculateTeam(team, result, playersMap, cohef, goalsReceived) {
                 player: member.player,
                 count: 0, win: 0, lost: 0, even: 0, points: 0, goalsCount: 0, goals: 0, goalAvg: 0, goalMax: 0,
                 beersCount: 0, beers: 0, beerAvg: 0, podium1: 0, podium2: 0, podium3: 0, historic: 0,
-                goalsReceived: 0, goalkeeperCount: 0,
-                streakMatches: 0,
-                lastMatch: false,
-                lastStreakMatches: 0,
-                streakWins: 0,
-                lastStreakWins: 0,
-                streakLosses: 0,
-                lastStreakLosses: 0,
-                streakNoLosses: 0,
-                lastStreakNoLosses: 0
+                goalsReceived: 0, goalkeeperCount: 0, undefeated: 0,
+                streakMatches: 0, lastMatch: false, lastStreakMatches: 0,
+                streakWins: 0, lastStreakWins: 0,
+                streakLosses: 0, lastStreakLosses: 0,
+                streakNoLosses: 0, lastStreakNoLosses: 0,
+                streakGoals: 0, lastStreakGoals: 0,
+                coPlayers: new Set()
             }
         }
         var data = playersMap[member.player];
@@ -94,6 +91,15 @@ function calculateTeam(team, result, playersMap, cohef, goalsReceived) {
             data.goals += member.goals;
             data.goalsCount++;
             data.goalMax = Math.max(data.goalMax, member.goals);
+
+            if (member.goals !== 0) {
+                data.lastStreakGoals++;
+                if (data.lastStreakGoals > data.streakGoals) {
+                    data.streakGoals = data.lastStreakGoals;
+                }
+            } else {
+                data.lastStreakGoals = 0;
+            }
         }
         if (member.beers != null) {
             data.beers += member.beers;
@@ -103,10 +109,13 @@ function calculateTeam(team, result, playersMap, cohef, goalsReceived) {
         if (member.podium == 1) data.podium1++;
         if (member.podium == 2) data.podium2++;
         if (member.podium == 3) data.podium3++;
-        if (member.goalkeeper) {
+        if (member.goalkeeper && goalsReceived !== undefined && goalsReceived !== null) {
             data.goalsReceived += goalsReceived;
             data.goalkeeperCount++;
             console.log(data.goalsReceived);
+            if (goalsReceived === 0) {
+                data.undefeated++;
+            }
         }
 
         if (result === 3) {
@@ -135,6 +144,7 @@ function calculateTeam(team, result, playersMap, cohef, goalsReceived) {
         } else {
             data.lastStreakNoLosses = 0;
         }
+        team.members.filter(m => m.player !== member.player).forEach(m => data.coPlayers.add(m.player));
     }
 }
 
@@ -265,6 +275,7 @@ function calculate(matches) {
         player.beerAvg = (player.beers / player.beersCount) || 0;
         player.goalAvg = (player.goals / player.goalsCount) || 0;
         player.goalsReceivedAvg = (player.goalsReceived / player.goalkeeperCount) || 0;
+        player.coPlayers = player.coPlayers.size;
         stats.byPlayer.push(player);
     }
 

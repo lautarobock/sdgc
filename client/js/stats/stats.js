@@ -307,6 +307,10 @@ define(['../resources'], function() {
 					name: 'Promedio Recibidos',
 					key: '-goalsReceivedAvg'
 				}, {
+					name: 'Vallas invictas ',
+                    key: '-undefeated',
+					sortBy: ['-undefeated', '-goalsReceived']
+				}, {
 					name: 'Birras',
 					key: '-beerAvg'
 				}, {
@@ -342,6 +346,9 @@ define(['../resources'], function() {
 				}, {
 					name: 'Racha NO perdidos',
 					key: '-streakNoLosses'
+				}, {
+					name: 'Racha Goles',
+					key: '-streakGoals'
 				}];
 
 				$scope.tableSort = $scope._config.sort.init || $scope.sorts[0];
@@ -350,6 +357,10 @@ define(['../resources'], function() {
 					$scope.sorts.push({
 						name: '% Ganados',
 						key: '-(win/(win+lost))'
+					});
+                    $scope.sorts.push({
+						name: 'Coequipers',
+						key: '-coPlayers'
 					});
 				}
 

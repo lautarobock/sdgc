@@ -20,10 +20,10 @@
           <tr ng-show="_config.show.rowGroup">
             <th colspan="2"></th>
             <th ng-if="_config.show.match" colspan="5">Partidos</th>
-            <th ng-if="_config.show.goals" colspan="5">Goles</th>
+            <th ng-if="_config.show.goals" colspan="6">Goles</th>
             <th ng-if="_config.show.beers" colspan="5">Birras</th>
-            <th ng-if="_config.show.extra" colspan="2">Extra</th>
-            <th ng-if="_config.show.streak" colspan="4">Rachas</th>
+            <th ng-if="_config.show.extra" colspan="3">Extra</th>
+            <th ng-if="_config.show.streak" colspan="5">Rachas</th>
           </tr>
           <tr>
             <th>#</th>
@@ -40,6 +40,7 @@
             <th ng-if="_config.show.goals" title="Maxima cantidad de goles en un partido">Max<span ng-class="{'glyphicon glyphicon-asterisk':tableSort.key=='-goalMax'}"></span></th>
             <th ng-if="_config.show.goals" title="Goles recibidos">G.R<span ng-class="{'glyphicon glyphicon-asterisk':tableSort.key=='-goalsReceived'}"></span></th>
             <th ng-if="_config.show.goals" title="Promedio recibidos">P.R<span ng-class="{'glyphicon glyphicon-asterisk':tableSort.key=='-goalsReceivedAvg'}"></span></th>
+            <th ng-if="_config.show.goals" title="Vayas invictas">V.I<span ng-class="{'glyphicon glyphicon-asterisk':tableSort.key=='-undefeated'}"></span></th>
 
             <th ng-if="_config.show.beers" title="Promedio de birras sobre los partidos en los cuales fue puntuado">B<span ng-class="{'glyphicon glyphicon-asterisk':tableSort.key=='-beerAvg'}"></span></th>
             <th ng-if="_config.show.beers" title="Cantidad de figuras">P1<span ng-class="{'glyphicon glyphicon-asterisk':tableSort.key=='-podium1'}"></span></th>
@@ -49,11 +50,13 @@
 
             <th ng-if="_config.show.extra" title="Promedio de partidos ganados">P.P.G<span ng-class="{'glyphicon glyphicon-asterisk':tableSort.key=='-(win/count)'}"></span></th>
             <th ng-if="_config.show.historic" title="Coheficiente historico">C.H.<span ng-class="{'glyphicon glyphicon-asterisk':tableSort.key=='-(historic)'}"></span></th>
+            <th ng-if="_config.show.historic" title="Jugadores con los que compartio equipo">C.E<span ng-class="{'glyphicon glyphicon-asterisk':tableSort.key=='-coPlayers'}"></span></th>
             
             <th ng-if="_config.show.streak" title="Mejor racha de partidos jugados">J<span ng-class="{'glyphicon glyphicon-asterisk':tableSort.key=='-(streakMatches)'}"></span></th>
             <th ng-if="_config.show.streak" title="Mayor racha de partidos ganados (Sobre los que jugo el jugador)">G<span ng-class="{'glyphicon glyphicon-asterisk':tableSort.key=='-(streakWins)'}"></span></th>
             <th ng-if="_config.show.streak" title="Mayor racha de partidos perdidos (Sobre los que jugo el jugador)">P<span ng-class="{'glyphicon glyphicon-asterisk':tableSort.key=='-(streakLosses)'}"></span></th>
             <th ng-if="_config.show.streak" title="Mayor racha de partidos NO perdidos (Sobre los que jugo el jugador)">N.P<span ng-class="{'glyphicon glyphicon-asterisk':tableSort.key=='-(streakNoLosses)'}"></span></th>
+            <th ng-if="_config.show.streak" title="Mayor racha de partidos con goles (Sobre los que jugo el jugador)">G.C<span ng-class="{'glyphicon glyphicon-asterisk':tableSort.key=='-(streakGoals)'}"></span></th>
           </tr>
         </thead>
         <tbody>
@@ -74,6 +77,7 @@
             <td ng-if="_config.show.goals" ng-class="{fwbold:tableSort.key=='-goalMax'}">{{player.goalMax}}</td>
             <td ng-if="_config.show.goals" ng-class="{fwbold:tableSort.key=='-goalsReceived'}">{{player.goalsReceived}}</td>
             <td ng-if="_config.show.goals" ng-class="{fwbold:tableSort.key=='-goalsReceived'}">{{player.goalsReceivedAvg | number:2}}</td>
+            <td ng-if="_config.show.goals" ng-class="{fwbold:tableSort.key=='-undefeated'}">{{player.undefeated}}</td>
 
             <td ng-if="_config.show.beers" ng-class="{fwbold:tableSort.key=='-beerAvg'}">{{player.beerAvg|number:2}}</td>
             <td ng-if="_config.show.beers" ng-class="{fwbold:tableSort.key=='-podium1'}">{{player.podium1}}</td>
@@ -83,11 +87,13 @@
 
             <td ng-if="_config.show.extra" ng-class="{fwbold:tableSort.key=='-(win/count)'}">{{player.win/(player.win+player.lost)*100|number:0}}%</td>
             <td ng-if="_config.show.historic" ng-class="{fwbold:tableSort.key=='-historic'}">{{player.historic|number:0}}</td>
+            <td ng-if="_config.show.historic" ng-class="{fwbold:tableSort.key=='-coPlayers'}">{{player.coPlayers}}</td>
             
             <td ng-if="_config.show.streak" ng-class="{fwbold:tableSort.key=='-streakMatches'}">{{player.streakMatches}}</td>
             <td ng-if="_config.show.streak" ng-class="{fwbold:tableSort.key=='-streakWins'}">{{player.streakWins}}</td>
             <td ng-if="_config.show.streak" ng-class="{fwbold:tableSort.key=='-streakLosses'}">{{player.streakLosses}}</td>
             <td ng-if="_config.show.streak" ng-class="{fwbold:tableSort.key=='-streakNoLosses'}">{{player.streakNoLosses}}</td>
+            <td ng-if="_config.show.streak" ng-class="{fwbold:tableSort.key=='-streakGoals'}">{{player.streakGoals}}</td>
           </tr>
         </tbody>
       </table>
