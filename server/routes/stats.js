@@ -72,7 +72,7 @@ function calculateTeam(team, result, playersMap, cohef, goalsReceived) {
                 count: 0, win: 0, lost: 0, even: 0, points: 0, goalsCount: 0, goals: 0, goalAvg: 0, goalMax: 0,
                 beersCount: 0, beers: 0, beerAvg: 0, podium1: 0, podium2: 0, podium3: 0, historic: 0,
                 goalsReceived: 0, goalkeeperCount: 0, undefeated: 0,
-                streakMatches: 0, lastMatch: false, lastStreakMatches: 0,
+                streakMatches: 0, lastMatch: false, lastStreakMatches: 1,
                 streakWins: 0, lastStreakWins: 0,
                 streakLosses: 0, lastStreakLosses: 0,
                 streakNoLosses: 0, lastStreakNoLosses: 0,

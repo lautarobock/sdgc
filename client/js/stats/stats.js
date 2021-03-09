@@ -207,9 +207,9 @@ define(['../resources'], function() {
 		},true);
 
 		$scope.leagues = League.query(function(leagues) {
-			angular.forEach(leagues, function(league) {
-				$scope.filter.league[league._id] = true;
-			});
+			// angular.forEach(leagues, function(league) {
+				// $scope.filter.league[league._id] = true;
+			// });
 		});
 
 		$scope.config= {
