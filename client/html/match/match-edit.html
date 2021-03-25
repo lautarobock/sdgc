@@ -176,6 +176,17 @@
         </div>
       </div>
     </fieldset>
+    <div ng-show="win1" style="display: flex; height: 27px; width: 100%; margin-bottom: 1em; color: white; text-align: center; border-radius: 5px; overflow: hidden;">
+        <div style="background-color: #cc0000; height: 100%; padding-top: 4px;" ng-style="{width: win1 + '%'}">
+            {{ win1 | number:0 }}%
+        </div>
+        <div style="background-color: #ff8800; height: 100%; padding-top: 4px;" ng-style="{width: even1B + '%'}">
+            {{ even1B | number:0 }}%
+        </div>
+        <div style="background-color: #2a9fd6; height: 100%; padding-top: 4px;" ng-style="{width: winB + '%'}">
+            {{ winB | number:0 }}%
+        </div>
+    </div>
     <fieldset>
       <legend>Resultados</legend>
       <div >

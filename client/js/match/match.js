@@ -95,6 +95,7 @@ define(['../resources'], function() {
                     $scope.addStarting();
                 });
             });
+            
         } else {
             $scope.match = new Match();
             $scope.match.round = parseInt($location.search().nextRound);
@@ -129,6 +130,35 @@ define(['../resources'], function() {
             $scope.match.$save(function() {
                 $location.path("/league/detail/"+ $scope.match.league + '/' + $scope.match.round);
             }, err => alert(err.data.message));
+        };
+
+        function teamChances(team) {
+            let win = 0, lost = 0, even = 0;
+            if (team.members.length) {
+                let count = 0;
+                team.members.forEach(member => {
+                    const total = ($scope.stats.playersMap[member.player].win || 0) + ($scope.stats.playersMap[member.player].lost || 0) + ($scope.stats.playersMap[member.player].even || 0);
+                    if (total !== 0) {
+                        win += $scope.stats.playersMap[member.player].win / total;
+                        lost += $scope.stats.playersMap[member.player].lost / total;
+                        even += $scope.stats.playersMap[member.player].even / total;
+                        count ++;
+                    }
+                    
+                });
+                win = win / count;
+                lost = lost / count;
+                even = even / count;
+            }
+            return { win, lost, even };
+        }
+
+        $scope.chances = function() {
+            $scope.chances1 = teamChances($scope.match.team1);
+            $scope.chancesB = teamChances($scope.match.teamB);
+            $scope.win1 = ($scope.chances1.win + $scope.chancesB.lost) / 2 * 100;
+            $scope.winB = ($scope.chances1.lost + $scope.chancesB.win) / 2 * 100;
+            $scope.even1B = ($scope.chances1.even + $scope.chancesB.even) / 2 * 100;
         };
 
         $scope.random = function() {
@@ -212,6 +242,9 @@ define(['../resources'], function() {
                 goals: 0,
                 goalkeeper: $scope.playersMap[player].goalkeeper
             });
+            if ($scope.match.team1.members.length === 5 && $scope.match.teamB.members.length === 5) {
+                $scope.chances();
+            }
         }
 
         $scope.addTeamB = function(player) {
@@ -374,6 +407,7 @@ define(['../resources'], function() {
                         $scope.playersMap[player._id] = player;
                     });
                 });
+                
             }
         };
     });
