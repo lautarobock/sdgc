@@ -156,9 +156,9 @@ define(['../resources'], function () {
         $scope.chances = function () {
             $scope.chances1 = teamChances($scope.match.team1);
             $scope.chancesB = teamChances($scope.match.teamB);
-            $scope.win1 = ($scope.chances1.win + $scope.chancesB.lost) / 2 * 100;
-            $scope.winB = ($scope.chances1.lost + $scope.chancesB.win) / 2 * 100;
-            $scope.even1B = ($scope.chances1.even + $scope.chancesB.even) / 2 * 100;
+            $scope.match.chanceWin1 = ($scope.chances1.win + $scope.chancesB.lost) / 2 * 100;
+            $scope.match.chanceWinB = ($scope.chances1.lost + $scope.chancesB.win) / 2 * 100;
+            $scope.match.chanceEven = ($scope.chances1.even + $scope.chancesB.even) / 2 * 100;
         };
 
         $scope.random = function () {

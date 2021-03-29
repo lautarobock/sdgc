@@ -67,5 +67,8 @@ exports.Match = mongoose.model("Match", new Schema({
     diffGoals: Number,
     diffBeers: Number,
     diffAvg: Number,
-    comments: [Comment]
+    comments: [Comment],
+    chanceWin1: Number,
+    chanceWinB: Number,
+    chanceEven: Number
 },{ _id: false }));
