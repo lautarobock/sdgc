@@ -1,7 +1,7 @@
 <div main-content>
 	<h2>Estadisticas por jugador</h2>
   <div class="btn-group">
-      <button ng-repeat="it in leagues | orderBy:'_id'" type="button" class="btn btn-primary" ng-model="filter.league[it._id]" btn-checkbox>{{it.name}}</button>
+      <button ng-repeat="it in leagues" type="button" class="btn btn-primary" ng-model="filter.league[it._id]" btn-checkbox>{{it.name}}</button>
   </div>
 
   <div class="well well-sm top1">

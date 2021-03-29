@@ -6,7 +6,7 @@ define(['../resources'], function() {
 
         $scope.leagues = [];
 
-        League.query({sort: '_id'}, function(leagues) {
+        League.query({sort: 'startDate'}, function(leagues) {
             // angular.forEach(leagues, function(league) {
 
             //     $scope.filter.league[league._id] = true;
@@ -206,7 +206,7 @@ define(['../resources'], function() {
 			});
 		},true);
 
-		$scope.leagues = League.query(function(leagues) {
+		$scope.leagues = League.query({sort: 'startDate'}, function(leagues) {
 			// angular.forEach(leagues, function(league) {
 				// $scope.filter.league[league._id] = true;
 			// });
